@@ -1,3 +1,86 @@
-.underline-on-hover:hover{
+.underline-on-hover:hover {
     text-decoration: underline;
+}
+
+.btn:hover>* {
+    fill: white;
+    color: white;
+}
+
+#menu-dropdown:checked ~ #menu-checkbox > #topbar {
+    animation: topopenanim 0.5s forwards ease-in-out;
+}
+
+#menu-dropdown:checked ~ #menu-checkbox > #middlebar {
+    animation: middleopenanim 0.5s forwards ease-in-out;
+}
+
+#menu-dropdown:checked ~ #menu-checkbox > #botbar {
+    animation: botopenanim 0.5s forwards ease-in-out;
+}
+
+#menu-dropdown ~ #menu-checkbox > #topbar {
+    animation: topcloseanim 0.5s ease-in-out;
+}
+
+#menu-dropdown ~ #menu-checkbox > #middlebar {
+    animation: middlecloseanim 0.5s ease-in-out;
+}
+
+#menu-dropdown ~ #menu-checkbox > #botbar {
+    animation: botcloseanim 0.5s ease-in-out;
+}
+
+@keyframes topopenanim{
+    0% {
+        transform: translateY(0) rotate(0);
+    }
+    100% {
+        transform: translateY(0.5rem) rotate(45deg);
+    }
+}
+
+@keyframes topcloseanim{
+    0% {
+        transform: translateY(0.5rem) rotate(45deg);
+    }
+    100% {
+        transform: translateY(0) rotate(0);
+    }
+}
+
+@keyframes botopenanim{
+    0% {
+        transform: translateY(0) rotate(0);
+    }
+    100% {
+        transform: translateY(-0.5rem) rotate(-45deg);
+    }
+}
+
+@keyframes botcloseanim{
+    0% {
+        transform: translateY(-0.5rem) rotate(-45deg);
+    }
+    100% {
+        transform: translateY(0) rotate(0);
+    }
+}
+
+@keyframes middlecloseanim{
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes middleopenanim{
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
 }
