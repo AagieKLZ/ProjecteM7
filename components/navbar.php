@@ -17,9 +17,16 @@
                 <li class="nav-item col">
                     <a class="nav-link text-center fw-bold px-5 underline-on-hover" href="#">Viajeros</a>
                 </li>
-                <li class="nav-item col span-4">
-                    <button class="btn btn-success btn-sm text-center px-5 mt-1 text-nowrap fw-bold">Iniciar Sesión</button>
-                </li>
+                <?php 
+                if (isset($_SESSION['user'])) {
+                    echo '<li class="nav-item col span-4">
+                    <a href="login.php" class="btn btn-success btn-sm text-center px-5 mt-1 text-nowrap fw-bold">Cerrar Sesión</a>
+                </li>';
+                } else {
+                    echo '<li class="nav-item col span-4">
+                    <a href="login.php" class="btn btn-success btn-sm text-center px-5 mt-1 text-nowrap fw-bold">Iniciar Sesión</a></li>';
+                }
+                ?>
             </ul>
 
         </div>

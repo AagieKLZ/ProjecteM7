@@ -14,7 +14,7 @@
 
 <body>
   
-    <?php include 'navbar.php'; ?>
+    <?php include 'components/navbar.php'; ?>
     
 </body>
 
