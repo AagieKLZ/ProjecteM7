@@ -5,7 +5,7 @@ $contrasenya = "123321";
 $db = "tenfe";
 $host = "localhost:3306";
 
-// Creem la conexio
+// Creem la conexió
 try {
     $bd = new PDO('mysql:host=' . $host . ';dbname=' . $db, $usuari, $contrasenya);
     if (isset($_GET['debug'])) {
