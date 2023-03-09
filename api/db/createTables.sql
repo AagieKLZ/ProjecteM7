@@ -24,3 +24,12 @@ CREATE TABLE if not exists linies
     nom varchar(3) not null,
     PRIMARY KEY (id)
 );
+
+CREATE TABLE if not exists usuarios
+(
+    id_usuario int          not null auto_increment,
+    nombre     varchar(255) not null,
+    password   varchar(255) not null,
+    email      varchar(255) not null,
+    PRIMARY KEY (id_usuario)
+);
