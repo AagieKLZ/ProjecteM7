@@ -1,34 +1,34 @@
-CREATE TABLE if not exists parades
+CREATE TABLE if not exists stations
 (
-    id_parada int         not null auto_increment,
-    nom       varchar(50) not null,
-    PRIMARY KEY (id_parada)
+    id   int         not null auto_increment,
+    name varchar(50) not null,
+    PRIMARY KEY (id)
 );
 
-CREATE TABLE if not exists linies
+CREATE TABLE if not exists routes
 (
-    id  int        not null auto_increment,
-    nom varchar(3) not null,
+    id   int        not null auto_increment,
+    name varchar(3) not null,
     PRIMARY KEY (id),
-    INDEX (nom)
+    INDEX (name)
 );
 
-CREATE TABLE if not exists horarios
+CREATE TABLE if not exists schedules
 (
-    linia     varchar(3)                   not null,
-    id_parada int                          not null,
-    hora      varchar(5)                   not null,
-    id_viaje  int                          not null,
-    orden     smallint                     not null,
-    FOREIGN KEY (linia) REFERENCES linies (nom),
-    FOREIGN KEY (id_parada) REFERENCES parades (id_parada)
+    route_id    varchar(3) not null,
+    station_id  int        not null,
+    time        varchar(5) not null,
+    train_num    int        not null,
+    stop_number smallint   not null,
+    FOREIGN KEY (route_id) REFERENCES routes (name),
+    FOREIGN KEY (station_id) REFERENCES stations (id)
 );
 
-CREATE TABLE if not exists usuarios
+CREATE TABLE if not exists users
 (
-    id_usuario int          not null auto_increment,
-    nombre     varchar(255) not null,
-    password   varchar(255) not null,
-    email      varchar(255) not null,
-    PRIMARY KEY (id_usuario)
+    id       int          not null auto_increment,
+    name     varchar(255) not null,
+    password varchar(255) not null,
+    email    varchar(255) not null,
+    PRIMARY KEY (id)
 );

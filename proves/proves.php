@@ -3,9 +3,9 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 
-include '../api/rutesTren.php';
+include '../api/trainLines.php';
 
-use api\rutesTren;
+use api\trainLines;
 
 echo "TEST";
 ?>
@@ -17,4 +17,4 @@ echo "TEST";
 
 <?php
 
-echo json_encode(rutesTren::getRouteByTrain($_GET['train']));
+echo json_encode(trainLines::getRouteByTrainNumber($_GET['train']));
