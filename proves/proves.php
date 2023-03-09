@@ -8,14 +8,13 @@ include '../api/rutesTren.php';
 use api\rutesTren;
 
 echo "TEST";
-$res = rutesTren::getRouteByTrain(150);
-// Display the result as a table
-echo "<table border='1'>";
-foreach ($res as $row) {
-    echo "<tr>";
-    foreach ($row as $field) {
-        echo "<td>" . $field . "</td>";
-    }
-    echo "</tr>";
-}
-echo "</table>";
+?>
+
+<form action="proves.php" method="get">
+    <input type="number" name="train">
+    <input type="submit" value="Submit">
+</form>
+
+<?php
+
+echo json_encode(rutesTren::getRouteByTrain($_GET['train']));
