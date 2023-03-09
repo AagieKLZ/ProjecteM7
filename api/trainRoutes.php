@@ -4,12 +4,12 @@ namespace api;
 
 include "dbClient.php";
 
-class trainLines
+class trainRoutes
 {
     /**
      * Gets all the stops of a route and its times, given a train number
      * @param $trainNumber int train number
-     * @return mixed array with route name, destination station id and name, time, each row is a stop, 
+     * @return array with route name, destination station id and name, time, each row is a stop,
      */
     static function getRouteByTrainNumber($trainNumber)
     {
@@ -23,15 +23,30 @@ class trainLines
         return $db->query($sql, $params);
     }
 
+    /**
+     * Gets all the routes that pass through a station, given a station id
+     * @param $stationId int station id
+     * @return array with all routes that pass through the station, each row is a route [route, time it passes, train number, origin, destination]
+     */
     static function getRoutesByStationId($stationId)
     {
         $db = new dbClient();
+        $sql = "SELECT route_id, time, train_num FROM schedules
+        WHERE station_id = ?;";
+        $params = [$stationId];
+        $routes = $db->query($sql, $params);
+        // Maps routes and add origin and destination
+        return array_map(function ($route) {
+            $route["origin"] = (new trainRoutes)->getRouteOrigin($route["train_num"]);
+            $route["destination"] = (new trainRoutes)->getRouteDestination($route["train_num"]);
+            return $route;
+        }, $routes);
     }
 
     /**
      * Gets the origin of a route, given a train number
      * @param $trainNumber int train number
-     * @return void array with route name, origin station id and name, time
+     * @return array with route name, origin station id and name, time
      */
     private function getRouteOrigin($trainNumber)
     {
@@ -47,7 +62,7 @@ class trainLines
     /**
      * Gets the final destination of a route, given a train number
      * @param $trainNumber int train number
-     * @return mixed array with route name, destination station id and name, time
+     * @return array with route name, destination station id and name, time
      */
     private function getRouteDestination($trainNumber)
     {

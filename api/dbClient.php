@@ -73,7 +73,7 @@ class dbClient
      * Method to execute a query
      * @param $sql string The query to do without parameters
      * @param $params array The parameters to bind to the query
-     * @return mixed array with the results of the query
+     * @return array with the results of the query
      */
     function query($sql, $params)
     {
