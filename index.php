@@ -1,3 +1,7 @@
+<?php
+    session_start();
+    session_get_cookie_params();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
