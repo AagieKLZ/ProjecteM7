@@ -1,25 +1,45 @@
 <?php
-// Configuracio de la conexio a la db
-$usuari = "root";
-$contrasenya = "123321";
-$db = "tenfe";
-$host = "localhost:3306";
 
-// Creem la conexió
-try {
-    $bd = new PDO('mysql:host=' . $host . ';dbname=' . $db, $usuari, $contrasenya);
-    if (isset($_GET['debug'])) {
-        echo "Conexio a la base de dades correcta";
+class dbClient
+{
+
+    // Configuracio de la conexio a la db
+    private $usuari = "root";
+    private $contrasenya = "123321";
+    private $db = "tenfe";
+    private $host = "localhost:3306";
+
+    private $conn;
+
+    /**
+     * Constructor de la classe
+     */
+    function __construct()
+    {
+        $this->conn = PDO("mysql:host=$this->host;dbname=$this->db", $this->usuari, $this->contrasenya);
+        // Creem les taules si no existeixen
+        $this->createTables();
     }
 
-    // Executem la query que crea les taules
-    $sql = file_get_contents('createTables.sql');
-    $bd->exec($sql);
-    if (isset($_GET['debug'])) {
-        echo "Taules creades correctament (si no existien)";
+    /**
+     * Metode per crear les taules si no existeixen
+     * @return void
+     */
+    private function createTables()
+    {
+        $sql = readfile("./createTables.sql");
+        $this->conn->exec($sql);
     }
 
-} catch (PDOException $e) {
-    echo "Error al connectar la base de dades!: " . $e->getMessage() . "<n/>";
-    die();
+    /**
+     * Metode per fer queries a la db
+     * @param $sql string Query a fer (sql)
+     * @param $params array Parametres de la query (valors)
+     * @return mixed Resultat de la query
+     */
+    function query($sql, $params)
+    {
+        $this->conn->prepare($sql)->execute($params);
+    }
+
 }
