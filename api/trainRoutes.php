@@ -36,11 +36,29 @@ class trainRoutes
         $params = [$stationId];
         $routes = $db->query($sql, $params);
         // Maps routes and add origin and destination
-        return array_map(function ($route) {
+        $routes = array_map(function ($route) {
             $route["origin"] = (new trainRoutes)->getRouteOrigin($route["train_num"]);
             $route["destination"] = (new trainRoutes)->getRouteDestination($route["train_num"]);
             return $route;
         }, $routes);
+        // Ordenamos las rutas por hora de mas temprano a mas tarde
+        usort($routes, function ($a, $b) {
+            return $a["time"] <=> $b["time"];
+        });
+        return $routes;
+    }
+
+    /**
+     * Gets the name of a station, given a station id
+     * @param $stationId int station id
+     * @return array with station name
+     */
+    static function getStationName($stationId)
+    {
+        $db = new dbClient();
+        $sql = "SELECT name FROM stations WHERE id = ?;";
+        $params = [$stationId];
+        return $db->query($sql, $params);
     }
 
     /**
@@ -74,4 +92,6 @@ class trainRoutes
         $params = [$trainNumber];
         return $db->query($sql, $params);
     }
+
+
 }

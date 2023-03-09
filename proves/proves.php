@@ -43,7 +43,8 @@ if (isset($_GET["train"])) {
 if (isset($_GET["station"])) {
     $stationId = $_GET["station"];
     $routes = trainRoutes::getRoutesByStationId($stationId);
-    echo "<h2>Routes that pass through station $stationId</h2>";
+    $stationName = trainRoutes::getStationName($stationId)[0]["name"];
+    echo "<h2>Routes that pass through station $stationId, $stationName</h2>";
     echo "<table>";
     echo "<tr><th>Route</th><th>Time</th><th>Train</th><th>Origin</th><th>Destination</th></tr>";
     foreach ($routes as $route) {
