@@ -18,3 +18,20 @@ session_get_cookie_params();
 <body class="mt-5">
 
     <?php include 'components/navbar.php'; ?>
+    <main class="flex flex-row justify-center items-center w-full h-[calc(100%-3.5rem)] mt-[5rem]">
+        <div class="flex flex-col items-center w-full space-y-8 w-2/3 pb-4">
+            <div class="flex flex-row justify-around items-center md:w-2/3 w-[90%] text-center text-xl font-semibold border-b border-b-black">
+                <div>Estación</div>
+                <div>Correspondencias</div>
+            </div>
+            <div class="flex flex-row justify-around items-center md:w-2/3 w-[90%] text-center text-xl">
+                <div>BARCELONA-SANTS</div>
+                <div class="flex flex-row flex-wrap max-w-lg min-w-md justify-between font-semibold">
+                    <div class="bg-fuchsia-900 text-white flex justify-center items-center py-2 px-1">R12</div>
+                    <div class="bg-cyan-900 text-white flex justify-center items-center py-2 px-1">R13</div>
+                    <div class="bg-orange-700 text-white flex justify-center items-center py-2 px-1">R14</div>
+                </div>
+            </div>
+    </div>
+</main>
+</body>
