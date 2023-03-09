@@ -18,7 +18,6 @@ CREATE TABLE if not exists horarios
     linia     varchar(3)                   not null,
     id_parada int                          not null,
     hora      varchar(5)                   not null,
-    dia       enum ('feiners','capsetmana') not null,
     id_viaje  int                          not null,
     orden     smallint                     not null,
     FOREIGN KEY (linia) REFERENCES linies (nom),
