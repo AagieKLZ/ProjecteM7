@@ -1,34 +1,19 @@
-<nav class="navbar navbar-expand-lg bg-primary-subtle ">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-            <img alt="tenfe" src="assets/logo.png" style="height: 65px"></img>
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse d-flex-lg justify-content-end container-fluid" id="navbarNav">
-            <ul class="navbar-nav row gx-5">
-                <li class="nav-item col">
-                    <a class="nav-link text-center fw-bold px-5 underline-on-hover" href="#">Rutas</a>
-                </li>
-                <li class="nav-item col">
-                    <a class="nav-link text-center fw-bold px-5 underline-on-hover" href="#">Horarios</a>
-                </li>
-                <li class="nav-item col">
-                    <a class="nav-link text-center fw-bold px-5 underline-on-hover" href="#">Viajeros</a>
-                </li>
-                <?php 
-                if (isset($_SESSION['user'])) {
-                    echo '<li class="nav-item col lg-span-4">
-                    <a href="login.php" class="btn btn-success btn-sm text-center px-5 mt-1 text-nowrap fw-bold">Cerrar Sesión</a>
-                </li>';
-                } else {
-                    echo '<li class="nav-item col lg-span-4">
-                    <a href="login.php" class="btn btn-success btn-sm text-center px-5 mt-1 text-nowrap fw-bold">Iniciar Sesión</a></li>';
-                }
-                ?>
-            </ul>
-
-        </div>
+<nav class="fixed lg:w-full left-0 w-full h-14 border-b border-b-black bg-transparent backdrop-blur z-50 top-0 left-0 flex flex-row justify-around items-center">
+    <a href="index.php" class="block h-14 my-auto"><img src="assets/logo.png" alt="logo" class="h-14 my-auto"></a>
+    <div class="lg:flex hidden justify-end space-x-16 items-center">
+        <a href="./routes.php" class="hover:underline text-lg text-fuchsia-900">Líneas</a>
+        <a href="#" class="hover:underline text-lg text-fuchsia-900">Horarios</a>
+        <a href="./stations.php" class="hover:underline text-lg text-fuchsia-900">Estaciones</a>
     </div>
+    <!-- <?php include "components/loginButton.php"; ?> -->
+    <?php 
+        if (isset($_SESSION["user"])){
+            include "components/adminButton.php";
+        } else {
+            include "components/loginButton.php";
+        }
+    ?>
+    <input type="checkbox" name="dropdown" id="menu-dropdown" class="hidden">
+    <?php include 'components/modalButton.php'; ?>
+
 </nav>
