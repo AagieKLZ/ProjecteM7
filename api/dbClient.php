@@ -9,7 +9,7 @@ class dbClient
 
     // Db connection config
     private $usuari = "root";
-    private $contrasenya = "123321";
+    private $contrasenya;
     private $db = "tenfe";
     private $host = "localhost:3306";
 
@@ -30,6 +30,7 @@ class dbClient
     {
         $this->contrasenya = $password;
     }
+
     /**
      * Creates the tables if they don't exist
      * @return void
