@@ -9,7 +9,7 @@ class dbClient
 
     // Db connection config
     private $usuari = "root";
-    private $contrasenya;
+    private $contrasenya = "123321";
     private $db = "tenfe";
     private $host = "localhost:3306";
 
