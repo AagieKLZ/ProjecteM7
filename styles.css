@@ -27,12 +27,10 @@ body{
 }
 
 .bubble2{
-    animation: bubblein 0.5s forwards ease-in-out;
     animation-delay: 0.1s;
 }
 
 .bubble3{
-    animation: bubblein 0.5s forwards ease-in-out;
     animation-delay: 0.2s;
 }
 
@@ -79,16 +77,15 @@ body{
 
 @keyframes modalopenanim{
     0% {
-        transform: translateX(200%);
-    } 100% {
         transform: translateX(100%);
+    } 100% {
+        transform: translateX(0);
     }
 }
 
 @keyframes closemodalanim{
     0% {
         transform: translateX(0);
-        display: block;
     } 100% {
         transform: translateX(100%);
         display: none;
@@ -97,27 +94,53 @@ body{
 
 @keyframes closemodal{
     0%{
-        display: block;
+        transform: translateX(0%)
     } 100%{
+        transform: translateX(100%)
+    }
+} 
+
+@media screen and (min-width: 1024px){
+    .modal{
+        display: none;
+    }
+
+    #menu-dropdown:checked ~ .modal {
+        display: none;
+    }
+
+    #menu-dropdown:checked ~ .modal-menu {
         display: none;
     }
 }
 
 
-#menu-dropdown:not(:checked) ~ .modal > div{
-    animation: closemodalanim 0.5s forwards ease-in-out;
-}
 
-#menu-dropdown:not(:checked) ~ .modal {
-    display: none;
-}
+@media screen and (max-width: 1024px){
+    #menu-dropdown:checked ~ .modal{
+        display: block;
+    }
 
-#menu-dropdown:checked ~ .modal {
-    display: block;
-}
+    #menu-dropdown:checked ~ .modal-menu{
+        display: flex;
+    }
 
-#menu-dropdown:checked ~ .modal > div {
-    animation: modalopenanim 0.5s forwards ease-in-out;
+    #menu-dropdown:not(:checked) ~ .modal {
+        animation: closemodal 0.5s forwards ease-in-out;
+        display: none;
+    }
+
+    #menu-dropdown:not(:checked) ~ .modal-menu {
+        animation: closemodal 0.5s forwards ease-in-out;
+    }
+
+    #menu-dropdown:checked ~ .modal-menu {
+        animation: modalopenanim 0.5s forwards ease-in-out;
+    }
+
+    #menu-dropdown:not(:checked) ~ .modal-menu {
+        animation: closemodalanim 0.5s forwards ease-in-out;
+    }
 }
 
 #menu-dropdown:checked ~ #menu-checkbox > #topbar {

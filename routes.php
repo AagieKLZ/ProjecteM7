@@ -20,7 +20,7 @@ session_get_cookie_params();
     <?php include 'components/navbar.php'; ?>
     <main class="flex flex-row justify-center items-center w-full h-[calc(100%-3.5rem)] mt-[3.5rem]">
         <div class="flex flex-col items-center w-full space-y-8 w-2/3 pb-4">
-        <div class="w-full text-center text-4xl font-bold h-36 flex justify-center items-center line-main text-white">Líneas</div>
+        <div class="w-full text-center text-4xl font-bold h-52 flex justify-center items-center line-main text-white">Líneas</div>
             <div class="flex flex-row justify-evenly items-center md:w-2/3 w-[90%] text-center text-xl font-semibold border-b border-b-black">
                 <div>Linea</div>
                 <div>Origen</div>
