@@ -9,7 +9,7 @@ class dbClient
 
     // Db connection config
     private $usuari = "root";
-    private $contrasenya = "123321";
+    private $contrasenya;
     private $db = "tenfe";
     private $host = "localhost:3306";
 
@@ -23,8 +23,13 @@ class dbClient
         $this->conn = new PDO("mysql:host=$this->host;dbname=$this->db", $this->usuari, $this->contrasenya);
         // Creem les taules si no existeixen
         $this->createTables();
+        $this->set_password(getenv("DB_PASSWORD") ?? "123321");
     }
 
+    private function set_password($password)
+    {
+        $this->contrasenya = $password;
+    }
     /**
      * Creates the tables if they don't exist
      * @return void
