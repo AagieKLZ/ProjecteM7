@@ -91,12 +91,25 @@ body{
         display: block;
     } 100% {
         transform: translateX(100%);
-        display: hidden;
+        display: none;
     }
 }
 
-#menu-dropdown:not(:checked) ~ .modal {
+@keyframes closemodal{
+    0%{
+        display: block;
+    } 100%{
+        display: none;
+    }
+}
+
+
+#menu-dropdown:not(:checked) ~ .modal > div{
     animation: closemodalanim 0.5s forwards ease-in-out;
+}
+
+#menu-dropdown:not(:checked) ~ .modal {
+    display: none;
 }
 
 #menu-dropdown:checked ~ .modal {
