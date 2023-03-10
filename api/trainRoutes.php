@@ -109,5 +109,27 @@ class trainRoutes
         return $stations;
     }
 
+    static function getAllStationsWithConnections(): array
+    {
+        $stations = self::getAllStations();
+        return array_map(function ($station) {
+            $station["connections"] = (new trainRoutes)->getConnections($station["id"]);
+            return $station;
+        }, $stations);
+    }
+
+    /**
+     * Gets all the routes where you can transfer from in a station
+     * @param int $stationId station id
+     * @return array with all routes where you can transfer from in a station
+     */
+    private function getConnections(int $stationId): array
+    {
+        $db = new dbClient();
+        $sql = "SELECT DISTINCT route_id FROM schedules
+        WHERE station_id = ?";
+        $params = [$stationId];
+        return $db->query($sql, $params);
+    }
 
 }

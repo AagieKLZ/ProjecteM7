@@ -10,6 +10,8 @@ use api\trainRoutes;
 echo "TEST PAGE";
 ?>
 
+<a href="stations.php">See stations</a>
+
     <form action="proves.php" method="get">
         <label for="train">Enter train number to see all stops:</label>
         <label>
@@ -80,11 +82,15 @@ if (isset($_GET["train"])) {
 
 if (isset($_GET["station"]) && !empty($_GET["station"])) {
     $stationId = $_GET["station"];
-    $time = $_GET["time"];
-    if ($time == "now") {
-        $routes = trainRoutes::getRoutesByStationId($stationId);
+    if (isset($_GET["time"])) {
+        $time = $_GET["time"];
+        if ($time == "now") {
+            $routes = trainRoutes::getRoutesByStationId($stationId);
+        } else {
+            $routes = trainRoutes::getRoutesByStationId($stationId, $time);
+        }
     } else {
-        $routes = trainRoutes::getRoutesByStationId($stationId, $time);
+        $routes = trainRoutes::getRoutesByStationId($stationId);
     }
     $stationName = trainRoutes::getStationName($stationId)[0]["name"];
     echo "<h2>Routes that pass through station $stationId, $stationName</h2>";
