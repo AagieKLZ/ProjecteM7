@@ -126,8 +126,10 @@ class trainRoutes
     private function getConnections(int $stationId): array
     {
         $db = new dbClient();
-        $sql = "SELECT DISTINCT route_id FROM schedules
-        WHERE station_id = ?";
+        $sql = "SELECT DISTINCT route_id, colour FROM schedules
+        INNER JOIN routes r on schedules.route_id = r.name
+        WHERE station_id = ?
+        ORDER BY route_id;";
         $params = [$stationId];
         return $db->query($sql, $params);
     }

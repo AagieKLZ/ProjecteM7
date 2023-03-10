@@ -17,6 +17,8 @@ foreach ($stations as $station) {
     echo "<tr><td>" . $station["name"] . "</td><td>";
     foreach ($station["connections"] as $connection) {
         echo $connection["route_id"];
+        echo " ";
+        echo $connection["colour"];
     }
     echo "</td></tr>";
 }
