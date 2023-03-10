@@ -116,6 +116,10 @@ body{
     #menu-dropdown:not(:checked) ~ .modal {
         display: none;
     }
+
+    #menu-dropdown:not(:checked) ~ .modal-menu {
+        display: none;
+    }
 }
 
 
