@@ -42,7 +42,8 @@ session_get_cookie_params();
             echo '</div>';
             echo '<div class="flex flex-row flex-wrap max-w-lg min-w-md justify-start font-semibold w-1/2">';
             foreach ($station["connections"] as $connection) {
-                echo '<div class="bg-fuchsia-900 text-white flex justify-center items-center py-2 px-2 mx-2">';
+                echo '<div class="';
+                echo $connection["colour"].' text-white flex justify-center items-center py-2 px-2 mx-2">';
                 echo $connection["route_id"];
                 echo '</div>';
             }

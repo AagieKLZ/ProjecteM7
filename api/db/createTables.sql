@@ -9,6 +9,7 @@ CREATE TABLE if not exists routes
 (
     id   int        not null auto_increment,
     name varchar(3) not null,
+    colour varchar(20) not null,
     PRIMARY KEY (id),
     INDEX (name)
 );
