@@ -11,7 +11,7 @@ session_get_cookie_params();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tenfe</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css">   
 
 </head>
 
@@ -56,7 +56,7 @@ session_get_cookie_params();
                             <option value="">15:00</option>
                         </select>
                     </div>
-                    <button class="bg-gray-200 bg-opacity-75 hover:bg-fuchsia-900 hover:text-white text-black border-2 font-semibold border-black w-fit px-10 py-2 rounded-lg flex justify-between items-center md:text-xl text-lg">
+                    <button class="bg-gray-200 active:animate-pulse bg-opacity-75 hover:bg-fuchsia-900 hover:text-white text-black border-2 font-semibold border-black w-fit px-10 py-2 rounded-lg flex justify-between items-center md:text-xl text-lg">
                         Buscar
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6 ml-2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
@@ -66,19 +66,19 @@ session_get_cookie_params();
                 </form>
             </div>
             <div class="flex flex-row justify-center items-center w-[90%] h-fit md:mt-32 mt-4 md:space-x-24 space-x-4 mb-4">
-                <a href="./routes.php" class="flex flex-col justify-center items-center hover:font-semibold hover:scale-105">
+                <a href="./routes.php" class="bubble bubble1 flex flex-col justify-center items-center hover:font-semibold hover:scale-105">
                     <div class="lg:w-[175px] lg:h-[175px] w-[100px] h-[100px] drop-shadow-xl bg-emerald-500 hover:bg-emerald-600 rounded-full flex justify-center items-center">
                         <img src="assets/train.svg" class="lg:h-[75px] h-[50px]" />
                     </div>
                     <div class="lg:text-2xl text-lg mt-2 font-semibold">Líneas</div>
                 </a>
-                <a href="#" class="flex flex-col justify-center items-center hover:font-semibold hover:scale-105">
+                <a href="#" class="bubble bubble2 flex flex-col justify-center items-center hover:font-semibold hover:scale-105">
                     <div class="lg:w-[175px] lg:h-[175px] w-[100px] h-[100px] drop-shadow-xl bg-emerald-500 hover:bg-emerald-600 rounded-full flex justify-center items-center">
                         <img src="assets/time.svg" class="lg:h-[75px] h-[50px]" />
                     </div>
                     <div class="lg:text-2xl text-lg mt-2 font-semibold">Horarios</div>
                 </a>
-                <a href="#" class="flex flex-col justify-center items-center hover:font-semibold hover:scale-105">
+                <a href="#" class="bubble bubble3 flex flex-col justify-center items-center hover:font-semibold hover:scale-105">
                     <div class="lg:w-[175px] lg:h-[175px] w-[100px] h-[100px] drop-shadow-xl bg-emerald-500 rounded-full hover:bg-emerald-600 flex justify-center items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="lg:h-[75px] h-[50px] stroke-white">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />

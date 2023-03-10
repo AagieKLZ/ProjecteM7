@@ -1,3 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+body{
+    font-family: inter;
+}
+
+@keyframes bubblein{
+    0% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.station-main{
+    background-image: url("assets/bgstation.jpg");    
+}
+
+.line-main{
+    background-image: url("assets/bglines.jpg");
+    background-position: center;
+}
+
+.bubble{
+    animation: bubblein 0.5s forwards ease-in-out;
+}
+
+.bubble2{
+    animation: bubblein 0.5s forwards ease-in-out;
+    animation-delay: 0.1s;
+}
+
+.bubble3{
+    animation: bubblein 0.5s forwards ease-in-out;
+    animation-delay: 0.2s;
+}
+
+.menu-item {
+    position: relative;
+  }
+
+.menu-item::after {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background-color: #701a75;
+    transition: width 0.3s ease;
+  }
+  
+  .menu-item:hover::after {
+    width: 100%;
+  }
+
+@keyframes rotation{
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+#admin:hover > svg{
+    animation: rotation 2s infinite;
+}
+
 .underline-on-hover:hover {
     text-decoration: underline;
 }
@@ -5,6 +75,36 @@
 .btn:hover>* {
     fill: white;
     color: white;
+}
+
+@keyframes modalopenanim{
+    0% {
+        transform: translateX(200%);
+    } 100% {
+        transform: translateX(100%);
+    }
+}
+
+@keyframes closemodalanim{
+    0% {
+        transform: translateX(0);
+        display: block;
+    } 100% {
+        transform: translateX(100%);
+        display: hidden;
+    }
+}
+
+#menu-dropdown:not(:checked) ~ .modal {
+    animation: closemodalanim 0.5s forwards ease-in-out;
+}
+
+#menu-dropdown:checked ~ .modal {
+    display: block;
+}
+
+#menu-dropdown:checked ~ .modal > div {
+    animation: modalopenanim 0.5s forwards ease-in-out;
 }
 
 #menu-dropdown:checked ~ #menu-checkbox > #topbar {
@@ -84,3 +184,4 @@
         opacity: 0;
     }
 }
+
