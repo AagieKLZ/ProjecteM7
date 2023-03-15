@@ -70,10 +70,33 @@ use api\trainRoutes;
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6 ml-2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                         </svg>
-
                     </button>
                 </form>
             </div>
+            <?php if (isset($_GET["origin"]) && isset($_GET["destiny"])) : ?>
+                <div class="flex flex-row justify-between w-2/3 mt-6 text-lg">
+                    <div><b>Origen: </b> <?php echo $_GET['origin'] ?></div>
+                    <div><b>Destino: </b> <?php echo $_GET['destiny'] ?></div>
+                </div>
+                <div class="flex flex-row justify-between w-2/3 mt-2 text-lg">
+                    <div><b>Fecha: </b> <?php echo $_GET['date'] ?></div>
+                    <div><b>Hora: </b> <?php echo $_GET['time'] ?></div>
+                </div>
+                <div class="flex mt-6 flex-row justify-between md:px-24 px-0 w-[90%] text-lg font-bold text-center border-b border-black">
+                    <div class="py-1">Línea</div>
+                    <div class="py-1">Salida</div>
+                    <div class="py-1">Llegada</div>
+                    <div class="py-1">Duración</div>
+                </div>
+                <div class="flex mt-6 flex-row justify-between md:px-24 px-0 w-[90%] text-lg text-center">
+                <div class="bg-fuchsia-800 text-white w-[50px] h-[50px] flex items-center justify-center">
+                            R12
+                        </div>
+                <div class="flex items-center py-1 text-center">07:20</div>
+                <div class="flex items-center py-1 text-center">11:30</div>
+                <div class="flex items-center py-1 text-center">4h 10m</div>
+                
+            <?php endif; ?>
     </main>
 </body>
 

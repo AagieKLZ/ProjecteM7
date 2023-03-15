@@ -134,12 +134,12 @@ body{
     }
 
     #menu-dropdown:not(:checked) ~ .modal {
-        animation: closemodal 0.5s forwards ease-in-out;
+        animation: closemodal 0.1s forwards ease-in-out;
         display: none;
     }
 
     #menu-dropdown:not(:checked) ~ .modal-menu {
-        animation: closemodal 0.5s forwards ease-in-out;
+        animation: closemodal 0.1s forwards ease-in-out;
     }
 
     #menu-dropdown:checked ~ .modal-menu {
