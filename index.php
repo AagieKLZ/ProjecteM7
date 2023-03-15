@@ -1,6 +1,9 @@
 <?php
 session_start();
 session_get_cookie_params();
+include './api/trainRoutes.php';
+
+use api\trainRoutes;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,21 +31,29 @@ session_get_cookie_params();
             <div class="w-[90%] rounded-lg h-fit bg-fuchsia-100 bg-opacity-25 backdrop-blur p-8 py-12 drop-shadow-xl">
                 <h1 class="font-semibold text-2xl">Consulta de horarios</h1>
                 <form method="post" action="./lib/schedule.php" class="flex lg:flex-row flex-col min-w-fit justify-around lg:items-end items-center lg:space-y-0 space-y-2 w-full mt-8">
-                    <div class="flex flex-col space-y-1">
+                <div class="flex flex-col space-y-1">
                         <label for="origin" class="font-semibold">Origen</label>
-                        <select name="origin" id="origin" placeholder="----" class="w-44 bg-white p-2 rounded-lg border-2 border-fuchsia-900">
-                            <option value="">Estacion 1</option>
-                            <option value="">Estacion 2</option>
-                            <option value="">Estacion 3</option>
-                        </select>
+                        <input list="origin-list" id="origin" name="origin" placeholder="----" class="w-44 bg-white p-2 rounded-lg border-2 border-fuchsia-900">
+                        <datalist id="origin-list">
+                        <?php 
+                                $stations = trainRoutes::getAllStations();
+                                foreach ($stations as $station) {
+                                    echo "<option value='" . $station["name"] . "'></option>";
+                                }
+                            ?>
+                        </datalist>
                     </div>
                     <div class="flex flex-col space-y-1">
                         <label for="destiny">Destino</label>
-                        <select name="destiny" id="destiny" placeholder="----" class="w-44 bg-white p-2 rounded-lg border-2 border-fuchsia-900">
-                            <option value="">Estacion 1</option>
-                            <option value="">Estacion 2</option>
-                            <option value="">Estacion 3</option>
-                        </select>
+                        <input list="destiny-list" id="destiny" name="destiny" placeholder="----" class="w-44 bg-white p-2 rounded-lg border-2 border-fuchsia-900">
+                        <datalist name="destiny" id="destiny-list">
+                        <?php 
+                                $stations = trainRoutes::getAllStations();
+                                foreach ($stations as $station) {
+                                    echo "<option value='" . $station["name"] . "'></option>";
+                                }
+                            ?>
+                        </datalist>
                     </div>
                     <div class="flex flex-col space-y-1">
                         <label for="date">Fecha</label>
@@ -51,9 +62,11 @@ session_get_cookie_params();
                     <div class="flex flex-col space-y-1">
                         <label for="time">Hora</label>
                         <select name="time" id="time" placeholder="----" class="w-44 bg-white p-2 rounded-lg border-2 border-fuchsia-900">
-                            <option value="">13:00</option>
-                            <option value="">14:00</option>
-                            <option value="">15:00</option>
+                            <?php 
+                                for ($i = 0; $i < 24; $i++) {
+                                    echo "<option value='" . $i . ":00'>" . $i . ":00</option>";
+                                }
+                            ?>
                         </select>
                     </div>
                     <button class="bg-gray-200 active:animate-pulse bg-opacity-75 hover:bg-fuchsia-900 hover:text-white text-black border-2 font-semibold border-black w-fit px-10 py-2 rounded-lg flex justify-between items-center md:text-xl text-lg">
