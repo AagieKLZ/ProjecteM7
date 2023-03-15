@@ -30,6 +30,7 @@ class dbClient
     {
         $this->contrasenya = $password;
     }
+
     /**
      * Creates the tables if they don't exist
      * @return void
