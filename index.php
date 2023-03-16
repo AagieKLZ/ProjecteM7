@@ -33,7 +33,7 @@ use api\trainRoutes;
                 <form method="post" action="./lib/schedule.php" class="flex lg:flex-row flex-col min-w-fit justify-around lg:items-end items-center lg:space-y-0 space-y-2 w-full mt-8">
                 <div class="flex flex-col space-y-1">
                         <label for="origin" class="font-semibold">Origen</label>
-                        <input list="origin-list" id="origin" name="origin" placeholder="----" class="w-44 bg-white p-2 rounded-lg border-2 border-fuchsia-900">
+                        <input required list="origin-list" id="origin" name="origin" placeholder="----" class="w-44 bg-white p-2 rounded-lg border-2 border-fuchsia-900">
                         <datalist id="origin-list">
                         <?php 
                                 $stations = trainRoutes::getAllStations();
@@ -45,7 +45,7 @@ use api\trainRoutes;
                     </div>
                     <div class="flex flex-col space-y-1">
                         <label for="destiny">Destino</label>
-                        <input list="destiny-list" id="destiny" name="destiny" placeholder="----" class="w-44 bg-white p-2 rounded-lg border-2 border-fuchsia-900">
+                        <input required list="destiny-list" id="destiny" name="destiny" placeholder="----" class="w-44 bg-white p-2 rounded-lg border-2 border-fuchsia-900">
                         <datalist name="destiny" id="destiny-list">
                         <?php 
                                 $stations = trainRoutes::getAllStations();
@@ -57,7 +57,7 @@ use api\trainRoutes;
                     </div>
                     <div class="flex flex-col space-y-1">
                         <label for="date">Fecha</label>
-                        <input type="date" name="date" id="date" class="w-44 bg-white p-2 rounded-lg border-2 border-fuchsia-900">
+                        <input required type="date" name="date" id="date" class="w-44 bg-white p-2 rounded-lg border-2 border-fuchsia-900">
                     </div>
                     <div class="flex flex-col space-y-1">
                         <label for="time">Hora</label>
