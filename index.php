@@ -85,13 +85,13 @@ use api\trainRoutes;
                     </div>
                     <div class="lg:text-2xl text-lg mt-2 font-semibold">Líneas</div>
                 </a>
-                <a href="#" class="bubble bubble2 flex flex-col justify-center items-center hover:font-semibold hover:scale-105">
+                <a href="./schedule.php" class="bubble bubble2 flex flex-col justify-center items-center hover:font-semibold hover:scale-105">
                     <div class="lg:w-[175px] lg:h-[175px] w-[100px] h-[100px] drop-shadow-xl bg-emerald-500 hover:bg-emerald-600 rounded-full flex justify-center items-center">
                         <img src="assets/time.svg" class="lg:h-[75px] h-[50px]" />
                     </div>
                     <div class="lg:text-2xl text-lg mt-2 font-semibold">Horarios</div>
                 </a>
-                <a href="#" class="bubble bubble3 flex flex-col justify-center items-center hover:font-semibold hover:scale-105">
+                <a href="./stations.php" class="bubble bubble3 flex flex-col justify-center items-center hover:font-semibold hover:scale-105">
                     <div class="lg:w-[175px] lg:h-[175px] w-[100px] h-[100px] drop-shadow-xl bg-emerald-500 rounded-full hover:bg-emerald-600 flex justify-center items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="lg:h-[75px] h-[50px] stroke-white">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
