@@ -229,3 +229,8 @@ body{
     }
 }
 
+.line-checkbox:checked ~ .line-check{
+    background-color: #701a75;
+    color: white;
+    font-weight: 500;
+}
