@@ -96,6 +96,7 @@ use api\trainRoutes;
                     <div class="flex items-center py-1 text-center">11:30</div>
                     <div class="flex items-center py-1 text-center">4h 10m</div>
                 <?php else: ?>
+                    <!-- Replace this with condition if no results found and show no text if the variables are not set -->
                     <div class="mt-24 text-2xl max-w-[90%] text-center">No se encuentran horarios con las condiciones seleccionadas</div>
                 <?php endif; ?>
     </main>

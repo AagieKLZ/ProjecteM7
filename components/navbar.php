@@ -2,7 +2,7 @@
     <a href="index.php" class="block h-14 my-auto"><img src="assets/logo.png" alt="logo" class="h-14 my-auto"></a>
     <div class="lg:flex hidden justify-end space-x-16 items-center">
         <a href="./routes.php" class="text-xl text-fuchsia-900 menu-item">Líneas</a>
-        <a href="#" class="text-xl text-fuchsia-900 menu-item">Horarios</a>
+        <a href="./schedule.php" class="text-xl text-fuchsia-900 menu-item">Horarios</a>
         <a href="./stations.php" class="text-xl text-fuchsia-900 menu-item">Estaciones</a>
     </div>
     <!-- <?php include "components/loginButton.php"; ?> -->
