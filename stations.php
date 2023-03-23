@@ -29,11 +29,11 @@ session_get_cookie_params();
                 <div class="w-1/2 py-1">Correspondencias</div>
             </div>
             <?php
-            include './api/trainRoutes.php';
+            include './api/lines.php';
 
-            use api\trainRoutes;
+            use api\lines;
 
-            $stations = trainRoutes::getAllStationsWithConnections();
+            $stations = lines::getAllStationsWithConnections();
 
             foreach ($stations as $station) {
                 echo '<div class="flex flex-row justify-evenly items-center md:w-2/3 w-[90%] text-center text-xl">
