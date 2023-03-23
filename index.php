@@ -1,9 +1,9 @@
 <?php
 session_start();
 session_get_cookie_params();
-include './api/trainRoutes.php';
+include './api/lines.php';
 
-use api\trainRoutes;
+use api\lines;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,7 +36,7 @@ use api\trainRoutes;
                         <input required list="origin-list" id="origin" name="origin" placeholder="----" class="w-44 bg-white p-2 rounded-lg border-2 border-fuchsia-900">
                         <datalist id="origin-list">
                         <?php 
-                                $stations = trainRoutes::getAllStations();
+                                $stations = lines::getAllStations();
                                 foreach ($stations as $station) {
                                     echo "<option value='" . $station["name"] . "'></option>";
                                 }
@@ -48,7 +48,7 @@ use api\trainRoutes;
                         <input required list="destiny-list" id="destiny" name="destiny" placeholder="----" class="w-44 bg-white p-2 rounded-lg border-2 border-fuchsia-900">
                         <datalist name="destiny" id="destiny-list">
                         <?php 
-                                $stations = trainRoutes::getAllStations();
+                                $stations = lines::getAllStations();
                                 foreach ($stations as $station) {
                                     echo "<option value='" . $station["name"] . "'></option>";
                                 }
