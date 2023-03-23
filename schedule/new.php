@@ -24,7 +24,29 @@ if (!isset($_SESSION['user'])) {
     <main class="flex flex-col justify-center items-center w-full h-[calc(100%-3.5rem)] mt-[3.5rem]">
         <div class="mt-16 mb-8 text-3xl font-semibold">Añadir Horario</div>
         <?php if (isset($_GET['direction']) && isset($_GET['lane'])) : ?>
-            <form class="md:w-2/3 space-x-8 w-[90%] flex flex-row items-center justify-center">
+            <form class="md:w-2/3 space-x-8 w-[90%] flex flex-col items-center justify-center">
+                <div class="flex flex-row items-center justify-center w-full space-x-24">
+                    <div class="space-x-3">
+                    <label for="origin" class="text-lg font-semibold">Salida</label>
+                    <input type="text" name="origin" id="origin" value="14:24" class="w-32 text-center border rounded-lg">
+                    </div>
+                    <div class="space-x-3">
+                        <label for="destination" class="text-lg font-semibold">Llegada</label>
+                        <input type="text" name="destination" id="destination" value="15:41" class="w-32 text-center border rounded-lg" disabled>
+                    </div>
+                    <div class="space-x-3">
+                        <label for="duration" class="text-lg font-semibold">Tiempo entre paradas</label>
+                        <input type="text" name="duration" id="duration" value="3:00" class="w-32 text-center border rounded-lg" disabled>
+                    </div>
+                </div>
+                <div class="grid w-full grid-cols-4 mt-12 gap-14">
+                    <?php for($i=1; $i<24; $i++) : ?>
+                        <div class="flex flex-row items-center justify-start space-x-3">
+                            <input type="checkbox" name="p<?php echo $i?>" id="p<?php echo $i?>" class="accent-fuchsia-900" checked>
+                            <label for="p<?php echo $i?>" class="ml-2 text-lg font-semibold">Parada <?php echo $i ?></label>
+                        </div>
+                    <?php endfor; ?>
+                </div>
             </form>
         <?php else : ?>
             <div class="text-lg">No se ha seleccionado una línea y/o dirección</div>
