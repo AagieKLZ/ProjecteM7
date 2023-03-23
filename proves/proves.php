@@ -11,6 +11,7 @@ echo "TEST PAGE";
 ?>
 
 <a href="stations.php">See stations</a>
+<a href="routes.php">See routes</a>
 
     <form action="proves.php" method="get">
         <label for="train">Enter train number to see all stops:</label>
