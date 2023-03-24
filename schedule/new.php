@@ -36,7 +36,14 @@ if (!isset($_SESSION['user'])) {
                     </div>
                     <div class="space-x-3">
                         <label for="duration" class="text-lg font-semibold">Tiempo entre paradas</label>
-                        <input type="text" name="duration" id="duration" value="3:00" class="w-32 text-center border rounded-lg" disabled>
+                        <select name="duration" id="duration" value="3:00" class="w-32 text-center border rounded-lg" list="time-list">
+                            <option value="3">3:00</option>
+                            <option value="3.5">3:30</option>
+                            <option value="4">4:00</option>
+                            <option value="4.5">4:30</option>
+                            <option value="5">5:00</option>
+                            <option value="5.5">5:30</option>
+                        </select>
                     </div>
                 </div>
                 <div class="grid w-full grid-cols-4 mt-12 gap-14">
