@@ -18,7 +18,7 @@ class dbClient
     /**
      * Class constructor
      */
-    function __construct()
+    public function __construct()
     {
         $this->setPassword("123321");
         $this->conn = new PDO("mysql:host=$this->host;dbname=$this->db", $this->usuari, $this->contrasenya);
@@ -26,6 +26,37 @@ class dbClient
         $this->createTables();
     }
 
+    /**
+     * Method to execute a query
+     * @param $sql string The query to do without parameters
+     * @param $params array The parameters to bind to the query
+     * @return array with the results of the query
+     */
+    public function query($sql, $params)
+    {
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute($params);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Last id inserted in the db
+     * @return int the last insert id
+     * @throws Exception if there is no last insert id
+     */
+    public function lastInsertId() {
+        $id = $this->conn->lastInsertId();
+        if ($id == 0) {
+            throw new Exception("No last insert id");
+        }
+        return $id;
+    }
+
+    /**
+     * Sets the password
+     * @param $password
+     * @return void
+     */
     private function setPassword($password)
     {
         $this->contrasenya = $password;
@@ -37,56 +68,10 @@ class dbClient
      */
     private function createTables()
     {
-        $sql = "CREATE TABLE if not exists stations
-(
-    id   int         not null auto_increment,
-    name varchar(50) not null,
-    PRIMARY KEY (id)
-);
-
-CREATE TABLE if not exists routes
-(
-    id   int        not null auto_increment,
-    name varchar(3) not null,
-    colour varchar(20) not null,
-    PRIMARY KEY (id),
-    INDEX (name)
-);
-
-CREATE TABLE if not exists schedules
-(
-    route_id    varchar(3) not null,
-    station_id  int        not null,
-    time        varchar(5) not null,
-    train_num    int        not null,
-    stop_number smallint   not null,
-    FOREIGN KEY (route_id) REFERENCES routes (name),
-    FOREIGN KEY (station_id) REFERENCES stations (id)
-);
-
-CREATE TABLE if not exists users
-(
-    id       int          not null auto_increment,
-    name     varchar(255) not null,
-    password varchar(255) not null,
-    email    varchar(255) not null,
-    PRIMARY KEY (id)
-);";
+        // Get the content of createTables.sql
+        $sql = file_get_contents("createTables.sql");
+        // Execute the query
         $this->conn->exec($sql);
-    }
-
-
-    /**
-     * Method to execute a query
-     * @param $sql string The query to do without parameters
-     * @param $params array The parameters to bind to the query
-     * @return array with the results of the query
-     */
-    function query($sql, $params)
-    {
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute($params);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
 

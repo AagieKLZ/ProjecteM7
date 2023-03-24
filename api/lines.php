@@ -10,7 +10,7 @@ class lines
      * Gets all the stations and their connections
      * @return array with all stations and their connections
      */
-    static function getAllStationsWithConnections(): array
+    public static function getAllStationsWithConnections(): array
     {
         $stations = self::getAllStations();
         return array_map(function ($station) {
@@ -23,7 +23,7 @@ class lines
      * Gets all the stations and their ids
      * @return array with all stations and their ids
      */
-    static function getAllStations(): array
+    public static function getAllStations(): array
     {
         $db = new dbClient();
         $sql = "SELECT id, name FROM stations;";
@@ -35,28 +35,12 @@ class lines
     }
 
     /**
-     * Gets all the routes where you can transfer from in a station
-     * @param int $stationId station id
-     * @return array with all routes where you can transfer from in a station
-     */
-    private function getConnectionsOfStation(int $stationId): array
-    {
-        $db = new dbClient();
-        $sql = "SELECT DISTINCT route_id, colour FROM schedules
-        INNER JOIN routes r on schedules.route_id = r.name
-        WHERE station_id = ?
-        ORDER BY route_id;";
-        $params = [$stationId];
-        return $db->query($sql, $params);
-    }
-
-    /**
      * Calculates the route between two stations
      * @param $originStationId int origin station id
      * @param $destinationStationId int destination station id
      * @return array with all routes between the two stations
      */
-    static function calculateRoute(int $originStationId, int $destinationStationId, string $time = null): array
+    public static function calculateRoute(int $originStationId, int $destinationStationId, string $time = null): array
     {
         // First check if the stations are in the same line, if they share a route
         $db = new dbClient();
@@ -125,11 +109,27 @@ class lines
                 return $a["time"] <=> $b["time"];
             });
             // Return the first 5 results
-//            return array_slice($results, 0, 5);
+            // return array_slice($results, 0, 5);
             return $results;
         } else {
             return [];
         }
+    }
+
+    /**
+     * Gets all the routes where you can transfer from in a station
+     * @param int $stationId station id
+     * @return array with all routes where you can transfer from in a station
+     */
+    private function getConnectionsOfStation(int $stationId): array
+    {
+        $db = new dbClient();
+        $sql = "SELECT DISTINCT route_id, colour FROM schedules
+        INNER JOIN routes r on schedules.route_id = r.name
+        WHERE station_id = ?
+        ORDER BY route_id;";
+        $params = [$stationId];
+        return $db->query($sql, $params);
     }
 
     /**
