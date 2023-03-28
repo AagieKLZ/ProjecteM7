@@ -2,6 +2,7 @@
 
 namespace api;
 
+use Exception;
 use PDO;
 
 class dbClient
@@ -11,7 +12,7 @@ class dbClient
     private $usuari = "root";
     private $contrasenya;
     private $db = "tenfe";
-    private $host = "localhost:3306";
+    private $host = "192.168.0.24:3306";
 
     private $conn;
 
@@ -69,7 +70,7 @@ class dbClient
     private function createTables()
     {
         // Get the content of createTables.sql
-        $sql = file_get_contents("createTables.sql");
+        $sql = file_get_contents("./api/createTables.sql");
         // Execute the query
         $this->conn->exec($sql);
     }
