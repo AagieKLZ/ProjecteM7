@@ -36,16 +36,7 @@ if (!isset($_SESSION['user'])) { header('Location: ../index.php'); }
                 <input type="text" value="Paquito Jimenez" class="w-full p-2 rounded-lg border border-fuchsia-900">
                 <label for="email" class="block mt-8">Correo</label>
                 <input type="email" value="paquito@jimenez" class="w-full p-2 rounded-lg border border-fuchsia-900">
-                
-                <div class="grid grid-cols-3 mt-8 accent-fuchsia-900 gap-4">
-                    <?php for ($i = 0; $i < 12; $i++) : ?>
-                        <div class="mx-auto flex justify-around w-full">
-                            <input type="checkbox" class="hidden line-checkbox" name="R<?php echo $i+1?>" id="R<?php echo $i+1?>">
-                            <label class="line-check cursor-pointer w-full rounded-full border-2 py-1 border-fuchsia-900 text-center" for="R<?php echo $i+1?>">R<?php echo $i+1?></label>
-                        </div>
-                    <?php endfor ?>
-                </div>
-                
+            
                 <input type="submit" value="Actualizar" class="mt-8 px-3 py-3 text-white bg-fuchsia-900 hover:bg-fuchsia-800 cursor-pointer w-full font-semibold rounded-lg">
                
             </form>

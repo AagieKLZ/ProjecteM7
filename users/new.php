@@ -30,14 +30,6 @@ if (!isset($_SESSION['user'])) { header('Location: ../index.php'); }
                 <input type="password" id="password" name="password" class="w-full p-2 rounded-lg border border-fuchsia-900">
                 <label for="rpassword" class="block mt-8">Confirmar Contraseña</label>
                 <input type="password" id="rpassword" name="rpassword" class="w-full p-2 rounded-lg border border-fuchsia-900">
-                <div class="grid grid-cols-3 mt-8 accent-fuchsia-900 gap-4">
-                    <?php for ($i = 0; $i < 12; $i++) : ?>
-                        <div class="mx-auto flex justify-around w-full">
-                            <input type="checkbox" class="hidden line-checkbox" name="R<?php echo $i+1?>" id="R<?php echo $i+1?>">
-                            <label tabindex="0" class="line-check cursor-pointer w-full rounded-full border-2 py-1 border-fuchsia-900 text-center" for="R<?php echo $i+1?>">R<?php echo $i+1?></label>
-                        </div>
-                    <?php endfor ?>
-                </div>
                 <input type="submit" value="Crear Usuario" class="mt-8 px-3 py-3 text-white bg-fuchsia-900 hover:bg-fuchsia-800 cursor-pointer w-full font-semibold rounded-lg">
             </form>
     </main>
