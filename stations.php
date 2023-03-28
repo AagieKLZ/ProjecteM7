@@ -42,7 +42,7 @@ session_get_cookie_params();
                     </div>
                     <div class="flex flex-row flex-wrap max-w-lg min-w-md justify-center font-semibold w-1/2">
                         <?php foreach ($station["connections"] as $connection) : ?>
-                            <div class="<?= $connection["colour"] ?> <?php $connection['colour'] == 'bg-yellow-300' ? 'text-black' : 'text-white'?> flex justify-center items-center py-2 px-2 mx-2">
+                            <div class="<?= $connection['colour'] ?> <?= $connection['colour'] == 'bg-yellow-300' ? 'text-black' : 'text-white'?> flex justify-center items-center py-2 px-2 mx-2">
                                 <?= $connection["route_id"]; ?>
                             </div>
                         <?php endforeach; ?>
