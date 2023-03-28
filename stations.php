@@ -35,21 +35,20 @@ session_get_cookie_params();
 
             $stations = lines::getAllStationsWithConnections();
 
-            foreach ($stations as $station) {
-                echo '<div class="flex flex-row justify-evenly items-center md:w-2/3 w-[90%] text-center text-xl">
-            <div class="w-1/2 text-left">';
-                echo $station["name"];
-                echo '</div>';
-                echo '<div class="flex flex-row flex-wrap max-w-lg min-w-md justify-center font-semibold w-1/2">';
-                foreach ($station["connections"] as $connection) {
-                    echo '<div class="';
-                    echo $connection["colour"] . ' text-white flex justify-center items-center py-2 px-2 mx-2">';
-                    echo $connection["route_id"];
-                    echo '</div>';
-                }
-                echo '</div></div>';
-            }
-            ?>
+            foreach ($stations as $station) : ?>
+                <div class="flex flex-row justify-evenly items-center md:w-2/3 w-[90%] text-center text-xl">
+                    <div class="w-1/2 text-left">
+                        <?= $station["name"]; ?>
+                    </div>
+                    <div class="flex flex-row flex-wrap max-w-lg min-w-md justify-center font-semibold w-1/2">
+                        <?php foreach ($station["connections"] as $connection) : ?>
+                            <div class="<?= $connection["colour"] ?> <?php $connection['colour'] == 'bg-yellow-300' ? 'text-black' : 'text-white'?> flex justify-center items-center py-2 px-2 mx-2">
+                                <?= $connection["route_id"]; ?>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            <?php endforeach; ?>
 
         </div>
     </main>

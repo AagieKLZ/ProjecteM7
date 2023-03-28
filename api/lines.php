@@ -168,12 +168,13 @@ class lines
      * Gets all the routes and their stations
      * @return array with all different lines and their origin and destination
      */
-    private function getLines(): array
+    public static function getLines(): array
     {
         $db = new dbClient();
-        $sql = "SELECT name FROM routes;";
-        $routes = $db->query($sql, []);
-        // TODO TO BE FINISHED
+        $sql = "SELECT name, colour  FROM routes;";
+        return $db->query($sql, []);
+        //TODO: Add origin and destination
+        
     }
 
     /**

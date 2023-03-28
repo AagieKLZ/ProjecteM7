@@ -37,7 +37,7 @@ class schedules
      */
     static function modifyDepartureTime(int $trainNum, string $time): bool
     {
-
+        return true;
     }
 }
 

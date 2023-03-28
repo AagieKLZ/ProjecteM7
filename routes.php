@@ -27,31 +27,30 @@ session_get_cookie_params();
                 <div>Destino</div>
             </div>
             <?php
-            $lanes = ["R12", "R13", "R14","R12", "R13", "R14","R12", "R13", "R14","R12", "R13", "R14"];
-            foreach ($lanes as $index => $lane) {
-                if ($index % 2 == 1){
-                    echo '
+            //$lanes = ["R12", "R13", "R14","R12", "R13", "R14","R12", "R13", "R14","R12", "R13", "R14"];
+            include './api/lines.php';
+            use api\lines;
+            $lanes = lines::getLines();
+            foreach ($lanes as $index => $lane) :?>
+                <?php if ($index % 2 == 1) : ?>
                     <div class="flex flex-row justify-evenly items-center md:w-2/3 w-[90%] py-4">
-                        <div class="bg-fuchsia-800 text-white w-[50px] h-[50px] flex items-center justify-center">
-                            ' . $lane . '
+                        <div class="<?= $lane['colour']?> <?= $lane['colour'] == 'bg-yellow-300' ? 'text-black' : 'text-white'?> text-white w-[50px] h-[50px] flex items-center justify-center">
+                            <?= $lane['name'] ?>
                         </div>
                         <div>Placeholder</div>
                         <div>Placeholder</div>
                     </div>
-                    ';
-                } else {
-                    echo '
+                    <?php else : ?>
+                    
                     <div class="flex flex-row justify-evenly items-center md:w-2/3 w-[90%] bg-gray-100 py-4">
-                        <div class="bg-fuchsia-800 text-white w-[50px] h-[50px] flex items-center justify-center">
-                            ' . $lane . '
+                        <div class="<?= $lane['colour']?> <?= $lane['colour'] == 'bg-yellow-300' ? 'text-black' : 'text-white'?> w-[50px] h-[50px] flex items-center justify-center">
+                            <?= $lane['name'] ?>
                         </div>
                         <div>Placeholder</div>
                         <div>Placeholder</div>
                     </div>
-                    ';
-                }
-            }
-            ?>
+                <?php endif; ?>
+            <?php endforeach; ?>
         </div>
 
 
