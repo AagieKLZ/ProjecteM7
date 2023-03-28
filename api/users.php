@@ -48,7 +48,7 @@ class users
     public static function getAll(): array
     {
         $db = new dbClient();
-        $sql = "SELECT * FROM users";
+        $sql = "SELECT * FROM user_admin";
         $params = [];
         return $db->query($sql, $params);
     }
