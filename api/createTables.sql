@@ -33,4 +33,5 @@ CREATE TABLE if not exists users_permissions (
     CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users (id),
     CONSTRAINT fk_line_users_id FOREIGN KEY (route_id) REFERENCES routes (name)
 );
-CREATE VIEW IF NOT EXISTS user_admin AS SELECT * FROM users WHERE email <> "admin@tenfe.com";
+
+CREATE OR REPLACE VIEW user_admin AS SELECT * FROM users WHERE email <> "admin@tenfe.com";
