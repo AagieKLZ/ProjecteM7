@@ -28,18 +28,18 @@ class users
             return false;
         }
 
-        // Then for each line in lines we add it to the user_lines table
-        $sql = "INSERT INTO users_permissions (user_id, line_id) VALUES (?, ?)";
-        $params = [];
-        foreach ($lines as $line) {
-            $params[] = [$db->lastInsertId(), $line];
-            try {
-                $db->query($sql, $params);
-            } catch (Exception $e) {
-                return false;
-            }
-        }
-        return true;
+        // // Then for each line in lines we add it to the user_lines table
+        // $sql = "INSERT INTO users_permissions (user_id, line_id) VALUES (?, ?)";
+        // $params = [];
+        // foreach ($lines as $line) {
+        //     $params[] = [$db->lastInsertId(), $line];
+        //     try {
+        //         $db->query($sql, $params);
+        //     } catch (Exception $e) {
+        //         return false;
+        //     }
+        // }
+        // return true;
     }
 
     /**
@@ -51,6 +51,24 @@ class users
         $sql = "SELECT * FROM user_admin";
         $params = [];
         return $db->query($sql, $params);
+    }
+
+    /**
+     * @param string $email email of the user
+     * @param string $password password of the user
+     * 
+     * @return bool if the user exists and the password is correct
+     */
+    public static function logIn(string $email, string $password): bool
+    {
+        $db = new dbClient();
+        $sql = "SELECT * FROM users WHERE email = ? AND password = ?";
+        $params = [$email, $password];
+        $result = $db->query($sql, $params);
+        if (count($result) == 1) {
+            return true;
+        }
+        return false;
     }
 
     /**

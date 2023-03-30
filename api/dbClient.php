@@ -12,7 +12,7 @@ class dbClient
     private $usuari = "root";
     private $contrasenya;
     private $db = "tenfe";
-    private $host = "192.168.0.24:3306";
+    private $host = "localhost:3306";
 
     private $conn;
 
@@ -21,7 +21,7 @@ class dbClient
      */
     public function __construct()
     {
-        $this->setPassword("123321");
+        $this->setPassword("");
         $this->conn = new PDO("mysql:host=$this->host;dbname=$this->db", $this->usuari, $this->contrasenya);
         // Creem les taules si no existeixen
         // $this->createTables();
@@ -37,7 +37,7 @@ class dbClient
     {
         $stmt = $this->conn->prepare($sql);
         $stmt->execute($params);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll();
     }
 
     /**

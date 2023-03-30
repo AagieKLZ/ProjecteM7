@@ -35,6 +35,9 @@
             <div class="w-full flex flex-col justify-center items-center">
                 <label for="password" class="block flex md:w-2/3 w-[90%] justify-start text-fuchsia-900 font-semibold">Contraseña</label>
                 <input required type="password" name="password" id="password" class="md:w-2/3 w-[90%] text-fuchsia-900 h-10 border-2 border-fuchsia-800 rounded-lg px-2">
+                <?php if (isset($_GET["error"])): ?>
+                    <div class="text-red-500 w-2/3 text-left mt-1">Usuario o contraseña incorrectos</div>
+                <?php endif; ?>
             </div>
             <a href="#" class="block text-fuchsia-900 underline md:w-2/3 w-[90%] flex flex-row justify-start items-center font-light">¿Has olvidado tu contraseña?</a>
             <button class="md:w-2/3 w-[90%] py-2 border-2 border-fuchsia-900 rounded-lg text-fuchsia-900 font-semibold hover:text-white hover:bg-fuchsia-900">Iniciar Sesión</button>
