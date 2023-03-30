@@ -16,6 +16,8 @@ class dbClient
 
     private $conn;
 
+    private static $instance;
+
     /**
      * Class constructor
      */
@@ -25,6 +27,15 @@ class dbClient
         $this->conn = new PDO("mysql:host=$this->host;dbname=$this->db", $this->usuari, $this->contrasenya);
         // Creem les taules si no existeixen
         // $this->createTables();
+    }
+
+    public static function getInstance()
+    {
+        if (!isset(self::$instance)) {
+            self::$instance = new dbClient();
+        }
+
+        return self::$instance;
     }
 
     /**

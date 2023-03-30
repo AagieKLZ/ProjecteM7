@@ -25,7 +25,7 @@ class lines
      */
     public static function getAllStations(): array
     {
-        $db = new dbClient();
+        $db = dbClient::getInstance();
         $sql = "SELECT id, name FROM stations;";
         $stations = $db->query($sql, []);
         usort($stations, function ($a, $b) {
@@ -43,7 +43,7 @@ class lines
     public static function calculateRoute(int $originStationId, int $destinationStationId, string $time = null): array
     {
         // First check if the stations are in the same line, if they share a route
-        $db = new dbClient();
+        $db = dbClient::getInstance();
         $sql = "SELECT DISTINCT route_id FROM schedules
         WHERE station_id = ?;";
         // Get all the routes that pass through the origin and destination stations
@@ -123,7 +123,7 @@ class lines
      */
     private function getConnectionsOfStation(int $stationId): array
     {
-        $db = new dbClient();
+        $db = dbClient::getInstance();
         $sql = "SELECT DISTINCT route_id, colour FROM schedules
         INNER JOIN routes r on schedules.route_id = r.name
         WHERE station_id = ?
@@ -139,7 +139,7 @@ class lines
      */
     private function getScheduleOriginByTrainNum(int $trainNumber): array
     {
-        $db = new dbClient();
+        $db = dbClient::getInstance();
         $sql = "SELECT route_id, s.id, s.name, time FROM schedules
         INNER JOIN stations s on schedules.station_id = s.id
         WHERE train_num = ?
@@ -155,7 +155,7 @@ class lines
      */
     private function getScheduleDestinationByTrainNum(int $trainNumber): array
     {
-        $db = new dbClient();
+        $db = dbClient::getInstance();
         $sql = "SELECT route_id, s.id, s.name, time FROM schedules
         INNER JOIN stations s on schedules.station_id = s.id
         WHERE train_num = ?
@@ -170,7 +170,7 @@ class lines
      */
     public static function getLines(): array
     {
-        $db = new dbClient();
+        $db = dbClient::getInstance();
         $sql = "SELECT name, colour  FROM routes;";
         return $db->query($sql, []);
         //TODO: Add origin and destination
@@ -183,7 +183,7 @@ class lines
      */
     private function getStationsByRoute(string $name): array
     {
-        $db = new dbClient();
+        $db = dbClient::getInstance();
         $sql = "SELECT DISTINCT station_id, s.name FROM schedules
         INNER JOIN stations s ON s.id = schedules.station_id
         WHERE route_id = ?; ";

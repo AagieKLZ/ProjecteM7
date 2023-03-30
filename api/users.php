@@ -17,13 +17,14 @@ class users
      */
     public static function createNew(string $name, string $email, string $password, array $lines): bool
     {
-        $db = new dbClient();
+        $db = dbClient::getInstance();
 
         // Create the new user
         $sql = "INSERT INTO users (name, password, email) VALUES (?, ?, ?)";
         $params = [$name, $email, $password];
         try {
             $db->query($sql, $params);
+            return true;
         } catch (Exception $e) {
             return false;
         }
@@ -47,7 +48,7 @@ class users
      */
     public static function getAll(): array
     {
-        $db = new dbClient();
+        $db = dbClient::getInstance();
         $sql = "SELECT * FROM user_admin";
         $params = [];
         return $db->query($sql, $params);
@@ -61,7 +62,7 @@ class users
      */
     public static function logIn(string $email, string $password): bool
     {
-        $db = new dbClient();
+        $db = dbClient::getInstance();
         $sql = "SELECT * FROM users WHERE email = ? AND password = ?";
         $params = [$email, $password];
         $result = $db->query($sql, $params);
@@ -80,7 +81,7 @@ class users
      */
     public static function modify(int $userId, string $name, string $email, array $lines): bool
     {
-        $db = new dbClient();
+        $db = dbClient::getInstance();
 
         // First we get the actual user data and compare the name and email
         $sql = "SELECT * FROM users WHERE id = ?";

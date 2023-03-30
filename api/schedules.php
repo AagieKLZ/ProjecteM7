@@ -13,7 +13,7 @@ class schedules
      */
     static function createNew(array $stationsAndTimes, string $routeId): bool
     {
-        $db = new dbClient();
+        $db = dbClient::getInstance();
         // First we need to get the last train number
         $lastTrainNum = $db->query("SELECT train_num FROM schedules ORDER BY train_num DESC LIMIT 1",[])[0]["train_num"];
         // We convert it to a number and add one
