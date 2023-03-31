@@ -42,8 +42,8 @@ if (!isset($_SESSION['user'])) {
                     <select class="px-8 py-2 ml-2 text-center rounded-lg" name="direction">
                         <?php 
                             $directions = lines::getDirections($_GET["lane"]);
-                            foreach ($directions as $direction): ?> 
-                                <option value=<?=$direction["Origin"]."-".$direction["Destiny"]?>><?= $direction["Origin"] ?> - <?=$direction["Destiny"]?></option>
+                            foreach ($directions as $index => $direction): ?> 
+                                <option value=<?=$index?>><?= $direction["Origin"] ?> - <?=$direction["Destiny"]?></option>
                             
                         <?php endforeach; ?>
                     </select>
