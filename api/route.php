@@ -13,7 +13,7 @@ class route
      * @param $destinationStationId int destination station id
      * @return array with all routes between the two stations
      */
-    public static function calculateRoute(int $originStationId, int $destinationStationId, string $time = null): array
+    public static function calculateRoute(int $originStationId, int $destinationStationId, string $time): array
     {
         // First check if the stations are in the same line, if they share a route
         $db = dbClient::getInstance();
@@ -89,6 +89,18 @@ class route
         } else {
             return [];
         }
+    }
+
+    /**
+     * @param $name string station name
+     * @return array returns an array with the station id
+     */
+    public static function getStationIdByName($name): array
+    {
+        $db = dbClient::getInstance();
+        $sql = "SELECT id FROM stations WHERE name = ?;";
+        $params = [$name];
+        return $db->query($sql, $params);
     }
 
 }
