@@ -103,4 +103,16 @@ class route
         return $db->query($sql, $params);
     }
 
+    /**
+     * @param $id int station id
+     * @return array returns an array with the station name
+     */
+    public static function getStationNameById(int $id): array
+    {
+        $db = dbClient::getInstance();
+        $sql = "SELECT name FROM stations WHERE id = ?;";
+        $params = [$id];
+        return $db->query($sql, $params);
+    }
+
 }
