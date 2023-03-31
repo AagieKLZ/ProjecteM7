@@ -1,3 +1,5 @@
+# 
+
 # Sobre el proyecto
 
 ## Descripción
@@ -17,6 +19,14 @@ Además, la aplicación de Tenfe incluye mejoras sustanciales de accesibilidad, 
 La aplicación de Tenfe se desarrolló con:
 
 - PHP sin frameworks tanto para el lado del cliente como el lado del servidor.
-- TailwindCSS  (un framework de CSS) que permite su implementación CDN sin paquetes
+- TailwindCSS (un framework de CSS) que permite su implementación CDN sin paquetes
 - MySQL como sistema gestor de bases de datos
 - Python y excel para pasar los datos de los PDFs actuales de la Generalitat a la base de datos
+
+## Sobre la base de datos
+
+Hemos realizado un trabajo, aunque algunas partes sean solo teóricas, dónde se puede consultar como funciona la base de datos de Tenfe.
+
+Se puede consultar el pdf en el siguiente enlace:
+
+https://drive.google.com/file/d/1_qtezNTbShS2LGGmve_G0Gqw-eTqoCys/view?usp=sharing
