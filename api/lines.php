@@ -89,10 +89,21 @@ class lines
     public static function getLines(): array
     {
         $db = dbClient::getInstance();
-        $sql = "SELECT name, colour  FROM routes;";
+        $sql = "CALL list_all_lines()";
+        return $db->query($sql, []);        
+    }
+
+    public static function getDistinctLines(): array {
+        $db = dbClient::getInstance();
+        $sql = "SELECT DISTINCT name FROM routes;";
         return $db->query($sql, []);
-        //TODO: Add origin and destination
-        
+    }
+
+    public static function getDirections(string $name): array{
+        $db = dbClient::getInstance();
+        $sql = "CALL get_line_variants(?)";
+        $params = [$name];
+        return $db->query($sql, $params);
     }
 
     /**
