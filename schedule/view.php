@@ -23,7 +23,7 @@ if (!isset($_SESSION['user'])) {
     <?php include '../components/altNavbar.php' ?>
     <main class="flex flex-col justify-center items-center w-full h-[calc(100%-3.5rem)] mt-[3.5rem]">
         <div class="mt-16 mb-8 text-3xl font-semibold">Administración de Horarios</div>
-        <form class="md:w-2/3 space-x-8 w-[90%] flex flex-row items-center justify-center">
+        <form class="md:w-2/3 md:space-x-8 md:space-y-0 space-y-4 w-[90%] flex md:flex-row flex-col items-center justify-center">
             <div>
                 <label for="lane" class="text-lg">Línea</label>
                 <select class="px-8 py-2 ml-2 text-center rounded-lg" name="lane">
@@ -53,7 +53,7 @@ if (!isset($_SESSION['user'])) {
         </form>
         <?php if (isset($_GET['direction']) && isset($_GET['lane'])) : ?>
             <div class="mt-8 w-[90%] flex flex-col justify-start items-center space-y-4">
-                <div class="flex flex-row items-center justify-center w-full space-x-24 text-lg">
+                <div class="md:flex grid grid-cols-2 flex-row items-center justify-center w-full place-items-center gap-4 md:space-x-24 text-lg">
                     <div><b>Origen:</b> Reus</div>
                     <div><b>Destino:</b> Barcelona-Sants</div>
                     <div><b>Horarios:</b> 24</div>
