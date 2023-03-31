@@ -37,10 +37,10 @@ use api\lines;
                         <datalist id="origin-list">
                         <?php 
                                 $stations = lines::getAllStations();
-                                foreach ($stations as $station) {
-                                    echo "<option value='" . $station["name"] . "'></option>";
-                                }
-                            ?>
+                                foreach ($stations as $station) :?>
+                                    <option><?=$station["name"]?></option>
+                                
+                            <?php endforeach;?>
                         </datalist>
                     </div>
                     <div class="flex flex-col space-y-1">

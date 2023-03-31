@@ -2,8 +2,10 @@
 session_start();
 session_get_cookie_params();
 include './api/lines.php';
+include "./api/route.php";
 
 use api\lines;
+use api\route;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -73,10 +75,11 @@ use api\lines;
                     </button>
                 </form>
             </div>
-            <?php if (isset($_GET["origin"]) && isset($_GET["destiny"])) : ?>
+            <?php 
+            if (isset($_GET["origin"]) && isset($_GET["destiny"])) : ?>
                 <div class="flex flex-row justify-between w-2/3 mt-6 text-lg">
-                    <div><b>Origen: </b> <?php echo $_GET['origin'] ?></div>
-                    <div><b>Destino: </b> <?php echo $_GET['destiny'] ?></div>
+                    <div><b>Origen: </b> <?= route::getStationNameById($_GET['origin'])[0]["name"] ?></div>
+                    <div><b>Destino: </b> <?= route::getStationNameById($_GET['destiny'])[0]["name"] ?></div>
                 </div>
                 <div class="flex flex-row justify-between w-2/3 mt-2 text-lg">
                     <div><b>Fecha: </b> <?php echo $_GET['date'] ?></div>
