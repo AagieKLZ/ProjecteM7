@@ -27,16 +27,25 @@ if (!isset($_SESSION['user'])) {
             <div>
                 <label for="lane" class="text-lg">Línea</label>
                 <select class="px-8 py-2 ml-2 text-center rounded-lg" name="lane">
-                    <option>R1</option>
-                    <option>R2</option>
+                    <?php 
+                        include "../api/lines.php";
+                        use api\lines;
+                        $lines = lines::getDistinctLines();
+                        foreach ($lines as $line) :?>
+                            <option value=<?=$line["name"]?>><?=$line["name"]?></option>
+                        <?php endforeach; ?>
                 </select>
             </div>
             <?php if (isset($_GET['lane'])) : ?>
                 <div>
                     <label for="direction" class="text-lg">Dirección</label>
                     <select class="px-8 py-2 ml-2 text-center rounded-lg" name="direction">
-                        <option>IDA</option>
-                        <option>VUELTA</option>
+                        <?php 
+                            $directions = lines::getDirections($_GET["lane"]);
+                            foreach ($directions as $direction): ?> 
+                                <option value=<?=$direction["Origin"]."-".$direction["Destiny"]?>><?= $direction["Origin"] ?> - <?=$direction["Destiny"]?></option>
+                            
+                        <?php endforeach; ?>
                     </select>
                 </div>
             <?php endif; ?>
