@@ -44,12 +44,23 @@ class users
     }
 
     /**
-     * @return array with all the users
+     * @return array with all the users (user_admin)
      */
     public static function getAll(): array
     {
         $db = dbClient::getInstance();
         $sql = "SELECT * FROM user_admin";
+        $params = [];
+        return $db->query($sql, $params);
+    }
+
+    /**
+     * @return array with all the users (users)
+     */
+    public static function getUsers(): array
+    {
+        $db = dbClient::getInstance();
+        $sql = "SELECT * FROM users";
         $params = [];
         return $db->query($sql, $params);
     }
