@@ -51,6 +51,16 @@ class dbClient
         return $stmt->fetchAll();
     }
 
+    public function insert($sql, $params){
+        $stmt = $this->conn->prepare($sql);
+        $result = $stmt->execute($params);
+        if ($result) {
+            return $stmt->rowCount();
+        } else {
+            return false;
+        }
+    }
+
     /**
      * Last id inserted in the db
      * @return int the last insert id

@@ -21,7 +21,7 @@ if (!isset($_SESSION['user'])) { header('Location: ../index.php'); }
     <?php include '../components/altNavbar.php' ?>
     <main class="flex flex-col justify-center items-center w-full h-[calc(100vh-7rem)] mt-[3.5rem]">
         <div class="text-4xl mt-8 font-semibold">Crear Usuario</div>
-            <form class="mt-8 w-1/2">
+            <form class="mt-8 w-1/2" action="../lib/signup.php" method="POST">
                 <label for="name">Nombre</label>
                 <input type="text" id="name" name="name" class="w-full p-2 rounded-lg border border-fuchsia-900">
                 <label for="email" class="block mt-8">Correo</label>
