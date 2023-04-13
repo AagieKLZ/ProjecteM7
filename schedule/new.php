@@ -4,6 +4,8 @@ session_get_cookie_params();
 if (!isset($_SESSION['user'])) {
     header('Location: ../index.php');
 }
+include("../api/lines.php");
+use api\lines;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +25,7 @@ if (!isset($_SESSION['user'])) {
     <?php include '../components/altNavbar.php' ?>
     <main class="flex flex-col justify-center items-center w-full h-[calc(100%-3.5rem)] mt-[3.5rem]">
         <div class="mt-16 mb-8 text-3xl font-semibold">Añadir Horario</div>
-        <?php if (isset($_GET['direction']) && isset($_GET['lane'])) : ?>
+        <?php if (isset($_GET['direction']) && isset($_GET['lane']) && isset($_GET['origin']) && isset($_GET['destiny'])) : ?>
             <form class="md:w-2/3 space-x-8 w-[90%] flex flex-col items-center justify-center">
                 <div class="flex flex-row items-center justify-center w-full space-x-24">
                     <div class="space-x-3">
@@ -46,13 +48,23 @@ if (!isset($_SESSION['user'])) {
                         </select>
                     </div>
                 </div>
-                <div class="grid w-full grid-cols-4 mt-12 gap-14">
-                    <?php for($i=1; $i<24; $i++) : ?>
+                <div class="grid w-full grid-cols-4 mt-12 mb-8 gap-14">
+                    <!-- <?php for($i=1; $i<24; $i++) : ?>
                         <div class="flex flex-row items-center justify-start space-x-3">
                             <input type="checkbox" name="p<?php echo $i?>" id="p<?php echo $i?>" class="accent-fuchsia-900" checked>
                             <label for="p<?php echo $i?>" class="ml-2 text-lg font-semibold">Parada <?php echo $i ?></label>
                         </div>
-                    <?php endfor; ?>
+                    <?php endfor; ?> -->
+                    <?php
+                        
+                        $stations = lines::getAllStationsBetween($_GET['origin'], $_GET['destiny']);
+                        foreach($stations as $station):
+                        ?>
+                        <div class="flex flex-row items-center justify-start space-x-3">
+                            <input type="checkbox" name="p<?php echo $station['id']?>" id="p<?php echo $station['id']?>" class="accent-fuchsia-900" checked>
+                            <label for="p<?= $station['id']?>" class="ml-2 text-lg font-semibold"><?php echo $station['name'] ?></label>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
             </form>
         <?php else : ?>
