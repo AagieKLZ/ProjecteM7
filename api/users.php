@@ -74,14 +74,28 @@ class users
 
     /**
      * Method to delete a user
-     * @param string $email email of the user
+     * @param int $id id of the user
      * @return void
      */
-    public static function delete(string $email)
+    public static function delete(int $id)
     {
         $db = dbClient::getInstance();
-        $sql = "DELETE FROM users WHERE email = ?";
-        $params = [$email];
+        $sql = "DELETE FROM users WHERE id = ?";
+        $params = [$id];
         $db->delete($sql, $params);
+    }
+
+
+    /**
+     * Method to get the user given its id
+     * @param int $id id of the user
+     * @return string name of the user
+     */
+    public static function getNameById(int $id): string
+    {
+        $db = dbClient::getInstance();
+        $sql = "SELECT * FROM users WHERE id = ?";
+        $params = [$id];
+        return $db->query($sql, $params)[0]['name'];
     }
 }
