@@ -123,4 +123,47 @@ class lines
         return $db->query($sql, $params);
     }
 
+    public static function getAllTrainsBetween(string $origin, string $destiny): array {
+        $db = dbClient::getInstance();
+        $sql = "SELECT
+            S.train_num,
+            S.time AS arrival_time,
+            S1.time AS departure_time,
+            last_stop AS stops,
+            ST1.name AS origin,
+            ST2.name AS destiny
+        FROM
+            schedules AS S
+        INNER JOIN(
+            SELECT
+                train_num,
+                MAX(stop_number) AS last_stop
+            FROM
+                schedules
+            GROUP BY
+                train_num
+        ) AS S2
+        ON
+            (S2.train_num = S.train_num)
+        INNER JOIN(
+            SELECT
+                train_num,
+                time,
+                station_id AS first_stop
+            FROM
+                schedules
+            WHERE
+                stop_number = 1
+        ) AS S1
+        ON
+            (S1.train_num = S.train_num)
+        INNER JOIN stations AS ST1 ON (ST1.id = S1.first_stop)
+        INNER JOIN stations AS ST2 ON (ST2.id = S.station_id)
+        WHERE
+            S.stop_number = S2.last_stop
+        AND ST1.name = ? AND ST2.name = ?
+        ORDER BY S1.time;";
+        return $db->query($sql, [$origin, $destiny]);
+    }
+
 }
