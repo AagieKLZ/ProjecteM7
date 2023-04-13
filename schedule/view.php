@@ -87,7 +87,7 @@ if (isset($_GET['direction'])) {
                     <div><b>Origen:</b> <?= $_GET["origin"] ?></div>
                     <div><b>Destino:</b> <?= $_GET["destiny"] ?></div>
                     <div><b>Horarios:</b> <?= count($schedules) ?></div>
-                    <a href="./new.php?lane=1&direction=1" class="flex items-center justify-between px-3 py-1 font-semibold border border-2 rounded-lg w-fit hover:bg-emerald-500 text-emerald-500 hover:text-white hover:stroke-white stroke-emerald-500 border-emerald-500">
+                    <a href="./new.php?lane=<?=$_GET["lane"]?>&direction=<?=$_GET["direction"]?>&origin=<?=$_GET["origin"] ?>&destiny=<?=$_GET["destiny"]?>" class="flex items-center justify-between px-3 py-1 font-semibold border border-2 rounded-lg w-fit hover:bg-emerald-500 text-emerald-500 hover:text-white hover:stroke-white stroke-emerald-500 border-emerald-500">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5 mr-2 stroke-inherit">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                         </svg>
