@@ -23,7 +23,7 @@ class dbClient
      */
     public function __construct()
     {
-        $this->setPassword("");
+        $this->setPassword("123321");
         $this->conn = new PDO("mysql:host=$this->host;dbname=$this->db", $this->usuari, $this->contrasenya);
         // Creem les taules si no existeixen
         // $this->createTables();
@@ -82,6 +82,17 @@ class dbClient
     private function setPassword($password)
     {
         $this->contrasenya = $password;
+    }
+
+    /**
+     * @param string $sql
+     * @param array $params
+     * @return void
+     */
+    public function delete(string $sql, array $params)
+    {
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute($params);
     }
 
     /**

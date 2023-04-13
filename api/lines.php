@@ -169,7 +169,7 @@ class lines
         return $db->query($sql, [$origin, $destiny]);
     }
 
-    public static function getAllStationsBetween(string $origin, string $destiny)
+    public static function getAllStationsBetween(string $origin, string $destiny): array
     {
         $sql = "SELECT
         stop_number, ST.name, ST.id
@@ -229,5 +229,18 @@ class lines
         (MAX(stops)))
     ORDER BY stop_number;";
         return dbClient::getInstance()->query($sql, [$origin, $destiny]);
+    }
+
+    /**
+     * Gets the colour of a line
+     * @param string $name line name
+     * @return string colour
+     */
+    public static function getLineColour(string $name): string
+    {
+        $db = dbClient::getInstance();
+        $sql = "SELECT colour FROM routes WHERE name = ?;";
+        $params = [$name];
+        return $db->query($sql, $params)[0]['colour'];
     }
 }
