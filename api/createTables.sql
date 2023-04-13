@@ -153,3 +153,67 @@ BEGIN
 END $$
 
 DELIMITER ;
+
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS list_all_lines$$
+CREATE PROCEDURE list_all_lines()
+BEGIN
+    SELECT
+        route_id,
+        colour,
+        Origin,
+        Destiny
+    FROM
+        routes AS R
+    INNER JOIN(
+        SELECT
+            route_id,
+            Origin,
+            Destiny
+        FROM
+            (
+            SELECT
+                S3.route_id,
+                T.train_num,
+                S1.name AS Origin,
+                S2.name AS Destiny
+            FROM
+                (
+                SELECT
+                    train_num,
+                    MIN(stop_number) AS min_stop_number,
+                    MAX(stop_number) AS max_stop_number
+                FROM
+                    schedules
+                GROUP BY
+                    train_num
+            ) T
+        INNER JOIN schedules O ON
+            O.train_num = T.train_num AND O.stop_number = T.min_stop_number
+        INNER JOIN schedules D ON
+            D.train_num = T.train_num AND D.stop_number = T.max_stop_number
+        INNER JOIN stations AS S1
+        ON
+            S1.id = O.station_id
+        INNER JOIN stations AS S2
+        ON
+            S2.id = D.station_id
+        INNER JOIN schedules AS S3
+        ON
+            S3.train_num = T.train_num
+        WHERE
+            O.station_id <> D.station_id
+        ORDER BY
+            T.train_num
+        ) AS P
+    GROUP BY
+        route_id,
+        Origin,
+        Destiny
+    ) AS A
+    ON
+        A.route_id = R.name;
+END$$
+
+DELIMITER ;
