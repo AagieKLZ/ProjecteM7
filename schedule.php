@@ -114,28 +114,30 @@ use api\route;
             foreach ($schedules as $s):
                 ?>
                 <div class="flex mt-6 flex-row justify-between md:px-24 px-0 w-[90%] text-lg text-center">
-                    <div class="bg-fuchsia-800 text-white w-[50px] h-[50px] flex items-center justify-center">
+                    <div class="
+                    <?= lines::getLineColour($s['route_id']) ?> <?= lines::getLineColour($s['route_id']) == 'bg-yellow-300' ? 'text-black' : 'text-white' ?>
+                    w-[50px] h-[50px] flex items-center justify-center">
                         <?= $s['route_id'] ?>
                     </div>
                     <div class="flex items-center py-1 text-center"><?= $s['time'] ?></div>
                     <div class="flex items-center py-1 text-center"><?php
-                            if ($_GET['origin']<$_GET['destiny']){
-                                echo route::getTimeByTrainNumPassingByStation($s['train_num'],$_GET['destiny'])[0]['time'];
-                            }else{
-                                echo route::getTimeByTrainNumPassingByStation($s['train_num'],$_GET['origin'])[0]['time'];
-                            }
+                        if ($_GET['origin'] < $_GET['destiny']) {
+                            echo route::getTimeByTrainNumPassingByStation($s['train_num'], $_GET['destiny'])[0]['time'];
+                        } else {
+                            echo route::getTimeByTrainNumPassingByStation($s['train_num'], $_GET['origin'])[0]['time'];
+                        }
                         ?></div>
                     <div class="flex items-center py-1 text-center">
                         <?php
                         try {
                             $time1 = new DateTime($s['time']);
-                            if ($_GET['origin']<$_GET['destiny']){
-                                $time2 = new DateTime(route::getTimeByTrainNumPassingByStation($s['train_num'],$_GET['destiny'])[0]['time']);
-                            }else{
-                                $time2 = new DateTime(route::getTimeByTrainNumPassingByStation($s['train_num'],$_GET['origin'])[0]['time']);
+                            if ($_GET['origin'] < $_GET['destiny']) {
+                                $time2 = new DateTime(route::getTimeByTrainNumPassingByStation($s['train_num'], $_GET['destiny'])[0]['time']);
+                            } else {
+                                $time2 = new DateTime(route::getTimeByTrainNumPassingByStation($s['train_num'], $_GET['origin'])[0]['time']);
                             }
                             $interval = $time1->diff($time2);
-                            echo $interval->format('%H:%I').'h';
+                            echo $interval->format('%H:%I') . 'h';
                         } catch (Exception $e) {
                             echo '?';
                         }
