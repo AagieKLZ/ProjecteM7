@@ -39,7 +39,7 @@
                     <div class="text-red-500 w-2/3 text-left mt-1">Usuario o contraseña incorrectos</div>
                 <?php endif; ?>
             </div>
-            <a href="#" class="block text-fuchsia-900 underline md:w-2/3 w-[90%] flex flex-row justify-start items-center font-light">¿Has olvidado tu contraseña?</a>
+            <a href="https://www.youtube.com/watch?v=X_8Nh5XfRw0" target="_blank" class="block text-fuchsia-900 underline md:w-2/3 w-[90%] flex flex-row justify-start items-center font-light">¿Has olvidado tu contraseña?</a>
             <button class="md:w-2/3 w-[90%] py-2 border-2 border-fuchsia-900 rounded-lg text-fuchsia-900 font-semibold hover:text-white hover:bg-fuchsia-900">Iniciar Sesión</button>
         </form>
     </main>

@@ -1,5 +1,5 @@
 <nav class="fixed lg:w-full left-0 w-full h-14 bg-gray-200 bg-opacity-50 backdrop-blur z-40 top-0 left-0 flex flex-row lg:justify-around justify-between items-center">
-        <a href="index.php" class="block h-14 my-auto"><img src="../assets/logo.png" alt="logo" class="h-14 my-auto"></a>
+        <a href="../index.php" class="block h-14 my-auto"><img src="../assets/logo.png" alt="logo" class="h-14 my-auto"></a>
         <div class="lg:flex hidden justify-end space-x-16 items-center">
             <a href="../routes.php" class="text-xl text-fuchsia-900 menu-item">Líneas</a>
             <a href="../schedule.php" class="text-xl text-fuchsia-900 menu-item">Horarios</a>
