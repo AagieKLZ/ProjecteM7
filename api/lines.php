@@ -172,7 +172,7 @@ class lines
     public static function getAllStationsBetween(string $origin, string $destiny)
     {
         $sql = "SELECT
-        stop_number, ST.name
+        stop_number, ST.name, ST.id
     FROM
         schedules AS S
     INNER JOIN stations AS ST ON (ST.id = S.station_id)

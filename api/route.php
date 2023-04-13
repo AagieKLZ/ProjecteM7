@@ -119,4 +119,22 @@ class route
         return $db->query($sql, $params);
     }
 
+    public static function getNextTrainNumber(): int{
+        $db = dbClient::getInstance();
+        $sql = "SELECT MAX(train_num) as number FROM schedules;";
+        $result = $db->query($sql, []);
+        return $result[0]['number'] + 1;
+    }
+
+    public static function addRoute(string $lane, int $station_id, string $time, int $train, int $stop_n): bool{
+        $sql = "INSERT INTO schedules (route_id, station_id, time, train_num, stop_number) VALUES (?, ?, ?, ?, ?);";
+        $params = [$lane, $station_id, $time, $train, $stop_n];
+        $db = dbClient::getInstance();
+        try {
+            return $db->insert($sql, $params);
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
 }

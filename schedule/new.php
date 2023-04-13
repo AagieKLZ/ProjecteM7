@@ -5,6 +5,7 @@ if (!isset($_SESSION['user'])) {
     header('Location: ../index.php');
 }
 include("../api/lines.php");
+
 use api\lines;
 ?>
 <!DOCTYPE html>
@@ -26,46 +27,48 @@ use api\lines;
     <main class="flex flex-col justify-center items-center w-full h-[calc(100%-3.5rem)] mt-[3.5rem]">
         <div class="mt-16 mb-8 text-3xl font-semibold">Añadir Horario</div>
         <?php if (isset($_GET['direction']) && isset($_GET['lane']) && isset($_GET['origin']) && isset($_GET['destiny'])) : ?>
-            <form class="md:w-2/3 space-x-8 w-[90%] flex flex-col items-center justify-center">
-                <div class="flex flex-row items-center justify-center w-full space-x-24">
+            <form class="md:w-2/3 space-x-8 w-[90%] flex flex-col items-center justify-center" action="../lib/createRoute.php" method="POST">
+                <div class="flex flex-row justify-around w-full border-b pb-6 my-4 text-lg items-center">
+                    <div><b>Línea:</b> <?= $_GET["lane"] ?></div>
+                    <div><b>Origen:</b> <?= $_GET["origin"] ?></div>
+                    <div><b>Destino:</b> <?= $_GET["destiny"] ?></div>
+                </div>
+                <div class="flex flex-row items-center justify-center w-full space-x-24 border-b pb-6">
                     <div class="space-x-3">
-                    <label for="origin" class="text-lg font-semibold">Salida</label>
-                    <input type="text" name="origin" id="origin" value="14:24" class="w-32 text-center border rounded-lg">
+                        <label for="origin" class="text-lg font-semibold">Salida</label>
+                        <input type="text" name="departure" id="departure" value="14:24" class="w-32 text-center border rounded-lg">
                     </div>
                     <div class="space-x-3">
                         <label for="destination" class="text-lg font-semibold">Llegada</label>
                         <input type="text" name="destination" id="destination" value="15:41" class="w-32 text-center border rounded-lg" disabled>
+                        <input type="hidden" name="arrival">
                     </div>
                     <div class="space-x-3">
                         <label for="duration" class="text-lg font-semibold">Tiempo entre paradas</label>
                         <select name="duration" id="duration" value="3:00" class="w-32 text-center border rounded-lg" list="time-list">
                             <option value="3">3:00</option>
-                            <option value="3.5">3:30</option>
                             <option value="4">4:00</option>
-                            <option value="4.5">4:30</option>
                             <option value="5">5:00</option>
-                            <option value="5.5">5:30</option>
                         </select>
                     </div>
+                    <button type="submit" class="rounded-lg px-5 py-2 bg-fuchsia-900 text-white font-semibold">Guardar</button>
                 </div>
-                <div class="grid w-full grid-cols-4 mt-12 mb-8 gap-14">
-                    <!-- <?php for($i=1; $i<24; $i++) : ?>
-                        <div class="flex flex-row items-center justify-start space-x-3">
-                            <input type="checkbox" name="p<?php echo $i?>" id="p<?php echo $i?>" class="accent-fuchsia-900" checked>
-                            <label for="p<?php echo $i?>" class="ml-2 text-lg font-semibold">Parada <?php echo $i ?></label>
-                        </div>
-                    <?php endfor; ?> -->
+                <div class="grid w-full grid-cols-4 mt-4 mb-8 gap-14">
                     <?php
-                        
-                        $stations = lines::getAllStationsBetween($_GET['origin'], $_GET['destiny']);
-                        foreach($stations as $station):
-                        ?>
+
+                    $stations = lines::getAllStationsBetween($_GET['origin'], $_GET['destiny']);
+                    foreach ($stations as $station) :
+                    ?>
                         <div class="flex flex-row items-center justify-start space-x-3">
-                            <input type="checkbox" name="p<?php echo $station['id']?>" id="p<?php echo $station['id']?>" class="accent-fuchsia-900" checked>
-                            <label for="p<?= $station['id']?>" class="ml-2 text-lg font-semibold"><?php echo $station['name'] ?></label>
+                            <input type="checkbox" <?= $station["name"] == $_GET['origin'] || $station["name"] == $_GET["destiny"] ? "disabled" : "" ?> name="<?= $station['id'] ?>" id="<?= $station['id'] ?>" class="accent-fuchsia-900" checked>
+                            <label for="<?= $station['id'] ?>" class="ml-2 text-lg font-semibold select-none"><?= $station['name'] ?></label>
                         </div>
                     <?php endforeach; ?>
+                    
                 </div>
+                <input type="hidden" id="lane" name="lane" value="<?= $_GET['lane'] ?>">
+                <input type="hidden" id="origin_id" name="origin_id" value="<?= $stations[0]["id"] ?>">
+                <input type="hidden" id="destiny_id" name="destiny_id" value="<?= $stations[count($stations) - 1]["id"] ?>">
             </form>
         <?php else : ?>
             <div class="text-lg">No se ha seleccionado una línea y/o dirección</div>
@@ -78,5 +81,44 @@ use api\lines;
             </a>
         <?php endif; ?>
     </main>
+    <script>
+        const boxes = document.querySelectorAll("input[type='checkbox']");
+        const duration = document.querySelector("#duration");
+        calculateDuration();
+
+        function calculateDuration() {
+            const checked = document.querySelectorAll("input[type='checkbox']:checked");
+            const time = (checked.length - 1) * duration.value;
+            const hours = Math.floor(time);
+            const minutes = Math.round((time - hours) * 60);
+            const origin = document.querySelector("#departure").value;
+            document.querySelector("#destination").value = addMinutes(origin, time);
+            document.querySelector("input[name='arrival']").value = addMinutes(origin, time);
+        }
+
+        function addMinutes(time, minutes) {
+            var timeParts = time.split(":");
+            var hours = parseInt(timeParts[0]);
+            var mins = parseInt(timeParts[1]);
+            var totalMinutes = hours * 60 + mins + minutes;
+            var newHours = Math.floor(totalMinutes / 60);
+            var newMinutes = totalMinutes % 60;
+            return pad(newHours) + ":" + pad(newMinutes);
+        }
+
+        function pad(value) {
+            return (value < 10) ? "0" + value : value;
+        }
+
+        boxes.forEach(box => {
+            box.addEventListener("change", () => {
+                console.log("changed")
+                calculateDuration()
+            });
+        });
+        duration.addEventListener("change", calculateDuration)
+        origin.addEventListener("change", calculateDuration)
+    </script>
 </body>
+
 </html>
