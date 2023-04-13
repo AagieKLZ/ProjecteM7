@@ -98,4 +98,19 @@ class users
         $params = [$id];
         return $db->query($sql, $params)[0]['name'];
     }
+
+    /**
+     * Method to get update a user with its id
+     * @param int $id id of the user
+     * @param string $name name of the user
+     * @param string $email email of the user
+     * @return void
+     */
+    public static function update(int $id, string $name, string $email)
+    {
+        $db = dbClient::getInstance();
+        $sql = "UPDATE users SET name = ?, email = ? WHERE id = ?";
+        $params = [$name, $email, $id];
+        $db->insert($sql, $params);
+    }
 }
