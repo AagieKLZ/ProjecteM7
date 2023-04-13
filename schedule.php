@@ -110,6 +110,17 @@ use api\route;
             // SHow php errors
             ini_set('display_errors', 1);
             ini_set('display_startup_errors', 1);
+
+            if (count($schedules) == 0) {
+                echo "<div class='flex flex-col justify-center items-center mt-10 w-full h-full'>
+                <h1 class='text-2xl font-bold'>No hay horarios disponibles</h1>
+                <a href='./index.php' class='bg-fuchsia-900 block text-center mt-4 px-5 py-2 text-white font-semibold rounded-lg'>
+                    Volver
+                </a>
+                <p class='mt-4 text-gray-600'>Las dos estaciones seleccionadas no están conectadas</p>
+                ";
+            }
+
             // Foreach schedule
             foreach ($schedules as $s):
                 ?>
