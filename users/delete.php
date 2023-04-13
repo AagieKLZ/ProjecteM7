@@ -1,4 +1,6 @@
 <?php
+include '../api/users.php';
+use api\users;
 session_start();
 session_get_cookie_params();
 if (!isset($_SESSION['user'])) { header('Location: ../index.php'); }
@@ -32,10 +34,11 @@ if (!isset($_SESSION['user'])) { header('Location: ../index.php'); }
             </a>
         <?php else: ?>
             <div class="mt-32 text-xl">Eliminar al usuario</div>
-            <div class="text-xl font-semibold text-fuchsia-900">Paquito Jimenez</div>
+            <div class="text-xl font-semibold text-fuchsia-900">
+            <?= users::getNameById($_GET['id'])?>
+            </div>
             <form class="w-2/12 mt-4 flex justify-between">
                 <a class="px-3 text-lg py-2 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700" href="../users.php">Cancelar</a>
                 <input type="submit" class="px-3 text-lg cursor-pointer py-2 bg-emerald-500 text-white font-semibold rounded-lg hover:bg-emerald-600" value="Confirmar" />
-                
             </form>
         <?php endif ?>
