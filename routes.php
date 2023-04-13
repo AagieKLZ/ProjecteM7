@@ -35,7 +35,7 @@ session_get_cookie_params();
                 <?php if ($index % 2 == 1) : ?>
                     <div class="flex flex-row justify-evenly items-center md:w-2/3 w-[90%] py-4">
                         <div class="w-1/3">
-                        <div class="<?= $lane['colour']?> <?= $lane['colour'] == 'bg-yellow-300' ? 'text-black' : 'text-white'?> text-white font-semibold w-[50px] mx-auto h-[50px] flex items-center justify-center">
+                        <div class="<?= $lane['colour']?> <?= $lane['colour'] == 'bg-yellow-300' ? 'text-black' : 'text-white'?> font-semibold w-[50px] mx-auto h-[50px] flex items-center justify-center">
                             <?= $lane['route_id'] ?>
                         </div>
                         </div>
