@@ -85,6 +85,17 @@ class dbClient
     }
 
     /**
+     * @param string $sql
+     * @param array $params
+     * @return void
+     */
+    public function delete(string $sql, array $params)
+    {
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute($params);
+    }
+
+    /**
      * Creates the tables if they don't exist
      * @return void
      */
