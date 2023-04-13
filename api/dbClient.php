@@ -52,11 +52,11 @@ class dbClient
     }
 
     public function insert($sql, $params){
-        $stmt = $this->conn->prepare($sql);
-        $result = $stmt->execute($params);
-        if ($result) {
-            return $stmt->rowCount();
-        } else {
+        try {
+            $stmt = $this->conn->prepare($sql);
+            $result = $stmt->execute($params);
+            return $result;
+        } catch (Exception $e) {
             return false;
         }
     }

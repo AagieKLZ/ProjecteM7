@@ -12,28 +12,6 @@ if (!class_exists('dbClient')) {
 class users
 {
     /**
-     * @param $name string the name of the user
-     * @param $email string the email of the user
-     * @param $password string the password of the user without encryption
-     * @param $lines array the lines the user is able to edit
-     * @return bool if the user was created
-     */
-    public static function createNew(string $name, string $email, string $password, array $lines): bool
-    {
-        $db = dbClient::getInstance();
-
-        // Create the new user
-        $sql = "INSERT INTO users (name, password, email) VALUES (?, ?, ?)";
-        $params = [$name, $email, $password];
-        try {
-            $db->query($sql, $params);
-            return true;
-        } catch (Exception $e) {
-            return false;
-        }
-    }
-
-    /**
      * @return array with all the users (user_admin)
      */
     public static function getAll(): array
