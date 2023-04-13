@@ -32,15 +32,5 @@ class schedules
         }
         return true;
     }
-
-    /**
-     * @param int $trainNum the train number to modify
-     * @param string $time the new departure time
-     * @return bool if the departure time was modified
-     */
-    static function modifyDepartureTime(int $trainNum, string $time): bool
-    {
-        return true;
-    }
 }
 

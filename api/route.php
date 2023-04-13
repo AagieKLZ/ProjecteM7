@@ -6,8 +6,6 @@ if (!class_exists('dbClient')) {
     require_once('dbClient.php');
 }
 
-
-
 class route
 {
 
@@ -30,62 +28,53 @@ class route
             INNER JOIN routes r ON schedules.route_id = r.name
             WHERE station_id = ?);";
         $common = $db->query($sql, [$originStationId, $destinationStationId]);
-
         // In case they share at least one route, we get trains that go from the origin to the destination
         if (count($common) > 0) {
             $sql = "";
             $params = [];
             if ($originStationId < $destinationStationId) {
-                $sql = "SET @st1 = ?;
-                    SET @st2 = ?;
-                    SET @time = '?';
-                    
-                    SELECT *
+                $sql = "SELECT *
                     FROM schedules s1
-                    WHERE station_id = @st1
-                      AND time > @time
+                    WHERE station_id = ?
+                      AND time > ?
                       AND route_id IN (SELECT DISTINCT s1.route_id
                                         FROM schedules s1
                                         INNER JOIN routes r ON s1.route_id = r.name
-                                        WHERE station_id = @st1
+                                        WHERE station_id = ?
                                         AND route_id IN (SELECT DISTINCT s2.route_id
                                         FROM schedules s2
                                         INNER JOIN routes r ON s2.route_id = r.name
-                                        WHERE station_id = @st2))
+                                        WHERE station_id = ?))
                       AND s1.stop_number < (SELECT s2.stop_number
                                           FROM schedules s2
-                                          WHERE station_id = @st2
-                                          AND time > @time
+                                          WHERE station_id = ?
+                                          AND time > ?
                                           LIMIT 1)
                     ORDER BY time
                     LIMIT 10;";
-                $params = [$originStationId, $destinationStationId, $time];
-            }
-            else {
-                $sql = "SET @st1 = ?;
-                    SET @st2 = ?;
-                    SET @time = '?';
-                    
-                    SELECT *
+                $params = [$originStationId, $time, $originStationId, $destinationStationId, $destinationStationId, $time];
+
+            } else {
+                $sql = "SELECT *
                     FROM schedules s1
-                    WHERE station_id = @st1
-                      AND time > @time
+                    WHERE station_id = ?
+                      AND time > ?
                       AND route_id IN (SELECT DISTINCT s1.route_id
                                         FROM schedules s1
                                         INNER JOIN routes r ON s1.route_id = r.name
-                                        WHERE station_id = @st1
+                                        WHERE station_id = ?
                                         AND route_id IN (SELECT DISTINCT s2.route_id
                                         FROM schedules s2
                                         INNER JOIN routes r ON s2.route_id = r.name
-                                        WHERE station_id = @st2))
+                                        WHERE station_id = ?))
                       AND s1.stop_number > (SELECT s2.stop_number
                                           FROM schedules s2
-                                          WHERE station_id = @st2
-                                          AND time > @time
+                                          WHERE station_id = ?
+                                          AND time > ?
                                           LIMIT 1)
                     ORDER BY time
                     LIMIT 10;";
-                $params = [$destinationStationId, $originStationId, $time];
+                $params = [$destinationStationId, $time, $destinationStationId, $originStationId, $originStationId, $time];
             }
 
             return $db->query($sql, $params);
@@ -96,10 +85,11 @@ class route
     }
 
     /**
+     *
      * @param $name string station name
      * @return array returns an array with the station id
      */
-    public static function getStationIdByName($name): array
+    public static function getStationIdByName(string $name): array
     {
         $db = dbClient::getInstance();
         $sql = "SELECT id FROM stations WHERE name = ?;";
@@ -116,6 +106,20 @@ class route
         $db = dbClient::getInstance();
         $sql = "SELECT name FROM stations WHERE id = ?;";
         $params = [$id];
+        return $db->query($sql, $params);
+    }
+
+    /**
+     * Method to get the time a train passes by a station
+     * @param int $trainNum
+     * @param int $station
+     * @return array
+     */
+    public static function getTimeByTrainNumPassingByStation(int $trainNum, int $station): array
+    {
+        $db = dbClient::getInstance();
+        $sql = "SELECT time FROM schedules WHERE train_num = ? AND station_id = ?;";
+        $params = [$trainNum, $station];
         return $db->query($sql, $params);
     }
 
