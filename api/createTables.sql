@@ -221,7 +221,7 @@ DELIMITER ;
 DELIMITER $$
 
 DROP PROCEDURE IF EXISTS get_line_variants$$
-CREATE PROCEDURE get_line_variants()
+CREATE PROCEDURE get_line_variants(IN name VARCHAR(5))
 BEGIN
     SELECT
         route_id,
