@@ -2,6 +2,8 @@
 session_start();
 session_get_cookie_params();
 if (!isset($_SESSION['user'])) { header('Location: ../index.php'); }
+include("../api/users.php");
+use api\users;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,11 +33,13 @@ if (!isset($_SESSION['user'])) { header('Location: ../index.php'); }
                 Volver
             </a>
         <?php else: ?>
-            <form class="mt-8 w-1/2">
+            <?php $user = users::getUserById($_GET['id']); ?>
+            <form class="mt-8 w-1/2" method="POST" action="../lib/editUser.php">
+                <input type="hidden" value="<?=$_GET['id']?>" name="id" id="id">
                 <label for="name">Nombre</label>
-                <input type="text" value="Paquito Jimenez" class="w-full p-2 rounded-lg border border-fuchsia-900">
+                <input name="name" id="name" type="text" value="<?=$user["name"]?>" class="w-full p-2 rounded-lg border border-fuchsia-900">
                 <label for="email" class="block mt-8">Correo</label>
-                <input type="email" value="paquito@jimenez" class="w-full p-2 rounded-lg border border-fuchsia-900">
+                <input name="email" id="email" type="email" value="<?=$user["email"]?>" class="w-full p-2 rounded-lg border border-fuchsia-900">
             
                 <input type="submit" value="Actualizar" class="mt-8 px-3 py-3 text-white bg-fuchsia-900 hover:bg-fuchsia-800 cursor-pointer w-full font-semibold rounded-lg">
                

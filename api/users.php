@@ -99,6 +99,13 @@ class users
         return $db->query($sql, $params)[0]['name'];
     }
 
+    public static function getUserById(int $id){
+        $db = dbClient::getInstance();
+        $sql = "SELECT * FROM users WHERE id = ?";
+        $params = [$id];
+        return $db->query($sql, $params)[0];
+    }
+
     /**
      * Method to get update a user with its id
      * @param int $id id of the user
