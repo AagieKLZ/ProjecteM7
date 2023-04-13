@@ -67,7 +67,11 @@ use api\route;
                     <select name="time" id="time" placeholder="----"
                             class="w-44 bg-white p-2 rounded-lg border-2 border-fuchsia-900">
                         <?php
+                        // Add 0s to hours lower than 10
                         for ($i = 0; $i < 24; $i++) {
+                            if ($i < 10) {
+                                $i = "0" . $i;
+                            }
                             echo "<option value='" . $i . ":00'>" . $i . ":00</option>";
                         }
                         ?>
