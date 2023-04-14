@@ -37,7 +37,7 @@ use api\users;
             <form class="mt-8 w-1/2" method="POST" action="../lib/editUser.php">
                 <input type="hidden" value="<?=$_GET['id']?>" name="id" id="id">
                 <label for="name">Nombre</label>
-                <input name="name" id="name" type="text" value="<?=$user["name"]?>" class="w-full p-2 rounded-lg border border-fuchsia-900">
+                <input pattern="^[a-zA-Z\s]+$" name="name" id="name" type="text" value="<?=$user["name"]?>" class="w-full p-2 rounded-lg border border-fuchsia-900">
                 <label for="email" class="block mt-8">Correo</label>
                 <input pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" name="email" id="email" type="email" value="<?=$user["email"]?>" class="w-full p-2 rounded-lg border border-fuchsia-900">
             

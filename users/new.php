@@ -23,7 +23,7 @@ if (!isset($_SESSION['user'])) { header('Location: ../index.php'); }
         <div class="text-4xl mt-8 font-semibold">Crear Usuario</div>
             <form class="mt-8 w-1/2" action="../lib/signup.php" method="POST">
                 <label for="name">Nombre</label>
-                <input type="text" id="name" name="name" class="w-full p-2 rounded-lg border border-fuchsia-900">
+                <input pattern="^[a-zA-Z\s]+$" type="text" id="name" name="name" class="w-full p-2 rounded-lg border border-fuchsia-900">
                 <label for="email" class="block mt-8">Correo</label>
                 <input pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" type="email" id="email" name="email" class="w-full p-2 rounded-lg border border-fuchsia-900">
                 <label for="password" class="block mt-8">Contraseña</label>

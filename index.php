@@ -132,8 +132,10 @@ use api\lines;
                     destiny_valid = true;
                 }
             }
-            if (origin_valid && destiny_valid) {
+            if (origin_valid && destiny_valid && origin_value != destiny_value) {
                 form.submit();
+            } else if (origin_value == destiny_value) {
+                alert("La estación de origen y destino no pueden ser iguales");
             } else {
                 alert("Por favor, seleccione una estación válida");
             }
