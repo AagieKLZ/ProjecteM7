@@ -77,12 +77,17 @@ class users
      * @param int $id id of the user
      * @return void
      */
-    public static function delete(int $id)
+    public static function delete(int $id): bool
     {
         $db = dbClient::getInstance();
         $sql = "DELETE FROM users WHERE id = ?";
         $params = [$id];
-        $db->delete($sql, $params);
+        try{
+            $db->delete($sql, $params);
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
     }
 
 
@@ -113,11 +118,16 @@ class users
      * @param string $email email of the user
      * @return void
      */
-    public static function update(int $id, string $name, string $email)
+    public static function update(int $id, string $name, string $email): bool
     {
         $db = dbClient::getInstance();
         $sql = "UPDATE users SET name = ?, email = ? WHERE id = ?";
         $params = [$name, $email, $id];
-        $db->insert($sql, $params);
+        try {
+            return $db->insert($sql, $params);
+        } catch (Exception $e) {
+            return false;
+        }
+        
     }
 }

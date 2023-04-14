@@ -30,6 +30,24 @@ if (!isset($_SESSION['user'])) { header('Location: ../index.php'); }
                 <input type="password" id="password" name="password" class="w-full p-2 rounded-lg border border-fuchsia-900">
                 <label for="rpassword" class="block mt-8">Confirmar Contraseña</label>
                 <input type="password" id="rpassword" name="rpassword" class="w-full p-2 rounded-lg border border-fuchsia-900">
+                <div class="text-red-600 hidden" id="error">Las contraseñas no coinciden</div>
                 <input type="submit" value="Crear Usuario" class="mt-8 px-3 py-3 text-white bg-fuchsia-900 hover:bg-fuchsia-800 cursor-pointer w-full font-semibold rounded-lg">
+                
             </form>
     </main>
+    <script>
+        const password = document.getElementById('password');
+        const rpassword = document.getElementById('rpassword');
+        const submit = document.querySelector('input[type="submit"]');
+        submit.disabled = true;
+        rpassword.addEventListener('input', () => {
+            const errormsg = document.getElementById('error');
+            if (password.value === rpassword.value) {
+                submit.disabled = false;
+                errormsg.classList.add('hidden');
+            } else {
+                submit.disabled = true;
+                errormsg.classList.remove('hidden');
+            }
+        })
+    </script>

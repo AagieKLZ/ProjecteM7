@@ -37,7 +37,7 @@ if (!isset($_SESSION['user'])) { header('Location: ../index.php'); }
             <div class="text-xl font-semibold text-fuchsia-900">
             <?= users::getNameById($_GET['id'])?>
             </div>
-            <form class="lg-w-2/12 mt-4 flex justify-between" action="successfulDelete.php" method="post">
+            <form class="lg w-2/12 mt-4 flex justify-around" action="../lib/deleteUser.php" method="POST">
                 <input type="hidden" name="id" value="<?= $_GET['id'] ?>">
                 <a class="px-3 text-lg py-2 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700" href="../users.php">Cancelar</a>
                 <input type="submit" class="px-3 text-lg cursor-pointer py-2 bg-emerald-500 text-white font-semibold rounded-lg hover:bg-emerald-600" value="Confirmar" />

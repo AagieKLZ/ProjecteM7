@@ -23,7 +23,7 @@ class dbClient
      */
     public function __construct()
     {
-        $this->setPassword("123321");
+        $this->setPassword("");
         $this->conn = new PDO("mysql:host=$this->host;dbname=$this->db", $this->usuari, $this->contrasenya);
         // Creem les taules si no existeixen
         // $this->createTables();
@@ -51,11 +51,11 @@ class dbClient
         return $stmt->fetchAll();
     }
 
-    public function insert($sql, $params){
+    public function insert($sql, $params): bool{
         try {
             $stmt = $this->conn->prepare($sql);
             $result = $stmt->execute($params);
-            return $result;
+            return true;
         } catch (Exception $e) {
             return false;
         }
