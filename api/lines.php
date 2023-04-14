@@ -22,6 +22,14 @@ class lines
         }, $stations);
     }
 
+    public static function getStationsWithConnections(int $page, int $size): array{
+        $stations = self::getStations($page, $size);
+        return array_map(function ($station) {
+            $station["connections"] = (new lines)->getConnectionsOfStation($station["id"]);
+            return $station;
+        }, $stations);
+    }
+
     /**
      * Gets all the stations and their ids
      * @return array with all stations and their ids
@@ -31,6 +39,16 @@ class lines
         $db = dbClient::getInstance();
         $sql = "SELECT id, name FROM stations;";
         $stations = $db->query($sql, []);
+        usort($stations, function ($a, $b) {
+            return $a["name"] <=> $b["name"];
+        });
+        return $stations;
+    }
+
+    public static function getStations(int $page, int $size){
+        $db = dbClient::getInstance();
+        $sql = "SELECT id, name FROM stations ORDER BY name LIMIT ? OFFSET ?;";
+        $stations = $db->query($sql, [$size, ($page - 1) * $size]);
         usort($stations, function ($a, $b) {
             return $a["name"] <=> $b["name"];
         });

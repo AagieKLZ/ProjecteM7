@@ -1,6 +1,8 @@
 <?php
 session_start();
 session_get_cookie_params();
+error_reporting(-1);
+ini_set('display_errors', 'On');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,13 +35,13 @@ session_get_cookie_params();
 
             use api\lines;
 
-            $stations = lines::getAllStationsWithConnections();
+            
             if (isset($_GET['page'])) {
                 $page = $_GET['page'];
             } else {
                 $page = 1;
             }
-
+            $stations = lines::getAllStationsWithConnections();
             foreach ($stations as $i => $station) : ?>
             <?php if ($i > ($page - 1) * 10 && $i <= ($page) * 10): ?>
                 <div class="flex flex-row justify-evenly <?= $i % 2 == 0 ? "bg-white" : "bg-gray-100" ?> items-center w-full py-4 text-center text-xl">
