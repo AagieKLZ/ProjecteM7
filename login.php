@@ -25,7 +25,7 @@
             <h1 class="text-xl font-semibold text-fuchsia-900">Acceso para administradores</h1>
             <div class="w-full flex flex-col justify-center items-center">
                 <label for="username" class="block flex md:w-2/3 w-[90%] justify-start text-fuchsia-900 font-semibold">Email</label>
-                <input required type="email" name="username" id="username" class="md:w-2/3 w-[90%] h-10 text-fuchsia-900 font-light border-2 border-fuchsia-800 rounded-lg px-2">
+                <input required type="email" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" name="username" id="username" class="md:w-2/3 w-[90%] h-10 text-fuchsia-900 font-light border-2 border-fuchsia-800 rounded-lg px-2">
             </div>
             <?php 
                 if (isset($_SESSION["errorCode"]) && $_SESSION["errorCode"] == "404"){

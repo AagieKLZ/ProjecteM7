@@ -39,7 +39,7 @@ use api\users;
                 <label for="name">Nombre</label>
                 <input name="name" id="name" type="text" value="<?=$user["name"]?>" class="w-full p-2 rounded-lg border border-fuchsia-900">
                 <label for="email" class="block mt-8">Correo</label>
-                <input name="email" id="email" type="email" value="<?=$user["email"]?>" class="w-full p-2 rounded-lg border border-fuchsia-900">
+                <input pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" name="email" id="email" type="email" value="<?=$user["email"]?>" class="w-full p-2 rounded-lg border border-fuchsia-900">
             
                 <input type="submit" value="Actualizar" class="mt-8 px-3 py-3 text-white bg-fuchsia-900 hover:bg-fuchsia-800 cursor-pointer w-full font-semibold rounded-lg">
                
