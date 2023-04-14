@@ -87,7 +87,7 @@ if (isset($_GET['direction'])) {
                     <div><b>Origen:</b> <?= $_GET["origin"] ?></div>
                     <div><b>Destino:</b> <?= $_GET["destiny"] ?></div>
                     <div><b>Horarios:</b> <?= count($schedules) ?></div>
-                    <a href="./new.php?lane=<?=$_GET["lane"]?>&direction=<?=$_GET["direction"]?>&origin=<?=$_GET["origin"] ?>&destiny=<?=$_GET["destiny"]?>" class="flex items-center justify-between px-3 py-1 font-semibold border border-2 rounded-lg w-fit hover:bg-emerald-500 text-emerald-500 hover:text-white hover:stroke-white stroke-emerald-500 border-emerald-500">
+                    <a href="./new.php?lane=<?= $_GET["lane"] ?>&direction=<?= $_GET["direction"] ?>&origin=<?= $_GET["origin"] ?>&destiny=<?= $_GET["destiny"] ?>" class="flex items-center justify-between px-3 py-1 font-semibold border border-2 rounded-lg w-fit hover:bg-emerald-500 text-emerald-500 hover:text-white hover:stroke-white stroke-emerald-500 border-emerald-500">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5 mr-2 stroke-inherit">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                         </svg>
@@ -105,17 +105,57 @@ if (isset($_GET['direction'])) {
                         <div class="w-[25%]"><?= $schedule["departure_time"] ?></div>
                         <div class="w-[25%]"><?= $schedule["arrival_time"] ?></div>
                         <div class="w-[25%]"><?= $schedule["stops"] ?></div>
-                        <div class="w-[25%]"><?php 
-                            $date1 = new DateTime($schedule["departure_time"]);
-                            $date2 = new DateTime($schedule["arrival_time"]);
-                            $diff = $date1->diff($date2);
-                            echo $diff->format('%H:%I');
-                        ?></div>
+                        <div class="w-[25%]"><?php
+                                                $date1 = new DateTime($schedule["departure_time"]);
+                                                $date2 = new DateTime($schedule["arrival_time"]);
+                                                $diff = $date1->diff($date2);
+                                                echo $diff->format('%H:%I');
+                                                ?></div>
                     </div>
                 <?php endforeach ?>
             </div>
         <?php endif; ?>
     </main>
+    <?php if (isset($_GET['success']) && $_GET['success'] == "true") : ?>
+        <div class="toast fixed flex flex-col bottom-4 rounded-xl left-2 w-96 h-24 bg-emerald-500">
+            <div class="h-4/5 flex flex-row justify-between items-center px-8 pt-1">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 stroke-white">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <?php if (isset($_GET['action'])) : ?>
+                    <span class="text-white font-semibold"><?php
+                                                            switch ($_GET['action']) {
+                                                                case 'new':
+                                                                    echo "Ruta creada correctamente";
+                                                                    break;
+                                                                case 'edit':
+                                                                    echo "Ruta editada correctamente";
+                                                                    break;
+                                                                case 'delete':
+                                                                    echo "Ruta eliminada correctamente";
+                                                                    break;
+                                                            }
+                                                            ?></span>
+                <?php endif; ?>
+            </div>
+            <div class="h-1/5 rounded-b-xl">
+                <div class="w-full h-full rounded-b-xl bg-emerald-700 loader"></div>
+            </div>
+        </div>
+    <?php endif; ?>
+    <?php if (isset($_GET['error'])) : ?>
+        <div class="toast fixed flex flex-col bottom-4 rounded-xl left-2 w-96 h-24 bg-red-600">
+            <div class="h-4/5 flex flex-row justify-between items-center px-8 pt-1">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 stroke-white">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+
+                <span class="text-white font-semibold">Se ha producido un error</span>
+            </div>
+            <div class="h-1/5 rounded-b-xl">
+                <div class="w-full h-full rounded-b-xl bg-red-800 loader"></div>
+            </div>
+        <?php endif; ?>
 </body>
 
 </html>

@@ -1,6 +1,8 @@
 <?php
     include("../api/route.php");
+    include("../api/lines.php");
     use api\route;
+    use api\lines;
     $departure = $_POST["departure"];
     $arrival = $_POST["arrival"];
     $duration = $_POST["duration"];
@@ -22,5 +24,14 @@
             $station_time = $date1->format('H:i');
             route::addRoute($lane, $station, $station_time, $train_n, ($i+1));
     }
-    header("Location: ../schedule/view.php");
+    $origin_st = route::getStationNameById($origin)[0]['name'];
+    $destiny_st = route::getStationNameById($destiny)[0]['name'];
+    $variants = lines::getDirections($lane);
+    foreach ($variants as $i => $variant) {
+        if ($variant['Origin'] == $origin_st && $variant['Destiny'] == $destiny_st){
+            $direction = $i;
+        }
+    }
+    
+    header("Location: ../schedule/view.php?lane=$lane&origin=$origin_st&destiny=$destiny_st&direction=$direction&success=true&action=new");
 ?>
