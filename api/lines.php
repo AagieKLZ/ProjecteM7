@@ -261,4 +261,11 @@ class lines
         $params = [$name];
         return $db->query($sql, $params)[0]['colour'];
     }
+
+    public static function getAllLines(): array
+    {
+        $db = dbClient::getInstance();
+        $sql = "SELECT name, colour FROM routes;";
+        return $db->query($sql, []);
+    }
 }
