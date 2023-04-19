@@ -55,20 +55,15 @@ $color = lines::getLineColour($defaultLane);
 
     <?php include 'components/navbar.php'; ?>
     <main class="flex flex-col justify-center items-center w-full h-[calc(100%-3.5rem)] mt-[5rem]">
-        <div class="flex justify-center mt-4">
-            <!-- <?php
-                    $all_lanes = lines::getAllLines();
-                    foreach ($all_lanes as $lane) :
-                    ?>
-                <a href="?lane=<?= $lane["name"] ?>" class="<?= $lane["colour"] ?> block px-4 py-3 <?= $lane["colour"] == "bg-yellow-500" ? "text-black" : "text-white" ?> font-semibold"><?= $lane["name"] ?></a>
-            <?php endforeach; ?> -->
-            <div class="font-semibold text-center px-3 py-2 <?= $color ?> <?= $color == "bg-yellow-500" ? "text-black" : "text-white" ?>"><?= $defaultLane ?></div>
+        <div class="fixed top-0 left-0 h-screen w-1/2 flex flex-col justify-center items-center">
+            <div class="flex justify-center mt-4">
+                <div class="font-semibold text-3xl text-center px-5 py-4 <?= $color ?> <?= $color == "bg-yellow-500" ? "text-black" : "text-white" ?>"><?= $defaultLane ?></div>
+            </div>
+            <div class="flex flex-col ml-8 mt-2">
+                <div class="text-2xl font-semibold text-center"><?= $defaultOrigin ?> - <?= $defaultDestiny ?></div>
+            </div>
         </div>
-        <div class="flex flex-col ml-8 mt-2">
-            <div class="text-xl font-semibold text-center"><?= $defaultOrigin ?> - <?= $defaultDestiny ?></div>
-        </div>
-
-        <div class="absolute top-24 left-[50%] w-1/2 h-fit my-24 border-l-4 border-l-<?= substr($color, 3, strlen($color)) ?> p-8 flex flex-col items-start space-y-7">
+        <div class="absolute top-0 left-[50%] w-1/2 h-fit my-24 border-l-4 border-l-<?= substr($color, 3, strlen($color)) ?> p-8 flex flex-col items-start space-y-7">
             <?php
             foreach ($stations as $i => $station) :
             ?>
@@ -78,7 +73,7 @@ $color = lines::getLineColour($defaultLane);
                 </div>
             <?php endforeach; ?>
         </div>
-        <a href="./routes.php?lane=<?=$defaultLane?>" class="block absolute top-18 left-8 text-white font-semibold rounded-lg flex justify-center items-center bg-fuchsia-900 px-5 py-2">
+        <a href="./routes.php?lane=<?= $defaultLane ?>" class="block fixed top-24 left-12 text-white font-semibold rounded-lg flex justify-center items-center bg-fuchsia-900 px-5 py-2">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
             </svg>
