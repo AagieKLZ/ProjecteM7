@@ -42,7 +42,7 @@ if (isset($_GET['destiny'])) {
                 <form method="post" action="./lib/schedule.php" class="flex lg:flex-row flex-col min-w-fit justify-around lg:items-end items-center lg:space-y-0 space-y-2 w-full mt-8">
                     <div class="flex flex-col space-y-1">
                         <label for="origin" class="font-semibold">Origen</label>
-                        <input autocomplete="off" value="<?= $origin_st ?>" required list="origin-list" id="origin" name="origin" placeholder="----" class="w-44 bg-white p-2 rounded-lg border-2 border-fuchsia-900">
+                        <input autocomplete="off" value="<?= $origin_st ?>" required list="origin-list" id="origin" name="origin" class="w-44 bg-white p-2 rounded-lg border-2 border-fuchsia-900">
                         <datalist id="origin-list">
                             <?php
                             $stations = lines::getAllStations();
@@ -54,7 +54,7 @@ if (isset($_GET['destiny'])) {
                     </div>
                     <div class="flex flex-col space-y-1">
                         <label for="destiny">Destino</label>
-                        <input autocomplete="off" value="<?= $destiny_st ?>" required list="destiny-list" id="destiny" name="destiny" placeholder="----" class="w-44 bg-white p-2 rounded-lg border-2 border-fuchsia-900">
+                        <input autocomplete="off" value="<?= $destiny_st ?>" required list="destiny-list" id="destiny" name="destiny" class="w-44 bg-white p-2 rounded-lg border-2 border-fuchsia-900">
                         <datalist name="destiny" id="destiny-list">
                             <?php
                             $stations = lines::getAllStations();
@@ -78,7 +78,14 @@ if (isset($_GET['destiny'])) {
                                     $i = "0" . $i;
                                 }
                                 ?>
+                                <?php
+                                $hour = date("H"); 
+                                if (!isset($_GET["time"])) : ?>
+                                    <option <?= $i == $hour ? "selected" : "" ?> value='<?= $i ?>:00'><?= $i ?>:00</option>
+                                <?php else : ?>
+                                    
                                 <option <?= !isset($_GET["time"]) ? "" : ($i . ":00" == $_GET["time"] ? "selected" : "") ?> value='<?= $i ?>:00'><?= $i ?>:00</option>
+                                <?php endif; ?>
                             <?php endfor;
                             ?>
                         </select>
@@ -102,15 +109,20 @@ if (isset($_GET['destiny'])) {
                     <div><b>Hora: </b> <?php echo $_GET['time'] ?></div>
                 </div>
                 <div class="flex mt-6 flex-row justify-between md:px-24 px-0 w-[90%] text-lg font-bold text-center border-b border-black">
-                    <div class="py-1">Línea</div>
-                    <div class="py-1">Salida</div>
-                    <div class="py-1">Llegada</div>
-                    <div class="py-1">Duración</div>
+                    <div class="py-1 text-center">Línea</div>
+                    <div class="py-1 text-center">Salida</div>
+                    <div class="py-1 text-center">Llegada</div>
+                    <div class="py-1 text-center">Duración</div>
                 </div>
                 <?php
-                $schedules = route::calculateRoute($_GET['origin'], $_GET['destiny'], $_GET['time']);
-
-                if (count($schedules) == 0) : ?>
+                if (isset($_GET['page'])) {
+                    $page = $_GET['page'];
+                } else {
+                    $page = 1;
+                }
+                $schedules = route::calculateRoute($_GET['origin'], $_GET['destiny'], $_GET['time'], $page);
+                $schedule_n = route::getNumberOfRoutes($_GET['origin'], $_GET['destiny'], $_GET['time']);
+                if ($schedule_n == 0) : ?>
                     <div class='flex flex-col justify-center items-center mt-10 w-full h-full'>
                         <h1 class='text-2xl font-bold'>No hay horarios disponibles</h1>
                         <a href='./index.php' class='bg-fuchsia-900 block text-center mt-4 px-5 py-2 text-white font-semibold rounded-lg'>
@@ -125,47 +137,49 @@ if (isset($_GET['destiny'])) {
                     ?>
                         <div class="flex mt-6 flex-row justify-between md:px-24 px-0 w-[90%] text-lg text-center">
                             <div class="
-                    <?= lines::getLineColour($s['route_id']) ?> <?= lines::getLineColour($s['route_id']) == 'bg-yellow-300' ? 'text-black' : 'text-white' ?>
+                    <?= $s["colour"] ?> <?= $s["colour"] == 'bg-yellow-300' ? 'text-black' : 'text-white' ?>
                     w-[50px] h-[50px] flex items-center justify-center">
                                 <?= $s['route_id'] ?>
                             </div>
-                            <div class="flex items-center py-1 text-center"><?= $s['time'] ?></div>
+                            <div class="flex items-center py-1 text-center"><?= $s['origin_time'] ?></div>
                             <div class="flex items-center py-1 text-center">
-                                <?php
-                                if ($_GET['origin'] < $_GET['destiny']) {
-                                    echo route::getTimeByTrainNumPassingByStation($s['train_num'], $_GET['destiny'])[0]['time'];
-                                } else {
-                                    echo route::getTimeByTrainNumPassingByStation($s['train_num'], $_GET['origin'])[0]['time'];
-                                }
-                                ?>
+                                <?= $s['destiny_time'] ?>
                             </div>
                             <div class="flex items-center py-1 text-center">
                                 <?php
-                                try {
-                                    $time1 = new DateTime($s['time']);
-                                    if ($_GET['origin'] < $_GET['destiny']) {
-                                        $time2 = new DateTime(route::getTimeByTrainNumPassingByStation($s['train_num'], $_GET['destiny'])[0]['time']);
-                                    } else {
-                                        $time2 = new DateTime(route::getTimeByTrainNumPassingByStation($s['train_num'], $_GET['origin'])[0]['time']);
-                                    }
-                                    $interval = $time1->diff($time2);
-                                    echo $interval->format('%H:%I') . 'h';
-                                } catch (Exception $e) {
-                                    echo '?';
-                                }
+                                $date1 = new DateTime($s['origin_time']);
+                                $date2 = new DateTime($s['destiny_time']);
+                                $diff = $date2->diff($date1);
+                                echo $diff->format('%H:%I');
                                 ?>
                             </div>
                         </div>
                     <?php
                     endforeach;
+                    $path = "./schedule.php?origin=" . $_GET['origin'] . "&destiny=" . $_GET['destiny'] . "&date=" . $_GET['date'] . "&time=" . $_GET['time'];
                     ?>
-                <?php else : ?>
-                    <!-- Replace this with condition if no results found and show no text if the variables are not set -->
-                    <div class="mt-24 text-2xl max-w-[90%] text-center">No se encuentran horarios con las condiciones
-                        seleccionadas
+                    <?php if ($schedule_n > 0) : ?>
+                    <div class="w-fit h-16 flex justify-center items-center rounded-full text-lg px-3">
+                        <?php if ($page > 1) : ?>
+                            <a href="<?= $path . "&page=" . ($page - 1) ?>" class="px-4 py-2 block hover:bg-fuchsia-900 hover:text-white hover:font-semibold <?= $page == 1 ? "bg-fuchsia-900 text-white" : "bg-white" ?>">
+                                < </a>
+                                <?php endif; ?>
+                                <?php for ($i = 0; $i < floor($schedule_n / 10); $i++) : ?>
+                                    <a href="<?= $path . "&page=" . ($i + 1) ?>" class="px-4 py-2 block hover:bg-fuchsia-900 hover:text-white <?= $i + 1 == $page ? "bg-fuchsia-900 text-white font-semibold" : "bg-white" ?>"><?= $i + 1 ?></a>
+                                <?php endfor; ?>
+                                <?php if ($page < floor($schedule_n / 10)) : ?>
+                                    <a href="<?= $path . "&page=" . ($page + 1) ?>" class="px-4 py-2 block hover:bg-fuchsia-900 hover:text-white hover:font-semibold <?= $page == count($stations) / 10 ? "bg-fuchsia-900 text-white" : "bg-white" ?>">></a>
+                                <?php endif; ?>
                     </div>
-
+                    <?php endif; ?>
                 <?php endif; ?>
+                <!-- <?php if (!isset($_GET["origin"]) && !isset($_GET["destiny"])) : ?> -->
+                    <!-- Replace this with condition if no results found and show no text if the variables are not set -->
+                    <!-- <div class="mt-24 text-2xl max-w-[90%] text-center">No se encuentran horarios con las condiciones
+                        seleccionadas
+                    </div> -->
+
+                <!-- <?php endif; ?> -->
     </main>
     <script>
         // Get today's date
@@ -174,11 +188,12 @@ if (isset($_GET['destiny'])) {
         // Set the value of the date input field to today's date
         document.querySelector("input[type=date]").value = today;
         const form = document.querySelector("form");
-        const origin = document.querySelector("#origin");
-        const destiny = document.querySelector("#destiny");
+        
         const station_list = document.querySelector("#origin-list");
         form.addEventListener("submit", (e) => {
             e.preventDefault();
+            const origin = document.querySelector("#origin");
+            const destiny = document.querySelector("#destiny");
             let origin_value = origin.value;
             let destiny_value = destiny.value;
             let origin_valid = false;
@@ -191,14 +206,16 @@ if (isset($_GET['destiny'])) {
                     destiny_valid = true;
                 }
             }
-            if (origin_valid && destiny_valid) {
+            if (origin_valid && destiny_valid && origin_value !== destiny_value) {
                 form.submit();
+            } else if (origin_value === destiny_value) {
+                alert("La estación de origen y destino no pueden ser iguales");
             } else {
                 alert("Por favor, seleccione una estación válida");
             }
         })
     </script>
-    <?php include ("./components/searchModal.php") ?>
+    <?php include("./components/searchModal.php") ?>
 </body>
 
 </html>
