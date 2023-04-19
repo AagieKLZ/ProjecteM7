@@ -39,8 +39,13 @@ use api\lines;
             <?php
             
             $lanes = lines::getLines();
+            if (isset($_GET["lane"])){
+                $selected = $_GET["lane"];
+            } else {
+                $selected = "R1";
+            }
             foreach ($lanes as $index => $lane) :?>
-            <?php if(isset($_GET["lane"]) && $_GET["lane"] != $lane["route_id"]) continue; ?>
+            <?php if($selected != $lane["route_id"]) continue; ?>
                     <div class="flex flex-row justify-evenly <?= $index % 2 == 0 ? "bg-white" : "bg-gray-100" ?> items-center w-full py-4">
                         <div class="w-1/3">
                         <div class="<?= $lane['colour']?> <?= $lane['colour'] == 'bg-yellow-300' ? 'text-black' : 'text-white'?> font-semibold w-[50px] mx-auto h-[50px] flex items-center justify-center">
