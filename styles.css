@@ -315,5 +315,5 @@ body {
 
 .modal-open {
     background-color: red;
-    animation: zoomin 0.5s forwards ease-in-out;
+    animation: zoomin 0.25s forwards ease-in-out;
 }
