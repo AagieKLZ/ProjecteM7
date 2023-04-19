@@ -14,7 +14,7 @@ use api\lines;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tenfe</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="styles.css">   
+    <link rel="stylesheet" href="styles.css">
 
 </head>
 
@@ -44,7 +44,7 @@ use api\lines;
                         </datalist>
                     </div>
                     <div class="flex flex-col space-y-1">
-                        <label for="destiny">Destino</label>
+                        <label for="destiny" class="font-semibold">Destino</label>
                         <input autocomplete="off" required list="destiny-list" id="destiny" name="destiny" class="w-44 bg-white p-2 rounded-lg border-2 border-fuchsia-900">
                         <datalist name="destiny" id="destiny-list">
                             <?php
@@ -56,21 +56,21 @@ use api\lines;
                         </datalist>
                     </div>
                     <div class="flex flex-col space-y-1">
-                        <label for="date">Fecha</label>
+                        <label for="date" class="font-semibold">Fecha</label>
                         <input required type="date" name="date" id="date" class="w-44 bg-white p-2 rounded-lg border-2 border-fuchsia-900">
                     </div>
                     <div class="flex flex-col space-y-1">
-                        <label for="time">Hora</label>
+                        <label for="time" class="font-semibold">Hora</label>
                         <select name="time" id="time" placeholder="----" class="w-44 bg-white p-2 rounded-lg border-2 border-fuchsia-900">
                             <?php
                             $hour = date("H");
                             // Add 0s to hours lower than 10
                             for ($i = 0; $i < 24; $i++) : ?>
-                            <?php if ($i < 10) {
+                                <?php if ($i < 10) {
                                     $i = "0" . $i;
                                 }
-                            ?>
-                                <option <?= $i == $hour ? "selected" : "" ?> value='<?= $i ?>:00'><?=$i?>:00</option>
+                                ?>
+                                <option <?= $i == $hour ? "selected" : "" ?> value='<?= $i ?>:00'><?= $i ?>:00</option>
                             <?php endfor;
                             ?>
                         </select>
@@ -107,40 +107,44 @@ use api\lines;
                 </a>
             </div>
         </div>
+        <?php include "./components/searchModal.php" ?>
     </main>
     <script>
         // Get today's date
         const today = new Date().toISOString().substr(0, 10);
 
         // Set the value of the date input field to today's date
-        document.querySelector("input[type=date]").value = today;
+        document.getElementById("date").value = today;
         const form = document.querySelector("form");
-        const origin = document.querySelector("#origin");
-        const destiny = document.querySelector("#destiny");
-        const station_list = document.querySelector("#origin-list");
+        
         form.addEventListener("submit", (e) => {
             e.preventDefault();
+            const origin = document.querySelector("#origin");
+            const destiny = document.querySelector("#destiny");
+            const station_list = document.querySelector("#origin-list");
             let origin_value = origin.value;
             let destiny_value = destiny.value;
             let origin_valid = false;
             let destiny_valid = false;
             for (let i = 0; i < station_list.options.length; i++) {
-                if (station_list.options[i].value == origin_value) {
+                if (station_list.options[i].value === origin_value) {
                     origin_valid = true;
                 }
-                if (station_list.options[i].value == destiny_value) {
+                if (station_list.options[i].value === destiny_value) {
                     destiny_valid = true;
                 }
             }
-            if (origin_valid && destiny_valid && origin_value != destiny_value) {
+            console.log(origin_valid, destiny_valid, origin_value, destiny_value)
+            if (origin_valid && destiny_valid && origin_value !== destiny_value) {
                 form.submit();
-            } else if (origin_value == destiny_value) {
+            } else if (origin_value === destiny_value) {
                 alert("La estación de origen y destino no pueden ser iguales");
             } else {
                 alert("Por favor, seleccione una estación válida");
             }
         })
     </script>
+    
 </body>
 
 </html>

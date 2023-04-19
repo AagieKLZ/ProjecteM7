@@ -302,3 +302,18 @@ body {
 .toast:hover .loader {
     animation-play-state: paused;
 }
+
+@keyframes zoomin {
+    0% {
+        transform: scale(0);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.modal-open {
+    background-color: red;
+    animation: zoomin 0.5s forwards ease-in-out;
+}
