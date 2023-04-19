@@ -32,9 +32,10 @@ use api\lines;
                 <?php endforeach; ?>
             </div>
             <div class="flex flex-row justify-evenly items-center w-full text-center text-xl font-semibold border-b border-b-black mb-2 py-2 mt-4">
-                <div class="w-1/3 text-center">Linea</div>
-                <div class="w-1/3 text-center">Origen</div>
-                <div class="w-1/3 text-center">Destino</div>
+                <div class="w-1/4 text-center">Linea</div>
+                <div class="w-1/4 text-center">Origen</div>
+                <div class="w-1/4 text-center">Destino</div>
+                <div class="w-1/4 text-center">Detalles</div>
             </div>
             <?php
             
@@ -46,15 +47,16 @@ use api\lines;
             }
             foreach ($lanes as $index => $lane) :?>
             <?php if($selected != $lane["route_id"]) continue; ?>
-                    <div class="flex flex-row justify-evenly <?= $index % 2 == 0 ? "bg-white" : "bg-gray-100" ?> items-center w-full py-4">
-                        <div class="w-1/3">
+                    <div class="block flex flex-row justify-evenly <?= $index % 2 == 0 ? "bg-white" : "bg-gray-100" ?> items-center w-full py-4">
+                        <div class="w-1/4">
                         <div class="<?= $lane['colour']?> <?= $lane['colour'] == 'bg-yellow-300' ? 'text-black' : 'text-white'?> font-semibold w-[50px] mx-auto h-[50px] flex items-center justify-center">
                             <?= $lane['route_id'] ?>
                         </div>
                         </div>
-                        <div class="w-1/3 text-center"><?= $lane['Origin'] ?></div>
-                        <div class="w-1/3 text-center"><?= $lane['Destiny'] ?></div>
-                    </div>
+                        <div class="w-1/4 text-center"><?= $lane['Origin'] ?></div>
+                        <div class="w-1/4 text-center"><?= $lane['Destiny'] ?></div>
+                        <div class="w-1/4 text-center"><a class="text-fuchsia-900 underline" href="./variants.php?lane=<?=$lane['route_id']?>&origin=<?=$lane['Origin']?>&destiny=<?=$lane['Destiny']?>">Detalles</a></div>
+            </div>
                 
             <?php endforeach; ?>
         </div>
