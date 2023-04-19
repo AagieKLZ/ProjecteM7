@@ -33,7 +33,7 @@ use api\lines;
                 <form method="post" action="./lib/schedule.php" class="flex lg:flex-row flex-col min-w-fit justify-around lg:items-end items-center lg:space-y-0 space-y-2 w-full mt-8">
                     <div class="flex flex-col space-y-1">
                         <label for="origin" class="font-semibold">Origen</label>
-                        <input autocomplete="off" required list="origin-list" id="origin" name="origin" class="w-44 bg-white p-2 rounded-lg border-2 border-fuchsia-900">
+                        <input autocomplete="off" required list="origin-list" id="origin" name="origin" class="w-44 bg-white px-2 h-12 rounded-lg border-2 border-fuchsia-900">
                         <datalist id="origin-list">
                             <?php
                             $stations = lines::getAllStations();
@@ -45,7 +45,7 @@ use api\lines;
                     </div>
                     <div class="flex flex-col space-y-1">
                         <label for="destiny" class="font-semibold">Destino</label>
-                        <input autocomplete="off" required list="destiny-list" id="destiny" name="destiny" class="w-44 bg-white p-2 rounded-lg border-2 border-fuchsia-900">
+                        <input autocomplete="off" required list="destiny-list" id="destiny" name="destiny" class="w-44 bg-white px-2 h-12 rounded-lg border-2 border-fuchsia-900">
                         <datalist name="destiny" id="destiny-list">
                             <?php
                             $stations = lines::getAllStations();
@@ -57,11 +57,11 @@ use api\lines;
                     </div>
                     <div class="flex flex-col space-y-1">
                         <label for="date" class="font-semibold">Fecha</label>
-                        <input required type="date" name="date" id="date" class="w-44 bg-white p-2 rounded-lg border-2 border-fuchsia-900">
+                        <input required type="date" name="date" id="date" class="w-44 bg-white px-2 h-12 rounded-lg border-2 border-fuchsia-900">
                     </div>
                     <div class="flex flex-col space-y-1">
                         <label for="time" class="font-semibold">Hora</label>
-                        <select name="time" id="time" placeholder="----" class="w-44 bg-white p-2 rounded-lg border-2 border-fuchsia-900">
+                        <select name="time" id="time" placeholder="----" class="w-44 bg-white px-2 h-12 rounded-lg border-2 border-fuchsia-900">
                             <?php
                             $hour = date("H");
                             // Add 0s to hours lower than 10
@@ -75,7 +75,7 @@ use api\lines;
                             ?>
                         </select>
                     </div>
-                    <button class="bg-gray-200 active:animate-pulse bg-opacity-75 hover:bg-fuchsia-900 hover:text-white text-black border-2 font-semibold border-black w-fit px-10 py-2 rounded-lg flex justify-between items-center md:text-xl text-lg">
+                    <button class="bg-gray-200 active:animate-pulse bg-opacity-75 hover:bg-fuchsia-900 hover:text-white text-black border-2 font-semibold border-black w-fit px-10 h-12 rounded-lg flex justify-between items-center md:text-xl text-lg">
                         Buscar
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6 ml-2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
