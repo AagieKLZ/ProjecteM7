@@ -26,7 +26,7 @@ ini_set('display_errors', 'On');
             <div class="w-full text-center text-4xl font-bold h-52 flex justify-center items-center station-main text-white">
                 Estaciones
             </div>
-            <div class="flex flex-row justify-evenly items-center w-full text-center text-xl font-semibold border-b border-b-black py-2">
+            <div class="flex flex-row justify-evenly px-4 items-center w-full text-center text-xl font-semibold border-b border-b-black py-2">
                 <div class="w-1/2 text-left px-10 py-1">Estación</div>
                 <div class="w-1/2 py-1">Correspondencias</div>
             </div>
@@ -44,7 +44,7 @@ ini_set('display_errors', 'On');
             $stations = lines::getAllStationsWithConnections();
             foreach ($stations as $i => $station) : ?>
             <?php if ($i > ($page - 1) * 10 && $i <= ($page) * 10): ?>
-                <div class="flex flex-row justify-evenly <?= $i % 2 == 0 ? "bg-white" : "bg-gray-100" ?> items-center w-full py-4 text-center text-xl">
+                <div class="flex flex-row justify-evenly px-4 <?= $i % 2 == 0 ? "bg-white" : "bg-gray-100" ?> items-center w-full py-4 text-center text-xl">
                     <div class="w-1/2 text-left">
                         <?= $station["name"]; ?>
                     </div>
