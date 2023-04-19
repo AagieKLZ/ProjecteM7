@@ -44,6 +44,6 @@ session_get_cookie_params();
             <?php endforeach; ?>
         </div>
 
-
+        <?php include ("./components/searchModal.php") ?>
     </main>
 </body>

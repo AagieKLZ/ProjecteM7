@@ -52,6 +52,7 @@ if (!isset($_SESSION['user'])) {
             </a>
         </div>
     </main>
+    <?php include ("./components/searchModal.php") ?>
 </body>
 
 </html>

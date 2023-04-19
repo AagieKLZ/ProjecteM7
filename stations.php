@@ -71,4 +71,5 @@ ini_set('display_errors', 'On');
             </div>
         </div>
     </main>
+    <?php include ("./components/searchModal.php") ?>
 </body>

@@ -43,7 +43,7 @@
             <button class="md:w-2/3 w-[90%] py-2 border-2 border-fuchsia-900 rounded-lg text-fuchsia-900 font-semibold hover:text-white hover:bg-fuchsia-900">Iniciar Sesión</button>
         </form>
     </main>
-
+    <?php include ("./components/searchModal.php") ?>
 
 </body>
 

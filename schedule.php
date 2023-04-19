@@ -198,6 +198,7 @@ if (isset($_GET['destiny'])) {
             }
         })
     </script>
+    <?php include ("./components/searchModal.php") ?>
 </body>
 
 </html>
