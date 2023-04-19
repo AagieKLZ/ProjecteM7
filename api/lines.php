@@ -45,6 +45,16 @@ class lines
         return $stations;
     }
 
+    public static function getNumberOfStations(): int{
+        $db = dbClient::getInstance();
+        $sql = "SELECT COUNT(*) AS count FROM stations;";
+        $result = $db->query($sql, []);
+        if (count($result) == 0){
+            return 0;
+        }
+        return $result[0]["count"];
+    }
+
     public static function getStations(int $page, int $size){
         $db = dbClient::getInstance();
         $sql = "SELECT id, name FROM stations ORDER BY name LIMIT ? OFFSET ?;";

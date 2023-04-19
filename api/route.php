@@ -15,73 +15,35 @@ class route
      * @param $destinationStationId int destination station id
      * @return array with all routes between the two stations
      */
-    public static function calculateRoute(int $originStationId, int $destinationStationId, string $time): array
+    public static function calculateRoute(int $originStationId, int $destinationStationId, string $time, int $page): array
     {
         // First check if the stations are in the same line, if they share a route
         $db = dbClient::getInstance();
-        $sql = "SELECT DISTINCT route_id, colour
-            FROM schedules
-            INNER JOIN routes r ON schedules.route_id = r.name
-            WHERE station_id = ?
-            AND route_id IN (SELECT DISTINCT route_id
-            FROM schedules
-            INNER JOIN routes r ON schedules.route_id = r.name
-            WHERE station_id = ?);";
-        $common = $db->query($sql, [$originStationId, $destinationStationId]);
-        // In case they share at least one route, we get trains that go from the origin to the destination
-        if (count($common) > 0) {
-            $sql = "";
-            $params = [];
-            if ($originStationId < $destinationStationId) {
-                $sql = "SELECT *
-                    FROM schedules s1
-                    WHERE station_id = ?
-                      AND time > ?
-                      AND route_id IN (SELECT DISTINCT s1.route_id
-                                        FROM schedules s1
-                                        INNER JOIN routes r ON s1.route_id = r.name
-                                        WHERE station_id = ?
-                                        AND route_id IN (SELECT DISTINCT s2.route_id
-                                        FROM schedules s2
-                                        INNER JOIN routes r ON s2.route_id = r.name
-                                        WHERE station_id = ?))
-                      AND s1.stop_number < (SELECT s2.stop_number
-                                          FROM schedules s2
-                                          WHERE station_id = ?
-                                          AND time > ?
-                                          LIMIT 1)
-                    ORDER BY time
-                    LIMIT 10;";
-                $params = [$originStationId, $time, $originStationId, $destinationStationId, $destinationStationId, $time];
+        $sql = 'SELECT S1.route_id, R.colour, S1.time AS origin_time, S2.time AS destiny_time FROM schedules AS S1
+        INNER JOIN schedules AS S2 ON (S1.train_num = S2.train_num) 
+        INNER JOIN routes AS R ON (S1.route_id = R.name)
+        WHERE S1.station_id = ? AND S2.station_id = ? AND S1.TIME < S2.TIME AND S1.TIME > ?
+        ORDER BY S1.TIME LIMIT ? OFFSET ?;
+        ';
+        $offset = ($page - 1) * 10;
+        $size = 10;
+        return $db->query($sql, [$originStationId, $destinationStationId, $time, (int) $size, $offset]);
+    }
 
-            } else {
-                $sql = "SELECT *
-                    FROM schedules s1
-                    WHERE station_id = ?
-                      AND time > ?
-                      AND route_id IN (SELECT DISTINCT s1.route_id
-                                        FROM schedules s1
-                                        INNER JOIN routes r ON s1.route_id = r.name
-                                        WHERE station_id = ?
-                                        AND route_id IN (SELECT DISTINCT s2.route_id
-                                        FROM schedules s2
-                                        INNER JOIN routes r ON s2.route_id = r.name
-                                        WHERE station_id = ?))
-                      AND s1.stop_number > (SELECT s2.stop_number
-                                          FROM schedules s2
-                                          WHERE station_id = ?
-                                          AND time > ?
-                                          LIMIT 1)
-                    ORDER BY time
-                    LIMIT 10;";
-                $params = [$destinationStationId, $time, $destinationStationId, $originStationId, $originStationId, $time];
-            }
-
-            return $db->query($sql, $params);
-
-        } else {
-            return [];
+    public static function getNumberOfRoutes(int $originStationId, int $destinationStationId, string $time): int
+    {
+        // First check if the stations are in the same line, if they share a route
+        $db = dbClient::getInstance();
+        $sql = 'SELECT COUNT(*) AS count FROM schedules AS S1
+        INNER JOIN schedules AS S2 ON (S1.train_num = S2.train_num) 
+        INNER JOIN routes AS R ON (S1.route_id = R.name)
+        WHERE S1.station_id = ? AND S2.station_id = ? AND S1.TIME < S2.TIME AND S1.TIME > ?;
+        ';
+        $result = $db->query($sql, [$originStationId, $destinationStationId, $time]);
+        if (count($result) == 0) {
+            return 0;
         }
+        return $result[0]['count'];
     }
 
     /**
