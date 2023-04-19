@@ -79,12 +79,12 @@ if (isset($_GET['destiny'])) {
                                 }
                                 ?>
                                 <?php
-                                $hour = date("H"); 
+                                $hour = date("H");
                                 if (!isset($_GET["time"])) : ?>
                                     <option <?= $i == $hour ? "selected" : "" ?> value='<?= $i ?>:00'><?= $i ?>:00</option>
                                 <?php else : ?>
-                                    
-                                <option <?= !isset($_GET["time"]) ? "" : ($i . ":00" == $_GET["time"] ? "selected" : "") ?> value='<?= $i ?>:00'><?= $i ?>:00</option>
+
+                                    <option <?= !isset($_GET["time"]) ? "" : ($i . ":00" == $_GET["time"] ? "selected" : "") ?> value='<?= $i ?>:00'><?= $i ?>:00</option>
                                 <?php endif; ?>
                             <?php endfor;
                             ?>
@@ -107,6 +107,15 @@ if (isset($_GET['destiny'])) {
                 <div class="flex flex-row justify-between w-2/3 mt-2 text-lg">
                     <div><b>Fecha: </b> <?php echo $_GET['date'] ?></div>
                     <div><b>Hora: </b> <?php echo $_GET['time'] ?></div>
+                </div>
+                <div>
+                    <a href="schedule.php?origin=<?= $_GET["destiny"] ?>&destiny=<?= $_GET["origin"] ?>&time=<?= $_GET["time"] ?>&date=<?= $_GET["date"] ?>" class="block drop-shadow-xl hover:bg-fuchsia-900 hover:text-white hover:stroke-white flex justify-center items-center px-2 border border-2 border-fuchsia-900 text-fuchsia-900 h-12 w-52 rounded-lg font-semibold">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 mr-4">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
+                        </svg>
+
+                        Horarios de vuelta
+                    </a>
                 </div>
                 <div class="flex mt-6 flex-row justify-between md:px-24 px-0 w-[90%] text-lg font-bold text-center border-b border-black">
                     <div class="py-1 text-center">Línea</div>
@@ -159,18 +168,18 @@ if (isset($_GET['destiny'])) {
                     $path = "./schedule.php?origin=" . $_GET['origin'] . "&destiny=" . $_GET['destiny'] . "&date=" . $_GET['date'] . "&time=" . $_GET['time'];
                     ?>
                     <?php if ($schedule_n > 0) : ?>
-                    <div class="w-fit h-16 flex justify-center items-center rounded-full text-lg px-3">
-                        <?php if ($page > 1) : ?>
-                            <a href="<?= $path . "&page=" . ($page - 1) ?>" class="px-4 py-2 block hover:bg-fuchsia-900 hover:text-white hover:font-semibold <?= $page == 1 ? "bg-fuchsia-900 text-white" : "bg-white" ?>">
-                                < </a>
-                                <?php endif; ?>
-                                <?php for ($i = 0; $i < floor($schedule_n / 10); $i++) : ?>
-                                    <a href="<?= $path . "&page=" . ($i + 1) ?>" class="px-4 py-2 block hover:bg-fuchsia-900 hover:text-white <?= $i + 1 == $page ? "bg-fuchsia-900 text-white font-semibold" : "bg-white" ?>"><?= $i + 1 ?></a>
-                                <?php endfor; ?>
-                                <?php if ($page < floor($schedule_n / 10)) : ?>
-                                    <a href="<?= $path . "&page=" . ($page + 1) ?>" class="px-4 py-2 block hover:bg-fuchsia-900 hover:text-white hover:font-semibold <?= $page == count($stations) / 10 ? "bg-fuchsia-900 text-white" : "bg-white" ?>">></a>
-                                <?php endif; ?>
-                    </div>
+                        <div class="w-fit h-16 flex justify-center items-center rounded-full text-lg px-3">
+                            <?php if ($page > 1) : ?>
+                                <a href="<?= $path . "&page=" . ($page - 1) ?>" class="px-4 py-2 block hover:bg-fuchsia-900 hover:text-white hover:font-semibold <?= $page == 1 ? "bg-fuchsia-900 text-white" : "bg-white" ?>">
+                                    < </a>
+                                    <?php endif; ?>
+                                    <?php for ($i = 0; $i < floor($schedule_n / 10); $i++) : ?>
+                                        <a href="<?= $path . "&page=" . ($i + 1) ?>" class="px-4 py-2 block hover:bg-fuchsia-900 hover:text-white <?= $i + 1 == $page ? "bg-fuchsia-900 text-white font-semibold" : "bg-white" ?>"><?= $i + 1 ?></a>
+                                    <?php endfor; ?>
+                                    <?php if ($page < floor($schedule_n / 10)) : ?>
+                                        <a href="<?= $path . "&page=" . ($page + 1) ?>" class="px-4 py-2 block hover:bg-fuchsia-900 hover:text-white hover:font-semibold <?= $page == count($stations) / 10 ? "bg-fuchsia-900 text-white" : "bg-white" ?>">></a>
+                                    <?php endif; ?>
+                        </div>
                     <?php endif; ?>
                 <?php endif; ?>
     </main>
@@ -181,7 +190,7 @@ if (isset($_GET['destiny'])) {
         // Set the value of the date input field to today's date
         document.querySelector("input[type=date]").value = today;
         const form = document.querySelector("form");
-        
+
         const station_list = document.querySelector("#origin-list");
         form.addEventListener("submit", (e) => {
             e.preventDefault();
