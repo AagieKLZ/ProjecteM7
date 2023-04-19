@@ -5,7 +5,7 @@ if (!class_Exists('lines')) {
 
 use api\lines;
 ?>
-<button id="modal-open" tabindex="0" class="fixed bottom-4 left-8 hover:bg-fuchsia-800 flex z-[80] justify-center items-center rounded-full drop-shadow-xl hover:scale-105 w-20 h-20 bg-fuchsia-900">
+<button id="modal-open" tabindex="0" class="fixed bottom-4 left-8 hover:bg-fuchsia-800 flex z-[80] justify-center items-center rounded-full drop-shadow-xl hover:scale-105 w-16 h-16 bg-fuchsia-900">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-9 h-9 stroke-white">
         <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
     </svg>
