@@ -1,19 +1,29 @@
-FROM php:8.0-apache
+FROM ubuntu:20.04
 
-WORKDIR /var/www/html
+# Install required packages
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y \
+        apache2 \
+        php \
+        php-mysql \
+        mysql-server \
+        mysql-client && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-RUN apt-get update && apt-get install -y mysql-client mysql-server
-RUN echo "mysql-server mysql-server/root_password password 123321" | debconf-set-selections
-RUN echo "mysql-server mysql-server/root_password_again password 123321" | debconf-set-selections
+# Copy the Apache config file
+COPY apache2.conf /etc/apache2/apache2.conf
 
-RUN docker-php-ext-install mysqli pdo pdo_mysql
+# Copy the PHP app files
+COPY app/ /var/www/html/
 
-COPY . ./
+# Set up the MySQL database
+RUN service mysql start && \
+    mysql -e "CREATE DATABASE tenfe;" && \
+    mysql -e "GRANT ALL PRIVILEGES ON tenfe.* TO 'root'@'localhost' IDENTIFIED BY '123321';"
 
+# Expose port 80
 EXPOSE 80
 
-RUN chown -R www-data:www-data /var/www/html/
-RUN a2enmod rewrite
-
-COPY docker/apache.conf /etc/apache2/sites-available/000-default.conf
-CMD service mysql start && apache2-foreground
+# Start Apache and MySQL
+CMD service mysql start && /usr/sbin/apache2ctl -D FOREGROUND
