@@ -15,7 +15,7 @@ RUN apt-get update && \
 COPY apache2.conf /etc/apache2/apache2.conf
 
 # Copy the PHP app files
-COPY app/ /var/www/html/
+COPY . /var/www/html/
 
 # Set up the MySQL database
 RUN service mysql start && \
