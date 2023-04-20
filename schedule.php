@@ -118,10 +118,10 @@ if (isset($_GET['destiny'])) {
                     </a>
                 </div>
                 <div class="flex mt-6 flex-row justify-between md:px-24 px-0 w-[90%] text-lg font-bold text-center border-b border-black">
-                    <div class="py-1 text-center">Línea</div>
-                    <div class="py-1 text-center">Salida</div>
-                    <div class="py-1 text-center">Llegada</div>
-                    <div class="py-1 text-center">Duración</div>
+                    <div class="py-1 w-1/4 text-center">Línea</div>
+                    <div class="py-1 w-1/4 text-center">Salida</div>
+                    <div class="py-1 w-1/4 text-center">Llegada</div>
+                    <div class="py-1 w-1/4 text-center">Duración</div>
                 </div>
                 <?php
                 if (isset($_GET['page'])) {
@@ -142,19 +142,22 @@ if (isset($_GET['destiny'])) {
                     <?php endif; ?>
 
                     <?php
-                    foreach ($schedules as $s) :
+                    foreach ($schedules as $i => $s) :
                     ?>
-                        <div class="flex mt-6 flex-row justify-between md:px-24 px-0 w-[90%] text-lg text-center">
-                            <div class="
+                        <div class="flex py-3 <?= $i % 2 == 0 ? "bg-gray-100" : "bg-white" ?> flex-row justify-between md:px-24 px-0 w-[90%] text-lg text-center">
+
+                            <div class="w-1/4 flex justify-center items-center">
+                                <div class="
                     <?= $s["colour"] ?> <?= $s["colour"] == 'bg-yellow-300' ? 'text-black' : 'text-white' ?>
-                    w-[50px] h-[50px] flex items-center justify-center">
-                                <?= $s['route_id'] ?>
+                    w-[50px] h-[50px] flex items-center justify-center font-semibold">
+                                    <?= $s['route_id'] ?>
+                                </div>
                             </div>
-                            <div class="flex items-center py-1 text-center"><?= $s['origin_time'] ?></div>
-                            <div class="flex items-center py-1 text-center">
+                            <div class="w-1/4 flex items-center justify-center py-1 text-center"><?= $s['origin_time'] ?></div>
+                            <div class="w-1/4 flex items-center justify-center py-1 text-center">
                                 <?= $s['destiny_time'] ?>
                             </div>
-                            <div class="flex items-center py-1 text-center">
+                            <div class="w-1/4 mx-auto flex items-center justify-center py-1 text-center">
                                 <?php
                                 $date1 = new DateTime($s['origin_time']);
                                 $date2 = new DateTime($s['destiny_time']);
