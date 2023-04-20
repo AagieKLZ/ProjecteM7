@@ -55,7 +55,7 @@ use api\lines;
                         </div>
                         <div class="w-1/4 text-center"><?= $lane['Origin'] ?></div>
                         <div class="w-1/4 text-center"><?= $lane['Destiny'] ?></div>
-                        <div class="w-1/4 text-center"><a class="text-fuchsia-900 underline" href="./variants.php?lane=<?=$lane['route_id']?>&origin=<?=$lane['Origin']?>&destiny=<?=$lane['Destiny']?>">Detalles</a></div>
+                        <div class="w-1/4 text-center"><a class="text-fuchsia-900 underline" href="./variants.php?route=<?=$lane['route_id']?>&origin=<?=$lane['Origin']?>&destiny=<?=$lane['Destiny']?>">Detalles</a></div>
             </div>
                 
             <?php endforeach; ?>

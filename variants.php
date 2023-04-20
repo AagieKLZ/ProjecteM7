@@ -26,8 +26,8 @@ error_reporting(0);
 <body class="mt-5">
 
     <?php include 'components/navbar.php'; ?>
-    <?php if (isset($_GET["lane"])) {
-        $defaultLane = $_GET["lane"];
+    <?php if (isset($_GET["route"])) {
+        $defaultLane = $_GET["route"];
     } else {
         $defaultLane = "R1";
     }
@@ -96,6 +96,8 @@ error_reporting(0);
                             </div>
                             <div class="font-fuchsia-900 font-light"><?= $prev["Origin"] ?> - <?= $prev["Destiny"] ?></div>
                         </a>
+                    <?php else: ?>
+                        <div class="w-1/2 mr-4"></div>
                     <?php endif; ?>
                     <?php if ($next != null) : ?>
                         <a href="./variants.php?route=<?= $defaultLane ?>&origin=<?= $next['Origin'] ?>&destiny=<?= $next['Destiny'] ?>" class="w-1/2 flex h-full flex-col border p-2 rounded-xl border-fuchsia-900">
@@ -108,6 +110,8 @@ error_reporting(0);
                             </div>
                             <div class="flex items-end justify-end font-fuchsia-900 font-light"> <?= $next["Origin"] ?> - <?= $next["Destiny"] ?></div>
                         </a>
+                        <?php else: ?>
+                        <div class="w-1/2 ml-4"></div>
                     <?php endif; ?>
                 </div>
             </div>
@@ -139,6 +143,7 @@ error_reporting(0);
             Volver
         </a>
     </main>
+    <?php include ("./components/searchModal.php") ?>
 </body>
 
 </html>
