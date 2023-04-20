@@ -70,7 +70,7 @@ class lines
      * @param int $stationId station id
      * @return array with all routes where you can transfer from in a station
      */
-    private function getConnectionsOfStation(int $stationId): array
+    public static function getConnectionsOfStation(int $stationId): array
     {
         $db = dbClient::getInstance();
         $sql = "SELECT DISTINCT route_id, colour FROM schedules

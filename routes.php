@@ -28,7 +28,7 @@ use api\lines;
                     $all_lanes = lines::getAllLines(); 
                     foreach($all_lanes as $lane):
                 ?>
-                    <a href="?lane=<?=$lane["name"] ?>" class="<?=$lane["colour"]?> block px-4 py-3 <?=$lane["colour"] == "bg-yellow-500" ? "text-black" : "text-white"?> font-semibold"><?=$lane["name"] ?></a>
+                    <a href="?lane=<?=$lane["name"] ?>" class="<?=$lane["colour"]?> block px-4 py-3 <?=$lane["colour"] == "bg-yellow-300" ? "text-black" : "text-white"?> font-semibold"><?=$lane["name"] ?></a>
                 <?php endforeach; ?>
             </div>
             <div class="flex flex-row justify-evenly items-center w-full text-center text-xl font-semibold border-b border-b-black mb-2 py-2 mt-4">

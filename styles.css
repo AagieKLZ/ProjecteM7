@@ -317,3 +317,7 @@ body {
     background-color: red;
     animation: zoomin 0.25s forwards ease-in-out;
 }
+
+.station:hover ~ .line-circle{
+    transform: scale(1.05)
+}
