@@ -80,3 +80,6 @@ $color = lines::getLineColour($defaultLane);
 
             Volver
         </a>
+            </main>
+            </body>
+            </html>
