@@ -7,34 +7,6 @@ include "./api/route.php";
 use api\lines;
 
 error_reporting(0);
-if (isset($_GET["lane"])) {
-    $defaultLane = $_GET["lane"];
-} else {
-    $defaultLane = "R1";
-}
-$directions = lines::getDirections($defaultLane);
-
-if (isset($_GET["direction"])) {
-    $defaultDirection = $_GET["direction"];
-} else {
-    $defaultDirection = 0;
-}
-
-$defaultValue = $directions[$defaultDirection];
-if (isset($_GET["origin"])) {
-    $defaultOrigin = $_GET["origin"];
-} else {
-    $defaultOrigin = $defaultValue["Origin"];
-}
-
-if (isset($_GET["destiny"])) {
-    $defaultDestiny = $_GET["destiny"];
-} else {
-    $defaultDestiny = $defaultValue["Destiny"];
-}
-
-$stations = lines::getAllStationsBetween($defaultOrigin, $defaultDestiny);
-$color = lines::getLineColour($defaultLane);
 ?>
 
 <!DOCTYPE html>
@@ -54,6 +26,34 @@ $color = lines::getLineColour($defaultLane);
 <body class="mt-5">
 
     <?php include 'components/navbar.php'; ?>
+    <?php if (isset($_GET["lane"])) {
+        $defaultLane = $_GET["lane"];
+    } else {
+        $defaultLane = "R1";
+    }
+    $directions = lines::getDirections($defaultLane);
+
+    if (isset($_GET["direction"])) {
+        $defaultDirection = $_GET["direction"];
+    } else {
+        $defaultDirection = 0;
+    }
+
+    $defaultValue = $directions[$defaultDirection];
+    if (isset($_GET["origin"])) {
+        $defaultOrigin = $_GET["origin"];
+    } else {
+        $defaultOrigin = $defaultValue["Origin"];
+    }
+
+    if (isset($_GET["destiny"])) {
+        $defaultDestiny = $_GET["destiny"];
+    } else {
+        $defaultDestiny = $defaultValue["Destiny"];
+    }
+
+    $stations = lines::getAllStationsBetween($defaultOrigin, $defaultDestiny);
+    $color = lines::getLineColour($defaultLane); ?>
     <main class="flex flex-col justify-center items-center w-full h-[calc(100%-3.5rem)] mt-[5rem]">
         <div class="fixed top-0 left-0 h-screen w-1/2 flex flex-col justify-center items-center">
             <div class="flex justify-center mt-4">
@@ -80,6 +80,7 @@ $color = lines::getLineColour($defaultLane);
 
             Volver
         </a>
-            </main>
-            </body>
-            </html>
+    </main>
+</body>
+
+</html>
