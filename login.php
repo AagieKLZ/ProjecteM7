@@ -1,5 +1,11 @@
 <?php
-    $_SESSION["errorCode"] = "";
+session_start();
+session_get_cookie_params();
+if (isset($_SESSION["user"])){
+    header("Location: ./index.php");
+    exit();
+}
+$_SESSION["errorCode"] = "";
 ?>
 <!DOCTYPE html>
 <html lang="en">
