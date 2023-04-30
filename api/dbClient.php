@@ -9,14 +9,12 @@ class dbClient
 {
 
     // Db connection config
+    private static $instance;
     private $usuari = "root";
     private $contrasenya;
-    private $db = "tenfe";
-    private $host = "localhost:3306";
-
+    private $db = "railway";
+    private $host = "containers-us-west-11.railway.app:5513";
     private $conn;
-
-    private static $instance;
 
     /**
      * Class constructor
@@ -28,10 +26,20 @@ class dbClient
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
             PDO::ATTR_EMULATE_PREPARES => false,
         ];
-        $this->setPassword("");
+        $this->setPassword("lBAHrHt8GHcznpsaqfRw");
         $this->conn = new PDO("mysql:host=$this->host;dbname=$this->db", $this->usuari, $this->contrasenya, $options);
         // Creem les taules si no existeixen
         // $this->createTables();
+    }
+
+    /**
+     * Sets the password
+     * @param $password
+     * @return void
+     */
+    private function setPassword($password)
+    {
+        $this->contrasenya = $password;
     }
 
     public static function getInstance()
@@ -56,7 +64,8 @@ class dbClient
         return $stmt->fetchAll();
     }
 
-    public function insert($sql, $params): bool{
+    public function insert($sql, $params): bool
+    {
         try {
             $stmt = $this->conn->prepare($sql);
             $result = $stmt->execute($params);
@@ -71,22 +80,13 @@ class dbClient
      * @return int the last insert id
      * @throws Exception if there is no last insert id
      */
-    public function lastInsertId() {
+    public function lastInsertId()
+    {
         $id = $this->conn->lastInsertId();
         if ($id == 0) {
             throw new Exception("No last insert id");
         }
         return $id;
-    }
-
-    /**
-     * Sets the password
-     * @param $password
-     * @return void
-     */
-    private function setPassword($password)
-    {
-        $this->contrasenya = $password;
     }
 
     /**
