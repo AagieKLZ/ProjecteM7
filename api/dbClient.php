@@ -12,8 +12,8 @@ class dbClient
     private static $instance;
     private $usuari = "root";
     private $contrasenya;
-    private $db = "railway";
-    private $host = "containers-us-west-11.railway.app:5513";
+    private $db = "tenfe";
+    private $host = "localhost:3306";
     private $conn;
 
     /**
