@@ -1,4 +1,4 @@
-# 
+🌎 [Web de Tenfe](https://3.122.188.12/)
 
 # Sobre el proyecto
 
@@ -30,3 +30,13 @@ Hemos realizado un trabajo, aunque algunas partes sean solo teóricas, dónde se
 Se puede consultar el pdf en el siguiente enlace:
 
 https://drive.google.com/file/d/1_qtezNTbShS2LGGmve_G0Gqw-eTqoCys/view?usp=sharing
+
+## Despliegue
+
+Además, es importante destacar que el proyecto de Tenfe ha sido hosteado en una 
+máquina EC2 de AWS, utilizando XAMPP como servidor web y base de datos. 
+Esto nos permite tener un control total sobre el entorno de producción y 
+asegurar la escalabilidad y disponibilidad del servicio. 
+Se han trasladado las bases de datos a proudcción con mysqldump y se ha configurado 
+el servidor web para solo permitir conexiones locales a la base de datos.
+Se puede consultar el proyecto aqui: https://3.122.188.12/
