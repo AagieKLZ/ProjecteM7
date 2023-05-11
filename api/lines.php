@@ -222,4 +222,17 @@ class lines
         $sql = "SELECT name, colour FROM routes;";
         return $db->query($sql, []);
     }
+
+    /**
+     * @param string $name Name of the line
+     * @param string $colour (must be a TailwindCSS colour)
+     * @return void
+     */
+    public static function createNew(string $name, string $colour)
+    {
+        $db = dbClient::getInstance();
+        $sql = "INSERT INTO routes (name, colour) VALUES (?, ?);";
+        $params = [$name, $colour];
+        $db->query($sql, $params);
+    }
 }
