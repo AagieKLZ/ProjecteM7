@@ -42,3 +42,8 @@ Se han trasladado las bases de datos a proudcción con mysqldump y se ha configu
 el servidor web para solo permitir conexiones locales a la base de datos.
 
 Se puede consultar el proyecto aqui: https://3.122.188.12/
+
+## Acceso a administrador
+Usuario: admin@tenfe.com
+
+Contraseña: 123321
