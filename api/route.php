@@ -89,4 +89,28 @@ class route
         }
     }
 
+    public static function deleteRoute(int $train_num) : bool {
+        $sql = "DELETE FROM schedules WHERE train_num = ?;";
+        $params = [$train_num];
+        $db = dbClient::getInstance();
+        try {
+            return $db->insert($sql, $params);
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    public static function changeTime(int $train, int $station, string $time){
+        $sql = "UPDATE schedules SET time = ? WHERE train_num = ? AND station_id = ?;";
+        $params = [$time, $train, $station];
+        $db = dbClient::getInstance();
+        try {
+            return $db->insert($sql, $params);
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+
+
 }

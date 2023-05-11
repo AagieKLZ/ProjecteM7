@@ -75,6 +75,17 @@ class dbClient
         }
     }
 
+    public function debug($sql, $params) : string
+    {
+        try {
+            $stmt = $this->conn->prepare($sql);
+            $result = $stmt->execute($params);
+            return $result;
+        } catch (Exception $e) {
+            return $e;
+        }
+    }
+
     /**
      * Last id inserted in the db
      * @return int the last insert id
