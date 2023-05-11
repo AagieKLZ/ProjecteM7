@@ -43,7 +43,7 @@ ini_set('display_errors', 'On');
             }
             $stations = lines::getAllStationsWithConnections();
             foreach ($stations as $i => $station) : ?>
-            <?php if ($i > ($page - 1) * 10 && $i <= ($page) * 10): ?>
+            <?php if ($i >= ($page - 1) * 10 && $i <= ($page) * 10): ?>
                 <div class="flex flex-row justify-evenly px-4 <?= $i % 2 == 0 ? "bg-white" : "bg-gray-100" ?> items-center w-full py-4 text-center text-xl">
                     <div class="w-1/2 text-left">
                         <?= $station["name"]; ?>

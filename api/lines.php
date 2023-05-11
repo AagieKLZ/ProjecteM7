@@ -22,6 +22,15 @@ class lines
         }, $stations);
     }
 
+    public static function getAllStationsWithConnectionsPaginated(int $page): array
+    {
+        $stations = self::getAllStationsPaginated($page);
+        return array_map(function ($station) {
+            $station["connections"] = (new lines)->getConnectionsOfStation($station["id"]);
+            return $station;
+        }, $stations);
+    }
+
     /**
      * Gets all the stations and their ids
      * @return array with all stations and their ids
@@ -29,8 +38,32 @@ class lines
     public static function getAllStations(): array
     {
         $db = dbClient::getInstance();
-        $sql = "SELECT id, name FROM stations;";
+        $sql = "SELECT id, name FROM stations ORDER BY name;";
         $stations = $db->query($sql, []);
+        usort($stations, function ($a, $b) {
+            return $a["name"] <=> $b["name"];
+        });
+        return $stations;
+    }
+
+    public static function getStationNumber(): int
+    {
+        $db = dbClient::getInstance();
+        $sql = "SELECT COUNT(*) AS count FROM stations;";
+        $result = $db->query($sql, []);
+        if (count($result) == 0) {
+            return 0;
+        }
+        return $result[0]['count'];
+    }
+
+    public static function getAllStationsPaginated(int $page): array
+    {
+        $db = dbClient::getInstance();
+        $sql = "SELECT id, name FROM stations ORDER BY name LIMIT ? OFFSET ?;";
+        $offset = ($page - 1) * 10;
+        $size = 10;
+        $stations = $db->query($sql, [(int) $size, $offset]);
         usort($stations, function ($a, $b) {
             return $a["name"] <=> $b["name"];
         });

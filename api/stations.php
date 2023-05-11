@@ -35,12 +35,23 @@ class stations
         $db->query($sql, [$newName, $id]);
     }
 
+    public static function getStationById(int $id): array
+    {
+        $db = dbClient::getInstance();
+        $sql = "SELECT * FROM stations WHERE id = ?;";
+        $result = $db->query($sql, [$id]);
+        if (count($result) == 0) {
+            return [];
+        } 
+        return $result[0];
+    }
+
     /**
      * Method to delete a station from the database
      * @param int $id the id of the station
      * @return void
      */
-    public static function delete(int $id)
+    public static function deleteStation(int $id)
     {
         $db = dbClient::getInstance();
         $sql = "DELETE FROM stations WHERE id = ?;";

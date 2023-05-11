@@ -47,15 +47,14 @@ use api\lines;
         <?php
         
 
-
+        $pages = lines::getStationNumber() / 10;
         if (isset($_GET['page'])) {
             $page = $_GET['page'];
         } else {
             $page = 1;
         }
-        $stations = lines::getAllStationsWithConnections();
+        $stations = lines::getAllStationsWithConnectionsPaginated($page);
         foreach ($stations as $i => $station) : ?>
-            <?php if ($i > ($page - 1) * 10 && $i <= ($page) * 10) : ?>
                 <div class="flex flex-row justify-evenly px-4 <?= $i % 2 == 0 ? "bg-white" : "bg-gray-100" ?> items-center w-full py-4 text-center text-xl">
                     <div class="w-1/3 text-left">
                         <?= $station["name"]; ?>
@@ -77,17 +76,16 @@ use api\lines;
                         </a>
                     </div>
                 </div>
-            <?php endif; ?>
         <?php endforeach; ?>
         <div class="w-fit h-16 flex justify-center items-center rounded-full text-lg px-3">
             <?php if ($page > 1) : ?>
                 <a href="./view.php?page=<?= $page - 1 ?>" class="px-4 py-2 block hover:bg-fuchsia-900 hover:text-white hover:font-semibold <?= $page == 1 ? "bg-fuchsia-900 text-white" : "bg-white" ?>">
-                    << /a>
+                    <</a>
                     <?php endif; ?>
-                    <?php for ($i = 0; $i < count($stations) / 10; $i++) : ?>
+                    <?php for ($i = 0; $i < $pages; $i++) : ?>
                         <a href="./view.php?page=<?= $i + 1 ?>" class="px-4 py-2 block hover:bg-fuchsia-900 hover:text-white <?= $i + 1 == $page ? "bg-fuchsia-900 text-white font-semibold" : "bg-white" ?>"><?= $i + 1 ?></a>
                     <?php endfor; ?>
-                    <?php if ($page < count($stations) / 10) : ?>
+                    <?php if ($page < $pages) : ?>
                         <a href="./view.php?page=<?= $page + 1 ?>" class="px-4 py-2 block hover:bg-fuchsia-900 hover:text-white hover:font-semibold <?= $page == count($stations) / 10 ? "bg-fuchsia-900 text-white" : "bg-white" ?>">></a>
                     <?php endif; ?>
         </div>
