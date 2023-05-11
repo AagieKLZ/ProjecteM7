@@ -22,14 +22,6 @@ class lines
         }, $stations);
     }
 
-    public static function getStationsWithConnections(int $page, int $size): array{
-        $stations = self::getStations($page, $size);
-        return array_map(function ($station) {
-            $station["connections"] = (new lines)->getConnectionsOfStation($station["id"]);
-            return $station;
-        }, $stations);
-    }
-
     /**
      * Gets all the stations and their ids
      * @return array with all stations and their ids
@@ -39,26 +31,6 @@ class lines
         $db = dbClient::getInstance();
         $sql = "SELECT id, name FROM stations;";
         $stations = $db->query($sql, []);
-        usort($stations, function ($a, $b) {
-            return $a["name"] <=> $b["name"];
-        });
-        return $stations;
-    }
-
-    public static function getNumberOfStations(): int{
-        $db = dbClient::getInstance();
-        $sql = "SELECT COUNT(*) AS count FROM stations;";
-        $result = $db->query($sql, []);
-        if (count($result) == 0){
-            return 0;
-        }
-        return $result[0]["count"];
-    }
-
-    public static function getStations(int $page, int $size){
-        $db = dbClient::getInstance();
-        $sql = "SELECT id, name FROM stations ORDER BY name LIMIT ? OFFSET ?;";
-        $stations = $db->query($sql, [$size, ($page - 1) * $size]);
         usort($stations, function ($a, $b) {
             return $a["name"] <=> $b["name"];
         });
@@ -82,38 +54,6 @@ class lines
     }
 
     /**
-     * Gets the origin of a route, given a train number
-     * @param $trainNumber int train number
-     * @return array with route name, origin station id and name, time
-     */
-    private function getScheduleOriginByTrainNum(int $trainNumber): array
-    {
-        $db = dbClient::getInstance();
-        $sql = "SELECT route_id, s.id, s.name, time FROM schedules
-        INNER JOIN stations s on schedules.station_id = s.id
-        WHERE train_num = ?
-        ORDER BY stop_number LIMIT 1";
-        $params = [$trainNumber];
-        return $db->query($sql, $params);
-    }
-
-    /**
-     * Gets the final destination of a route, given a train number
-     * @param $trainNumber int train number
-     * @return array with route name, destination station id and name, time
-     */
-    private function getScheduleDestinationByTrainNum(int $trainNumber): array
-    {
-        $db = dbClient::getInstance();
-        $sql = "SELECT route_id, s.id, s.name, time FROM schedules
-        INNER JOIN stations s on schedules.station_id = s.id
-        WHERE train_num = ?
-        ORDER BY stop_number DESC LIMIT 1";
-        $params = [$trainNumber];
-        return $db->query($sql, $params);
-    }
-
-    /**
      * Gets all the routes and their stations
      * @return array with all different lines and their origin and destination
      */
@@ -124,6 +64,10 @@ class lines
         return $db->query($sql, []);
     }
 
+    /**
+     * Gets all the routes and their stations
+     * @return array with all different lines
+     */
     public static function getDistinctLines(): array
     {
         $db = dbClient::getInstance();
@@ -131,6 +75,11 @@ class lines
         return $db->query($sql, []);
     }
 
+    /**
+     * Gets all the line variants of a line
+     * @param string $name line name
+     * @return array with all the directions of a line
+     */
     public static function getDirections(string $name): array
     {
         $db = dbClient::getInstance();
@@ -140,19 +89,10 @@ class lines
     }
 
     /**
-     * @param $name string route name
-     * @return array returns an array with all the stations of a route
+     * @param string $origin origin station name
+     * @param string $destiny destiny station name
+     * @return array with all the trains that pass through the origin and destiny stations
      */
-    private function getStationsByRoute(string $name): array
-    {
-        $db = dbClient::getInstance();
-        $sql = "SELECT DISTINCT station_id, s.name FROM schedules
-        INNER JOIN stations s ON s.id = schedules.station_id
-        WHERE route_id = ?; ";
-        $params = [$name];
-        return $db->query($sql, $params);
-    }
-
     public static function getAllTrainsBetween(string $origin, string $destiny): array
     {
         $db = dbClient::getInstance();
@@ -197,6 +137,11 @@ class lines
         return $db->query($sql, [$origin, $destiny]);
     }
 
+    /**
+     * @param string $origin origin station name
+     * @param string $destiny destiny station name
+     * @return array with all the stations between the origin and destiny stations
+     */
     public static function getAllStationsBetween(string $origin, string $destiny): array
     {
         $sql = "SELECT
@@ -212,11 +157,7 @@ class lines
             (
             SELECT
                 S.train_num,
-                S.time AS arrival_time,
-                S1.time AS departure_time,
-                last_stop AS stops,
-                ST1.name AS origin,
-                ST2.name AS destiny
+                last_stop AS stops
             FROM
                 schedules AS S
             INNER JOIN(
@@ -272,10 +213,26 @@ class lines
         return $db->query($sql, $params)[0]['colour'];
     }
 
+    /**
+     * @return array with all the lines
+     */
     public static function getAllLines(): array
     {
         $db = dbClient::getInstance();
         $sql = "SELECT name, colour FROM routes;";
         return $db->query($sql, []);
+    }
+
+    /**
+     * @param string $name Name of the line
+     * @param string $colour (must be a TailwindCSS colour)
+     * @return void
+     */
+    public static function createNew(string $name, string $colour)
+    {
+        $db = dbClient::getInstance();
+        $sql = "INSERT INTO routes (name, colour) VALUES (?, ?);";
+        $params = [$name, $colour];
+        $db->query($sql, $params);
     }
 }
