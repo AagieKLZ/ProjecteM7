@@ -30,7 +30,7 @@ use api\lines;
         <form class="flex flex-row space-x-4" method="POST" action="./create.php">
             <div class="flex flex-start items-center">
                 <div class="px-2 py-1 border-2 border-fuchsia-900 bg-fuchsia-900 text-white font-semibold rounded-l-lg">R</div>
-                <input type="number" min="1" name="lane" id="lane" class="w-20 bg-white px-2 h-fit py-1 rounded-r-lg border-2 border-fuchsia-900">
+                <input type="number" required value="20" min="20" name="lane" id="lane" class="w-20 bg-white px-2 h-fit py-1 rounded-r-lg border-2 border-fuchsia-900">
             </div>
             <select name="color" id="color" class="w-fit border-fuchsia-900 rounded-lg px-2 py-1 border-2">
                 <?php
@@ -77,4 +77,62 @@ use api\lines;
             <?php endforeach; ?>
         </div>
     </main>
+    <?php if (isset($_GET['success']) && $_GET['success'] == "true") : ?>
+        <div class="toast fixed flex flex-col bottom-4 rounded-xl left-2 w-96 h-24 bg-emerald-500">
+            <div class="h-4/5 flex flex-row justify-between items-center px-8 pt-1">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 stroke-white">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <?php if (isset($_GET['action'])) : ?>
+                    <span class="text-white font-semibold">
+                        <?php
+                        switch ($_GET['action']) {
+                            case 'create':
+                                echo "Linea creada correctamente";
+                                break;
+                            case 'edit':
+                                echo "Linea editada correctamente";
+                                break;
+                            case 'delete':
+                                echo "Linea eliminada correctamente";
+                                break;
+                        }
+                        ?>
+                    </span>
+                <?php endif; ?>
+            </div>
+            <div class="h-1/5 rounded-b-xl">
+                <div class="w-full h-full rounded-b-xl bg-emerald-700 loader"></div>
+            </div>
+        </div>
+    <?php endif; ?>
+    <?php if (isset($_GET['success']) && $_GET['success'] == "false") : ?>
+        <div class="toast fixed flex flex-col bottom-4 rounded-xl left-2 w-96 h-24 bg-red-500">
+            <div class="h-4/5 flex flex-row justify-between items-center px-8 pt-1">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 stroke-white">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <?php if (isset($_GET['action'])) : ?>
+                    <span class="text-white font-semibold">
+                        <?php
+                        switch ($_GET['action']) {
+                            case 'create':
+                                echo "Error al crear la linea";
+                                break;
+                            case 'edit':
+                                echo "Error al editar la linea";
+                                break;
+                            case 'delete':
+                                echo "Error al eliminar la linea";
+                                break;
+                        }
+                        ?>
+                    </span>
+                <?php endif; ?>
+            </div>
+            <div class="h-1/5 rounded-b-xl">
+                <div class="w-full h-full rounded-b-xl bg-red-700 loader"></div>
+            </div>
+        </div>
+    <?php endif; ?>
 </body>
