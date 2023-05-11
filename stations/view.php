@@ -5,6 +5,9 @@ if (!isset($_SESSION['user'])) {
     header('Location: ./index.php');
 }
 $current_user = $_SESSION["user"];
+include '../api/lines.php';
+
+use api\lines;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,14 +27,16 @@ $current_user = $_SESSION["user"];
     <?php include '../components/altNavbar.php'; ?>
     <main class="flex flex-col justify-center items-center w-2/3 mx-auto h-[calc(100%-3.5rem)] mt-[3.5rem]">
         <div class="mt-16 mb-8 text-3xl font-semibold">Administración de Estaciones</div>
-        <form class="flex flex-row space-x-4">
-            <div class="flex flex-col">
-                <label for="station" class="h-8">Nombre</label>
+        <form class="flex flex-row space-x-4" method="POST" action="create.php">
+                <label for="station" class="py-1">Nombre</label>
                 <input type="text" name="station" id="station" class="w-44 bg-white px-2 h-fit py-1 rounded-lg border-2 border-fuchsia-900">
-            </div>
-            <div class="flex flex-col">
-                <div class="h-8"></div>
-                <input type="submit" value="Añadir Estación" class="py-1 h-fit px-6 bg-transparent text-emerald-600 font-semibold border-2 hover:bg-emerald-600 hover:text-white border-emerald-600 rounded-lg">
+                <button type="submit" class="py-1 flex flex-row space-x-2 h-fit px-6 bg-transparent text-emerald-600 font-semibold border-2 hover:bg-emerald-600 hover:text-white border-emerald-600 rounded-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+</svg>
+
+                    Añadir Estación
+                </button>
             </div>
         </form>
         <div class="flex flex-row justify-evenly px-4 items-center w-full text-center text-xl font-semibold border-b border-b-black py-2">
@@ -40,9 +45,7 @@ $current_user = $_SESSION["user"];
             <div class="w-1/3 py-1"></div>
         </div>
         <?php
-        include '../api/lines.php';
-
-        use api\lines;
+        
 
 
         if (isset($_GET['page'])) {
