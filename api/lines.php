@@ -261,11 +261,43 @@ class lines
      * @param string $colour (must be a TailwindCSS colour)
      * @return void
      */
-    public static function createNew(string $name, string $colour)
+    public static function createNew(string $name, string $colour) : bool
     {
         $db = dbClient::getInstance();
         $sql = "INSERT INTO routes (name, colour) VALUES (?, ?);";
         $params = [$name, $colour];
-        $db->query($sql, $params);
+        return $db->insert($sql, $params);
+    }
+
+    public static function getColors() : array 
+    {
+        return (
+            [
+                "bg-red-500",
+                "bg-blue-500",
+                "bg-green-500",
+                "bg-yellow-500",
+                "bg-purple-500",
+                "bg-rose-500",
+                "bg-indigo-500",
+                "bg-gray-500",
+            ]
+        );
+    }
+
+    public static function updateColor(string $name, string $colour) : bool
+    {
+        $db = dbClient::getInstance();
+        $sql = "UPDATE routes SET colour = ? WHERE name = ?;";
+        $params = [$colour, $name];
+        return $db->insert($sql, $params);
+    }
+
+    public static function deleteLine(string $name) : bool
+    {
+        $db = dbClient::getInstance();
+        $sql = "DELETE FROM routes WHERE name = ?;";
+        $params = [$name];
+        return $db->insert($sql, $params);
     }
 }
