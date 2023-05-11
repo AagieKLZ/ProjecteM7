@@ -34,4 +34,16 @@ class stations
         $sql = "UPDATE stations SET name = ? WHERE id = ?;";
         $db->query($sql, [$newName, $id]);
     }
+
+    /**
+     * Method to delete a station from the database
+     * @param int $id the id of the station
+     * @return void
+     */
+    public static function delete(int $id)
+    {
+        $db = dbClient::getInstance();
+        $sql = "DELETE FROM stations WHERE id = ?;";
+        $db->query($sql, [$id]);
+    }
 }
