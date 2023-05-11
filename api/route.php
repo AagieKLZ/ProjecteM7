@@ -89,18 +89,4 @@ class route
         }
     }
 
-    /**
-     * Method to get the time a train passes by a station
-     * @param int $trainNum
-     * @param int $station
-     * @return array
-     */
-    public static function getTimeByTrainNumPassingByStation(int $trainNum, int $station): array
-    {
-        $db = dbClient::getInstance();
-        $sql = "SELECT time FROM schedules WHERE train_num = ? AND station_id = ?;";
-        $params = [$trainNum, $station];
-        return $db->query($sql, $params);
-    }
-
 }
