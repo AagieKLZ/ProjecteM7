@@ -20,8 +20,8 @@ CREATE TABLE if not exists schedules
     train_num   int        not null,
     stop_number smallint   not null,
     PRIMARY KEY (route_id, station_id, time),
-    CONSTRAINT fk_route_id FOREIGN KEY (route_id) REFERENCES routes (name),
-    CONSTRAINT fk_station_id FOREIGN KEY (station_id) REFERENCES stations (id)
+    CONSTRAINT fk_route_id FOREIGN KEY (route_id) REFERENCES routes (name) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_station_id FOREIGN KEY (station_id) REFERENCES stations (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 CREATE TABLE if not exists users
 (
@@ -38,11 +38,6 @@ CREATE TABLE if not exists users_permissions
     CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users (id),
     CONSTRAINT fk_line_users_id FOREIGN KEY (route_id) REFERENCES routes (name)
 );
-
-CREATE OR REPLACE VIEW user_admin AS
-SELECT *
-FROM users
-WHERE email <> "admin@tenfe.com";
 
 DELIMITER $$
 
@@ -168,7 +163,6 @@ BEGIN
                                Origin,
                                Destiny
                         FROM (SELECT S3.route_id,
-                                     T.train_num,
                                      S1.name AS Origin,
                                      S2.name AS Destiny
                               FROM (SELECT train_num,
@@ -214,7 +208,6 @@ BEGIN
                                Origin,
                                Destiny
                         FROM (SELECT S3.route_id,
-                                     T.train_num,
                                      S1.name AS Origin,
                                      S2.name AS Destiny
                               FROM (SELECT train_num,
