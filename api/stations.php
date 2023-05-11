@@ -21,4 +21,17 @@ class stations
         $sql = "INSERT INTO stations (name) VALUES (?);";
         $db->query($sql, [$stationName]);
     }
+
+    /**
+     * Method to change the name of a station
+     * @param string $newName the new name of the station
+     * @param int $id the id of the station
+     * @return void
+     */
+    public static function updateStationName(string $newName, int $id)
+    {
+        $db = dbClient::getInstance();
+        $sql = "UPDATE stations SET name = ? WHERE id = ?;";
+        $db->query($sql, [$newName, $id]);
+    }
 }
