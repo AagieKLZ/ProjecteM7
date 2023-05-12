@@ -77,7 +77,7 @@ use api\lines;
         <div class="w-fit h-16 flex justify-center items-center rounded-full text-lg px-3">
             <?php if ($page > 1) : ?>
                 <a href="./view.php?page=<?= $page - 1 ?>" class="px-4 py-2 block hover:bg-fuchsia-900 hover:text-white hover:font-semibold <?= $page == 1 ? "bg-fuchsia-900 text-white" : "bg-white" ?>">
-                    << /a>
+                    <</a>
                     <?php endif; ?>
                     <?php for ($i = 0; $i < $pages; $i++) : ?>
                         <a href="./view.php?page=<?= $i + 1 ?>" class="px-4 py-2 block hover:bg-fuchsia-900 hover:text-white <?= $i + 1 == $page ? "bg-fuchsia-900 text-white font-semibold" : "bg-white" ?>"><?= $i + 1 ?></a>
