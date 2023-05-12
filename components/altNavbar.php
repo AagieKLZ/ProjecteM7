@@ -1,3 +1,11 @@
+<?php
+    header('Cache-Control: public, max-age=3600');
+    // Set the expiration time header
+    header("Expires: " . gmdate('D, d M Y H:i:s', time() + 3600) . ' GMT'); // Expires in 1 hour
+    
+    // Set the last modified header (optional)
+    header("Last-Modified: " . gmdate('D, d M Y H:i:s', time()) . ' GMT');
+?>
 <nav class="fixed lg:w-full left-0 w-full h-14 bg-gray-200 bg-opacity-50 backdrop-blur z-40 top-0 left-0 flex flex-row lg:justify-around justify-between items-center">
         <a href="../index.php" class="block h-14 my-auto"><img src="../assets/logo.png" alt="logo" class="h-14 my-auto"></a>
         <div class="lg:flex hidden justify-end space-x-16 items-center">

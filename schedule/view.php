@@ -24,7 +24,6 @@ if (isset($_GET['direction'])) {
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="../styles.css">
 
-
 </head>
 
 <body class="mt-5">
@@ -81,7 +80,9 @@ if (isset($_GET['direction'])) {
             <input type="submit" value="Buscar" class="px-5 py-2 font-semibold text-white rounded-lg bg-fuchsia-900">
         </form>
         <?php if (isset($_GET['direction']) && isset($_GET['lane'])) : ?>
-            <?php $schedules = lines::getAllTrainsBetween($_GET["origin"], $_GET["destiny"]) ?>
+            <?php 
+                $schedules = lines::getAllTrainsBetween($_GET["origin"], $_GET["destiny"]) 
+            ?>
             <div class="mt-8 w-[90%] flex flex-col justify-start items-center mb-4">
                 <div class="md:flex grid grid-cols-2 flex-row items-center justify-center w-full place-items-center gap-4 md:space-x-24 text-lg">
                     <div><b>Origen:</b> <?= $_GET["origin"] ?></div>
