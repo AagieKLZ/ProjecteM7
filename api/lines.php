@@ -78,8 +78,8 @@ class lines
     public static function getConnectionsOfStation(int $stationId): array
     {
         $db = dbClient::getInstance();
-        $sql = "SELECT DISTINCT route_id, colour FROM schedules
-        INNER JOIN routes r on schedules.route_id = r.name
+        $sql = "SELECT DISTINCT route_id, colour FROM schedules2
+        INNER JOIN routes r on schedules2.route_id = r.name
         WHERE station_id = ?
         ORDER BY route_id;";
         $params = [$stationId];
@@ -137,13 +137,13 @@ class lines
             ST1.name AS origin,
             ST2.name AS destiny
         FROM
-            schedules AS S
+            schedules2 AS S
         INNER JOIN(
             SELECT
                 train_num,
                 MAX(stop_number) AS last_stop
             FROM
-                schedules
+                schedules2
             GROUP BY
                 train_num
         ) AS S2
@@ -155,7 +155,7 @@ class lines
                 time,
                 station_id AS first_stop
             FROM
-                schedules
+                schedules2
             WHERE
                 stop_number = 1
         ) AS S1
@@ -180,7 +180,7 @@ class lines
         $sql = "SELECT
         stop_number, ST.name, ST.id
     FROM
-        schedules AS S
+        schedules2 AS S
     INNER JOIN stations AS ST ON (ST.id = S.station_id)
     WHERE
         train_num =(
@@ -192,13 +192,13 @@ class lines
                 S.train_num,
                 last_stop AS stops
             FROM
-                schedules AS S
+                schedules2 AS S
             INNER JOIN(
                 SELECT
                     train_num,
                     MAX(stop_number) AS last_stop
                 FROM
-                    schedules
+                    schedules2
                 GROUP BY
                     train_num
             ) AS S2
@@ -210,7 +210,7 @@ class lines
                 TIME,
                 station_id AS first_stop
             FROM
-                schedules
+                schedules2
             WHERE
                 stop_number = 1
         ) AS S1

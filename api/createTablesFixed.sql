@@ -42,3 +42,212 @@ CREATE TABLE if not exists users
     email    varchar(255) not null,
     PRIMARY KEY (id)
 );
+
+CREATE OR REPLACE VIEW schedules2 AS ( 
+    SELECT 
+        route_id, tenfe2.schedules.* 
+    FROM tenfe2.schedules 
+        INNER JOIN tenfe2.route_trains 
+    USING (train_num)
+);
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS getScheduleOrigin$$
+
+CREATE FUNCTION getScheduleOrigin(train_number INT)
+    RETURNS VARCHAR(50)
+    READS SQL DATA
+BEGIN
+    DECLARE destination_station VARCHAR(50);
+    SELECT s.name
+    INTO destination_station
+    FROM schedules2
+             INNER JOIN stations AS s on schedules2.station_id = s.id
+    WHERE train_num = train_number
+    ORDER BY stop_number
+    LIMIT 1;
+    RETURN destination_station;
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS getScheduleDestination$$
+
+CREATE FUNCTION getScheduleDestination(train_number INT)
+    RETURNS VARCHAR(50)
+    READS SQL DATA
+BEGIN
+    DECLARE destination_station VARCHAR(50);
+    SELECT s.name
+    INTO destination_station
+    FROM schedules2
+             INNER JOIN stations s on schedules2.station_id = s.id
+    WHERE train_num = train_number
+    ORDER BY stop_number DESC
+    LIMIT 1;
+    RETURN destination_station;
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS getStationsByRouteId$$
+
+CREATE PROCEDURE getStationsByRouteId(IN routeId VARCHAR(3))
+BEGIN
+    SELECT DISTINCT station_id, s.name
+    FROM schedules2
+             INNER JOIN stations s ON s.id = schedules2.station_id
+    WHERE route_id = routeId;
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS getLines$$
+
+CREATE PROCEDURE getLines()
+BEGIN
+    SELECT name FROM routes;
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS getLastTrainNumber$$
+
+CREATE FUNCTION getLastTrainNumber()
+    RETURNS INT
+    READS SQL DATA
+BEGIN
+    DECLARE lastTrainNumber INT;
+    SELECT MAX(train_num) INTO lastTrainNumber FROM schedules2;
+    RETURN lastTrainNumber;
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS getStations$$
+
+CREATE PROCEDURE getStations()
+BEGIN
+    SELECT id, name
+    FROM stations
+    ORDER BY name;
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS getConnectionsStation$$
+
+CREATE PROCEDURE getConnectionsStation(IN stationId INT)
+BEGIN
+    SELECT DISTINCT route_id, colour
+    FROM schedules2
+             INNER JOIN routes r ON schedules2.route_id = r.name
+    WHERE station_id = stationId
+    ORDER BY route_id;
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS list_all_lines$$
+CREATE PROCEDURE list_all_lines()
+BEGIN
+    SELECT route_id,
+           colour,
+           Origin,
+           Destiny
+    FROM routes AS R
+             INNER JOIN(SELECT route_id,
+                               Origin,
+                               Destiny
+                        FROM (SELECT S3.route_id,
+                                     S1.name AS Origin,
+                                     S2.name AS Destiny
+                              FROM (SELECT train_num,
+                                           MIN(stop_number) AS min_stop_number,
+                                           MAX(stop_number) AS max_stop_number
+                                    FROM schedules2
+                                    GROUP BY train_num) T
+                                       INNER JOIN schedules2 O ON
+                                  O.train_num = T.train_num AND O.stop_number = T.min_stop_number
+                                       INNER JOIN schedules2 D ON
+                                  D.train_num = T.train_num AND D.stop_number = T.max_stop_number
+                                       INNER JOIN stations AS S1
+                                                  ON
+                                                      S1.id = O.station_id
+                                       INNER JOIN stations AS S2
+                                                  ON
+                                                      S2.id = D.station_id
+                                       INNER JOIN schedules2 AS S3
+                                                  ON
+                                                      S3.train_num = T.train_num
+                              WHERE O.station_id <> D.station_id
+                              ORDER BY T.train_num) AS P
+                        GROUP BY route_id,
+                                 Origin,
+                                 Destiny) AS A
+                       ON
+                           A.route_id = R.name;
+END$$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS get_line_variants$$
+CREATE PROCEDURE get_line_variants(IN name VARCHAR(5))
+BEGIN
+    SELECT route_id,
+           colour,
+           Origin,
+           Destiny
+    FROM routes AS R
+             INNER JOIN(SELECT route_id,
+                               Origin,
+                               Destiny
+                        FROM (SELECT S3.route_id,
+                                     S1.name AS Origin,
+                                     S2.name AS Destiny
+                              FROM (SELECT train_num,
+                                           MIN(stop_number) AS min_stop_number,
+                                           MAX(stop_number) AS max_stop_number
+                                    FROM schedules2
+                                    GROUP BY train_num) T
+                                       INNER JOIN schedules2 O ON
+                                  O.train_num = T.train_num AND O.stop_number = T.min_stop_number
+                                       INNER JOIN schedules2 D ON
+                                  D.train_num = T.train_num AND D.stop_number = T.max_stop_number
+                                       INNER JOIN stations AS S1
+                                                  ON
+                                                      S1.id = O.station_id
+                                       INNER JOIN stations AS S2
+                                                  ON
+                                                      S2.id = D.station_id
+                                       INNER JOIN schedules2 AS S3
+                                                  ON
+                                                      S3.train_num = T.train_num
+                              WHERE O.station_id <> D.station_id
+                              ORDER BY T.train_num) AS P
+                        GROUP BY route_id,
+                                 Origin,
+                                 Destiny) AS A
+                       ON
+                           A.route_id = R.name
+    WHERE R.name = name;
+END$$
+
+DELIMITER ;

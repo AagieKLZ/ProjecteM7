@@ -19,8 +19,8 @@ class route
     {
         // First check if the stations are in the same line, if they share a route
         $db = dbClient::getInstance();
-        $sql = 'SELECT S1.route_id, R.colour, S1.time AS origin_time, S2.time AS destiny_time FROM schedules AS S1
-        INNER JOIN schedules AS S2 ON (S1.train_num = S2.train_num) 
+        $sql = 'SELECT S1.route_id, R.colour, S1.time AS origin_time, S2.time AS destiny_time FROM schedules2 AS S1
+        INNER JOIN schedules2 AS S2 ON (S1.train_num = S2.train_num) 
         INNER JOIN routes AS R ON (S1.route_id = R.name)
         WHERE S1.station_id = ? AND S2.station_id = ? AND S1.TIME < S2.TIME AND S1.TIME > ?
         ORDER BY S1.TIME LIMIT ? OFFSET ?;
@@ -34,8 +34,8 @@ class route
     {
         // First check if the stations are in the same line, if they share a route
         $db = dbClient::getInstance();
-        $sql = 'SELECT COUNT(*) AS count FROM schedules AS S1
-        INNER JOIN schedules AS S2 ON (S1.train_num = S2.train_num) 
+        $sql = 'SELECT COUNT(*) AS count FROM schedules2 AS S1
+        INNER JOIN schedules2 AS S2 ON (S1.train_num = S2.train_num) 
         INNER JOIN routes AS R ON (S1.route_id = R.name)
         WHERE S1.station_id = ? AND S2.station_id = ? AND S1.TIME < S2.TIME AND S1.TIME > ?;
         ';
@@ -73,7 +73,7 @@ class route
 
     public static function getNextTrainNumber(): int{
         $db = dbClient::getInstance();
-        $sql = "SELECT MAX(train_num) as number FROM schedules;";
+        $sql = "SELECT MAX(train_num) as number FROM schedules2;";
         $result = $db->query($sql, []);
         return $result[0]['number'] + 1;
     }

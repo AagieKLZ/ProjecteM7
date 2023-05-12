@@ -12,7 +12,7 @@ class dbClient
     private static $instance;
     private $usuari = "root";
     private $contrasenya;
-    private $db = "tenfe";
+    private $db = "tenfe2";
     private $host = "localhost:3306";
     private $conn;
 
