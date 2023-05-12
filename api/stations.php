@@ -2,8 +2,6 @@
 
 namespace api;
 
-namespace api;
-
 if (!class_exists('dbClient')) {
     require_once('dbClient.php');
 }
