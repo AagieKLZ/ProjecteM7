@@ -111,6 +111,17 @@ class route
         }
     }
 
+    public static function changeScheduleRoute(int $train, string $route){
+        $sql = "UPDATE route_trains SET route_id = ? WHERE train_num = ?;";
+        $params = [$route, $train];
+        $db = dbClient::getInstance();
+        try {
+            return $db->insert($sql, $params);
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
 
 
 }

@@ -17,7 +17,7 @@
             header("Location: ./view.php?success=false&action=edit&lane=" . $_POST["line"] . "&origin=" . urlencode($_POST["origin"]) . "&destiny=" . urlencode($_POST["destiny"]) . "&direction=" . $_POST["direction"]);
             exit();
         }
-        if (route::changeTime($_POST["train_n"], $origin, $_POST["departure"]) && route::changeTime($_POST["train_n"], $destiny, $_POST["arrival"])){
+        if (route::changeTime($_POST["train_n"], $origin, $_POST["departure"]) && route::changeTime($_POST["train_n"], $destiny, $_POST["arrival"]) && route::changeScheduleRoute($_POST["train_n"], $_POST["line"])){
             header("Location: ./view.php?success=true&action=edit&lane=" . $_POST["line"] . "&origin=" . urlencode($_POST["origin"]) . "&destiny=" . urlencode($_POST["destiny"]) . "&direction=" . $_POST["direction"]);
         } else {
             header("Location: ./view.php?success=false&action=edit&lane=" . $_POST["line"] . "&origin=" . urlencode($_POST["origin"]) . "&destiny=" . urlencode($_POST["destiny"]) . "&direction=" . $_POST["direction"]);
