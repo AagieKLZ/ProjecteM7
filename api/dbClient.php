@@ -26,7 +26,7 @@ class dbClient
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
             PDO::ATTR_EMULATE_PREPARES => false,
         ];
-        $this->setPassword("symfony123!");
+        $this->setPassword("");
         $this->conn = new PDO("mysql:host=$this->host;dbname=$this->db", $this->usuari, $this->contrasenya, $options);
         // Creem les taules si no existeixen
         // $this->createTables();

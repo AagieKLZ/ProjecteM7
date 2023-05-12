@@ -104,19 +104,20 @@ if (isset($_GET['direction'])) {
                 </div>
                 <?php foreach ($schedules as $index => $schedule) : ?>
                     <form method="POST" action="./edit.php" class="flex flex-row py-4 items-center justify-around w-full text-lg text-center <?= $index % 2 == 0 ? "bg-gray-100" : "bg-white" ?>">
-                    <div class="w-1/6 text-center">
-                        <select name="line" id="line">
-                            <?php
-                            foreach ($lines as $line) : ?>
-                                <option value=<?= $line["name"] ?> <?= $line["name"] == $defaultLane ? "selected" : "" ?>><?= $line["name"] ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
                         <div class="w-1/6 text-center">
-                            <input type="text" name="departure" id="departure" required value="<?= $schedule["departure_time"] ?>" class="text-center rounded-lg border-fuchsia-900 border">
+                            <select name="line" id="line" class="w-24 bg-white border border-fuchsia-900 rounded-lg text-center py-1">
+                                <?php
+                                foreach ($lines as $line) : ?>
+                                    <option value=<?= $line["name"] ?> <?= $line["name"] == $defaultLane ? "selected" : "" ?>><?= $line["name"] ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <input type="hidden" name="direction" value="<?= $_GET["direction"] ?>">
+                        <div class="w-1/6 text-center">
+                            <input type="text" name="departure" id="departure" required value="<?= $schedule["departure_time"] ?>" class="text-center rounded-lg border-fuchsia-900 border w-24">
                         </div>
                         <div class="w-1/6 text-center">
-                            <input type="text" name="arrival" id="arrival" required value="<?= $schedule["arrival_time"] ?>" class="text-center rounded-lg border border-fuchsia-900">
+                            <input type="text" name="arrival" id="arrival" required value="<?= $schedule["arrival_time"] ?>" class="text-center rounded-lg border border-fuchsia-900 w-24">
                         </div>
                         <div class="w-1/6 text-center"><?= $schedule["stops"] ?></div>
                         <div class="w-1/6 text-center">
